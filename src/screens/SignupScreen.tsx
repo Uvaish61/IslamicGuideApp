@@ -14,7 +14,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Chrome, ChevronLeft, Eye, Facebook, Lock, Mail, User } from 'lucide-react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from 'react-native-reanimated';
 
 type SignupScreenProps = {
   onSwitchToLogin: () => void;
@@ -38,6 +38,9 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
   const passwordFieldTranslateY = useSharedValue(16);
   const barOneWidth = useSharedValue(0);
   const barTwoWidth = useSharedValue(0);
+  const signupScale = useSharedValue(1);
+  const googleScale = useSharedValue(1);
+  const facebookScale = useSharedValue(1);
 
   const heroAnimatedStyle = useAnimatedStyle(() => ({
     opacity: heroOpacity.value,
@@ -70,6 +73,18 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
 
   const barTwoAnimatedStyle = useAnimatedStyle(() => ({
     width: barTwoWidth.value,
+  }));
+
+  const signupButtonAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: signupScale.value }],
+  }));
+
+  const googleButtonAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: googleScale.value }],
+  }));
+
+  const facebookButtonAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: facebookScale.value }],
   }));
 
   useEffect(() => {
@@ -245,14 +260,24 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
               </View>
 
               <Pressable
-                className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4"
-                onPress={handleSignup}
-                disabled={isSaving}>
-                {isSaving ? (
-                  <ActivityIndicator color="#FFFFFF" />
-                ) : (
-                  <Text className="text-[16px] font-semibold text-white">Sign up</Text>
-                )}
+                onPressIn={() => {
+                  signupScale.value = withSpring(0.97, { damping: 14, stiffness: 220 });
+                }}
+                onPressOut={() => {
+                  signupScale.value = withSpring(1, { damping: 12, stiffness: 220 });
+                }}>
+                <Animated.View style={signupButtonAnimatedStyle}>
+                  <Pressable
+                    className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4"
+                    onPress={handleSignup}
+                    disabled={isSaving}>
+                    {isSaving ? (
+                      <ActivityIndicator color="#FFFFFF" />
+                    ) : (
+                      <Text className="text-[16px] font-semibold text-white">Sign up</Text>
+                    )}
+                  </Pressable>
+                </Animated.View>
               </Pressable>
 
               <View className="mt-8 flex-row items-center">
@@ -262,14 +287,36 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
               </View>
 
               <View className="mt-6 flex-row gap-3">
-                <Pressable className="h-14 flex-1 flex-row items-center justify-center rounded-2xl border border-[#E7E7F0]">
-                  <Chrome size={18} color="#4B4B60" />
-                  <Text className="ml-2 text-[15px] font-semibold text-[#3A3A50]">Google</Text>
+                <Pressable
+                  className="flex-1"
+                  onPressIn={() => {
+                    googleScale.value = withSpring(0.97, { damping: 14, stiffness: 220 });
+                  }}
+                  onPressOut={() => {
+                    googleScale.value = withSpring(1, { damping: 12, stiffness: 220 });
+                  }}>
+                  <Animated.View style={googleButtonAnimatedStyle}>
+                    <View className="h-14 flex-row items-center justify-center rounded-2xl border border-[#E7E7F0]">
+                      <Chrome size={18} color="#4B4B60" />
+                      <Text className="ml-2 text-[15px] font-semibold text-[#3A3A50]">Google</Text>
+                    </View>
+                  </Animated.View>
                 </Pressable>
 
-                <Pressable className="h-14 flex-1 flex-row items-center justify-center rounded-2xl border border-[#E7E7F0]">
-                  <Facebook size={18} color="#3B82F6" />
-                  <Text className="ml-2 text-[15px] font-semibold text-[#3A3A50]">Facebook</Text>
+                <Pressable
+                  className="flex-1"
+                  onPressIn={() => {
+                    facebookScale.value = withSpring(0.97, { damping: 14, stiffness: 220 });
+                  }}
+                  onPressOut={() => {
+                    facebookScale.value = withSpring(1, { damping: 12, stiffness: 220 });
+                  }}>
+                  <Animated.View style={facebookButtonAnimatedStyle}>
+                    <View className="h-14 flex-row items-center justify-center rounded-2xl border border-[#E7E7F0]">
+                      <Facebook size={18} color="#3B82F6" />
+                      <Text className="ml-2 text-[15px] font-semibold text-[#3A3A50]">Facebook</Text>
+                    </View>
+                  </Animated.View>
                 </Pressable>
               </View>
             </Animated.View>
