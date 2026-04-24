@@ -14,7 +14,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Chrome, ChevronLeft, Eye, Facebook, Lock, Mail, User } from 'lucide-react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSpring, withTiming } from 'react-native-reanimated';
 
 type SignupScreenProps = {
   onSwitchToLogin: () => void;
@@ -116,6 +116,15 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
     barOneWidth.value = withTiming(strengthLevel >= 1 ? 20 : 0, { duration: 220 });
     barTwoWidth.value = withTiming(strengthLevel >= 2 ? 20 : 0, { duration: 220 });
   }, [barOneWidth, barTwoWidth, password.length]);
+
+  useEffect(() => {
+    if (isSaving) {
+      signupScale.value = withRepeat(withTiming(0.97, { duration: 520 }), -1, true);
+      return;
+    }
+
+    signupScale.value = withTiming(1, { duration: 180 });
+  }, [isSaving, signupScale]);
 
   const handleSignup = async () => {
     const trimmedEmail = email.trim().toLowerCase();
