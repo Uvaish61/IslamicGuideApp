@@ -30,6 +30,14 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
   const heroTranslateY = useSharedValue(-22);
   const cardOpacity = useSharedValue(0);
   const cardTranslateY = useSharedValue(26);
+  const emailFieldOpacity = useSharedValue(0);
+  const emailFieldTranslateY = useSharedValue(16);
+  const nameFieldOpacity = useSharedValue(0);
+  const nameFieldTranslateY = useSharedValue(16);
+  const passwordFieldOpacity = useSharedValue(0);
+  const passwordFieldTranslateY = useSharedValue(16);
+  const barOneWidth = useSharedValue(0);
+  const barTwoWidth = useSharedValue(0);
 
   const heroAnimatedStyle = useAnimatedStyle(() => ({
     opacity: heroOpacity.value,
@@ -41,12 +49,58 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
     transform: [{ translateY: cardTranslateY.value }],
   }));
 
+  const emailFieldAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: emailFieldOpacity.value,
+    transform: [{ translateY: emailFieldTranslateY.value }],
+  }));
+
+  const nameFieldAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: nameFieldOpacity.value,
+    transform: [{ translateY: nameFieldTranslateY.value }],
+  }));
+
+  const passwordFieldAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: passwordFieldOpacity.value,
+    transform: [{ translateY: passwordFieldTranslateY.value }],
+  }));
+
+  const barOneAnimatedStyle = useAnimatedStyle(() => ({
+    width: barOneWidth.value,
+  }));
+
+  const barTwoAnimatedStyle = useAnimatedStyle(() => ({
+    width: barTwoWidth.value,
+  }));
+
   useEffect(() => {
     heroOpacity.value = withTiming(1, { duration: 420 });
     heroTranslateY.value = withTiming(0, { duration: 460 });
     cardOpacity.value = withDelay(170, withTiming(1, { duration: 380 }));
     cardTranslateY.value = withDelay(170, withTiming(0, { duration: 420 }));
-  }, [cardOpacity, cardTranslateY, heroOpacity, heroTranslateY]);
+    emailFieldOpacity.value = withDelay(310, withTiming(1, { duration: 280 }));
+    emailFieldTranslateY.value = withDelay(310, withTiming(0, { duration: 320 }));
+    nameFieldOpacity.value = withDelay(390, withTiming(1, { duration: 280 }));
+    nameFieldTranslateY.value = withDelay(390, withTiming(0, { duration: 320 }));
+    passwordFieldOpacity.value = withDelay(470, withTiming(1, { duration: 280 }));
+    passwordFieldTranslateY.value = withDelay(470, withTiming(0, { duration: 320 }));
+  }, [
+    cardOpacity,
+    cardTranslateY,
+    emailFieldOpacity,
+    emailFieldTranslateY,
+    heroOpacity,
+    heroTranslateY,
+    nameFieldOpacity,
+    nameFieldTranslateY,
+    passwordFieldOpacity,
+    passwordFieldTranslateY,
+  ]);
+
+  useEffect(() => {
+    const strengthLevel = password.length >= 8 ? 2 : password.length >= 6 ? 1 : 0;
+    barOneWidth.value = withTiming(strengthLevel >= 1 ? 20 : 0, { duration: 220 });
+    barTwoWidth.value = withTiming(strengthLevel >= 2 ? 20 : 0, { duration: 220 });
+  }, [barOneWidth, barTwoWidth, password.length]);
 
   const handleSignup = async () => {
     const trimmedEmail = email.trim().toLowerCase();
@@ -134,54 +188,60 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
               <Text className="mt-2 text-center text-[15px] text-[#8D8CA3]">Free forever. No credit card needed.</Text>
 
               <View className="mt-8 gap-4">
-                <View className="flex-row items-center rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
-                  <Mail size={18} color="#9E9EB0" />
-                  <TextInput
-                    className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
-                    placeholder="Email Address"
-                    placeholderTextColor="#B0B0C2"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    value={email}
-                    onChangeText={setEmail}
-                  />
-                </View>
-
-                <View className="flex-row items-center rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
-                  <User size={18} color="#9E9EB0" />
-                  <TextInput
-                    className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
-                    placeholder="Your name"
-                    placeholderTextColor="#B0B0C2"
-                    value={name}
-                    onChangeText={setName}
-                  />
-                </View>
-
-                <View className="rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
-                  <View className="flex-row items-center">
-                    <Lock size={18} color="#9E9EB0" />
+                <Animated.View style={emailFieldAnimatedStyle}>
+                  <View className="flex-row items-center rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
+                    <Mail size={18} color="#9E9EB0" />
                     <TextInput
                       className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
-                      placeholder="Password"
+                      placeholder="Email Address"
                       placeholderTextColor="#B0B0C2"
-                      secureTextEntry={!showPassword}
-                      value={password}
-                      onChangeText={setPassword}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      value={email}
+                      onChangeText={setEmail}
                     />
-                    <Pressable
-                      className="ml-2 h-8 w-8 items-center justify-center rounded-full bg-[#F5F5FA]"
-                      onPress={() => setShowPassword(prev => !prev)}>
-                      <Eye size={16} color="#9E9EB0" />
-                    </Pressable>
                   </View>
+                </Animated.View>
 
-                  <View className="mt-2 flex-row items-center justify-end gap-2">
-                    <View className="h-1.5 w-5 rounded-full bg-[#7BD97F]" />
-                    <View className="h-1.5 w-5 rounded-full bg-[#7BD97F]" />
-                    <Text className="text-[12px] font-semibold text-[#64BE67]">Strong</Text>
+                <Animated.View style={nameFieldAnimatedStyle}>
+                  <View className="flex-row items-center rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
+                    <User size={18} color="#9E9EB0" />
+                    <TextInput
+                      className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
+                      placeholder="Your name"
+                      placeholderTextColor="#B0B0C2"
+                      value={name}
+                      onChangeText={setName}
+                    />
                   </View>
-                </View>
+                </Animated.View>
+
+                <Animated.View style={passwordFieldAnimatedStyle}>
+                  <View className="rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
+                    <View className="flex-row items-center">
+                      <Lock size={18} color="#9E9EB0" />
+                      <TextInput
+                        className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
+                        placeholder="Password"
+                        placeholderTextColor="#B0B0C2"
+                        secureTextEntry={!showPassword}
+                        value={password}
+                        onChangeText={setPassword}
+                      />
+                      <Pressable
+                        className="ml-2 h-8 w-8 items-center justify-center rounded-full bg-[#F5F5FA]"
+                        onPress={() => setShowPassword(prev => !prev)}>
+                        <Eye size={16} color="#9E9EB0" />
+                      </Pressable>
+                    </View>
+
+                    <View className="mt-2 flex-row items-center justify-end gap-2">
+                      <Animated.View className="h-1.5 rounded-full bg-[#7BD97F]" style={barOneAnimatedStyle} />
+                      <Animated.View className="h-1.5 rounded-full bg-[#7BD97F]" style={barTwoAnimatedStyle} />
+                      <Text className="text-[12px] font-semibold text-[#64BE67]">Strong</Text>
+                    </View>
+                  </View>
+                </Animated.View>
               </View>
 
               <Pressable
