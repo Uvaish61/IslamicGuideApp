@@ -27,7 +27,7 @@ const App = () => {
   if (screen === 'signup') {
     return (
       <Animated.View className="flex-1" style={containerAnimatedStyle}>
-        <SignupScreen onSwitchToLogin={() => switchScreen('login')} />
+        <SignupScreen onSwitchToLogin={() => switchScreen('login')} onSignupSuccess={() => switchScreen('home')} />
       </Animated.View>
     );
   }

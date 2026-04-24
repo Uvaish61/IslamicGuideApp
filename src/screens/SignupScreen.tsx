@@ -18,9 +18,10 @@ import Animated, { useAnimatedStyle, useSharedValue, withDelay, withRepeat, with
 
 type SignupScreenProps = {
   onSwitchToLogin: () => void;
+  onSignupSuccess: () => void;
 };
 
-const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
+const SignupScreen = ({ onSwitchToLogin, onSignupSuccess }: SignupScreenProps) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -161,7 +162,7 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
       setEmail('');
       setName('');
       setPassword('');
-      onSwitchToLogin();
+      onSignupSuccess();
     } catch {
       Alert.alert('Error', 'Could not save account. Please try again.');
     } finally {
