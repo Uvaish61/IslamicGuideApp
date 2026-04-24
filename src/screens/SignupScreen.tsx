@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
-  Animated,
   Alert,
   KeyboardAvoidingView,
   Platform,
@@ -15,6 +14,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Chrome, ChevronLeft, Eye, Facebook, Lock, Mail, User } from 'lucide-react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 type SignupScreenProps = {
   onSwitchToLogin: () => void;
@@ -26,22 +26,17 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const heroOpacity = useRef(new Animated.Value(0)).current;
-  const heroTranslateY = useRef(new Animated.Value(-22)).current;
+  const heroOpacity = useSharedValue(0);
+  const heroTranslateY = useSharedValue(-22);
+
+  const heroAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: heroOpacity.value,
+    transform: [{ translateY: heroTranslateY.value }],
+  }));
 
   useEffect(() => {
-    Animated.parallel([
-      Animated.timing(heroOpacity, {
-        toValue: 1,
-        duration: 420,
-        useNativeDriver: true,
-      }),
-      Animated.timing(heroTranslateY, {
-        toValue: 0,
-        duration: 460,
-        useNativeDriver: true,
-      }),
-    ]).start();
+    heroOpacity.value = withTiming(1, { duration: 420 });
+    heroTranslateY.value = withTiming(0, { duration: 460 });
   }, [heroOpacity, heroTranslateY]);
 
   const handleSignup = async () => {
@@ -101,10 +96,7 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
           <View className="min-h-full bg-[#ECEBFA]">
             <Animated.View
               className="h-72 overflow-hidden rounded-b-[34px] bg-[#3D3AE0] px-6 pt-5"
-              style={{
-                opacity: heroOpacity,
-                transform: [{ translateY: heroTranslateY }],
-              }}>
+              style={heroAnimatedStyle}>
               <View className="absolute -right-16 -top-8 h-56 w-56 rounded-full bg-[#7580FF]/45" />
               <View className="absolute -left-20 top-20 h-64 w-64 rounded-full bg-[#2F2CD0]/60" />
 
