@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  Alert,
+  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -9,10 +11,56 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeft, Chrome, Eye, Facebook, Lock, Mail, User } from 'lucide-react-native';
 
 const App = () => {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSignup = async () => {
+    const trimmedEmail = email.trim().toLowerCase();
+    const trimmedName = name.trim();
+
+    if (!trimmedEmail || !trimmedName || !password) {
+      Alert.alert('Missing fields', 'Please fill all signup fields.');
+      return;
+    }
+
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail);
+    if (!isValidEmail) {
+      Alert.alert('Invalid email', 'Please enter a valid email address.');
+      return;
+    }
+
+    if (password.length < 6) {
+      Alert.alert('Weak password', 'Password should be at least 6 characters.');
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      await AsyncStorage.setItem(
+        'auth_user',
+        JSON.stringify({
+          email: trimmedEmail,
+          name: trimmedName,
+          password,
+          createdAt: new Date().toISOString(),
+        }),
+      );
+      Alert.alert('Success', 'Account saved locally.');
+    } catch {
+      Alert.alert('Error', 'Could not save account. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
       <StatusBar barStyle="light-content" backgroundColor="#3D3AE0" />
@@ -61,6 +109,9 @@ const App = () => {
                     placeholder="Email Address"
                     placeholderTextColor="#B0B0C2"
                     keyboardType="email-address"
+                    autoCapitalize="none"
+                    value={email}
+                    onChangeText={setEmail}
                   />
                 </View>
 
@@ -70,6 +121,8 @@ const App = () => {
                     className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
                     placeholder="Your name"
                     placeholderTextColor="#B0B0C2"
+                    value={name}
+                    onChangeText={setName}
                   />
                 </View>
 
@@ -80,9 +133,13 @@ const App = () => {
                       className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
                       placeholder="Password"
                       placeholderTextColor="#B0B0C2"
-                      secureTextEntry
+                      secureTextEntry={!showPassword}
+                      value={password}
+                      onChangeText={setPassword}
                     />
-                    <Pressable className="ml-2 h-8 w-8 items-center justify-center rounded-full bg-[#F5F5FA]">
+                    <Pressable
+                      className="ml-2 h-8 w-8 items-center justify-center rounded-full bg-[#F5F5FA]"
+                      onPress={() => setShowPassword(prev => !prev)}>
                       <Eye size={16} color="#9E9EB0" />
                     </Pressable>
                   </View>
@@ -95,8 +152,15 @@ const App = () => {
                 </View>
               </View>
 
-              <Pressable className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4">
-                <Text className="text-[16px] font-semibold text-white">Sign up</Text>
+              <Pressable
+                className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4"
+                onPress={handleSignup}
+                disabled={isSaving}>
+                {isSaving ? (
+                  <ActivityIndicator color="#FFFFFF" />
+                ) : (
+                  <Text className="text-[16px] font-semibold text-white">Sign up</Text>
+                )}
               </Pressable>
 
               <View className="mt-8 flex-row items-center">
