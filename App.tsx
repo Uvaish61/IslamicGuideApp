@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -9,12 +10,47 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeft, Mail } from 'lucide-react-native';
 import { Chrome, Eye, Facebook, Lock } from 'lucide-react-native';
 
 const App = () => {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignIn = async () => {
+    const trimmedEmail = email.trim().toLowerCase();
+
+    if (!trimmedEmail || !password) {
+      Alert.alert('Missing fields', 'Please enter email and password.');
+      return;
+    }
+
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail);
+    if (!isValidEmail) {
+      Alert.alert('Invalid email', 'Please enter a valid email address.');
+      return;
+    }
+
+    try {
+      const savedUserRaw = await AsyncStorage.getItem('auth_user');
+      if (!savedUserRaw) {
+        Alert.alert('No account', 'No registered account found in local storage.');
+        return;
+      }
+
+      const savedUser = JSON.parse(savedUserRaw);
+      if (!savedUser?.email || !savedUser?.password) {
+        Alert.alert('Invalid account data', 'Saved account data is incomplete.');
+        return;
+      }
+
+      Alert.alert('Data ready', 'Account found. Credentials check will be added next.');
+    } catch {
+      Alert.alert('Error', 'Could not read account data.');
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
@@ -78,6 +114,8 @@ const App = () => {
                       placeholder="Password"
                       placeholderTextColor="#B0B0C2"
                       secureTextEntry
+                      value={password}
+                      onChangeText={setPassword}
                     />
                     <Pressable className="ml-2 h-8 w-8 items-center justify-center rounded-full bg-[#F5F5FA]">
                       <Eye size={16} color="#9E9EB0" />
@@ -86,7 +124,9 @@ const App = () => {
                 </View>
               </View>
 
-              <Pressable className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4">
+              <Pressable
+                className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4"
+                onPress={handleSignIn}>
                 <Text className="text-[16px] font-semibold text-white">Sign in</Text>
               </Pressable>
 
