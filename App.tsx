@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeft, Mail } from 'lucide-react-native';
+import { Chrome, Eye, Facebook, Lock } from 'lucide-react-native';
 
 const App = () => {
   const [email, setEmail] = useState('');
@@ -68,6 +69,47 @@ const App = () => {
                     onChangeText={setEmail}
                   />
                 </View>
+
+                <View className="rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
+                  <View className="flex-row items-center">
+                    <Lock size={18} color="#9E9EB0" />
+                    <TextInput
+                      className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
+                      placeholder="Password"
+                      placeholderTextColor="#B0B0C2"
+                      secureTextEntry
+                    />
+                    <Pressable className="ml-2 h-8 w-8 items-center justify-center rounded-full bg-[#F5F5FA]">
+                      <Eye size={16} color="#9E9EB0" />
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+
+              <Pressable className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4">
+                <Text className="text-[16px] font-semibold text-white">Sign in</Text>
+              </Pressable>
+
+              <Pressable className="mt-5 items-center">
+                <Text className="text-[14px] text-[#7E7D94]">Forgot your password?</Text>
+              </Pressable>
+
+              <View className="mt-8 flex-row items-center">
+                <View className="h-[1px] flex-1 bg-[#E7E7F0]" />
+                <Text className="mx-3 text-[13px] text-[#A6A6BA]">Or sign in with</Text>
+                <View className="h-[1px] flex-1 bg-[#E7E7F0]" />
+              </View>
+
+              <View className="mt-6 flex-row gap-3">
+                <Pressable className="h-14 flex-1 flex-row items-center justify-center rounded-2xl border border-[#E7E7F0]">
+                  <Chrome size={18} color="#4B4B60" />
+                  <Text className="ml-2 text-[15px] font-semibold text-[#3A3A50]">Google</Text>
+                </Pressable>
+
+                <Pressable className="h-14 flex-1 flex-row items-center justify-center rounded-2xl border border-[#E7E7F0]">
+                  <Facebook size={18} color="#3B82F6" />
+                  <Text className="ml-2 text-[15px] font-semibold text-[#3A3A50]">Facebook</Text>
+                </Pressable>
               </View>
             </View>
           </View>
