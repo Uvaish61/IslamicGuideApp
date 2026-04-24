@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
   Platform,
@@ -18,6 +19,8 @@ import { Chrome, Eye, Facebook, Lock } from 'lucide-react-native';
 const App = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   const handleSignIn = async () => {
     const trimmedEmail = email.trim().toLowerCase();
@@ -34,6 +37,7 @@ const App = () => {
     }
 
     try {
+      setIsSigningIn(true);
       const savedUserRaw = await AsyncStorage.getItem('auth_user');
       if (!savedUserRaw) {
         Alert.alert('No account', 'No registered account found in local storage.');
@@ -46,9 +50,21 @@ const App = () => {
         return;
       }
 
-      Alert.alert('Data ready', 'Account found. Credentials check will be added next.');
+      const isEmailMatch = savedUser.email === trimmedEmail;
+      const isPasswordMatch = savedUser.password === password;
+
+      if (!isEmailMatch || !isPasswordMatch) {
+        Alert.alert('Login failed', 'Email or password is incorrect.');
+        return;
+      }
+
+      Alert.alert('Login successful', `Welcome back, ${savedUser.name || 'User'}!`);
+      setEmail('');
+      setPassword('');
     } catch {
       Alert.alert('Error', 'Could not read account data.');
+    } finally {
+      setIsSigningIn(false);
     }
   };
 
@@ -113,11 +129,13 @@ const App = () => {
                       className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
                       placeholder="Password"
                       placeholderTextColor="#B0B0C2"
-                      secureTextEntry
+                      secureTextEntry={!showPassword}
                       value={password}
                       onChangeText={setPassword}
                     />
-                    <Pressable className="ml-2 h-8 w-8 items-center justify-center rounded-full bg-[#F5F5FA]">
+                    <Pressable
+                      className="ml-2 h-8 w-8 items-center justify-center rounded-full bg-[#F5F5FA]"
+                      onPress={() => setShowPassword(prev => !prev)}>
                       <Eye size={16} color="#9E9EB0" />
                     </Pressable>
                   </View>
@@ -126,8 +144,13 @@ const App = () => {
 
               <Pressable
                 className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4"
-                onPress={handleSignIn}>
-                <Text className="text-[16px] font-semibold text-white">Sign in</Text>
+                onPress={handleSignIn}
+                disabled={isSigningIn}>
+                {isSigningIn ? (
+                  <ActivityIndicator color="#FFFFFF" />
+                ) : (
+                  <Text className="text-[16px] font-semibold text-white">Sign in</Text>
+                )}
               </Pressable>
 
               <Pressable className="mt-5 items-center">
