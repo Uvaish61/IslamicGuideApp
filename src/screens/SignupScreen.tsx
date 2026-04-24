@@ -14,7 +14,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Chrome, ChevronLeft, Eye, Facebook, Lock, Mail, User } from 'lucide-react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 
 type SignupScreenProps = {
   onSwitchToLogin: () => void;
@@ -28,16 +28,25 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
   const [isSaving, setIsSaving] = useState(false);
   const heroOpacity = useSharedValue(0);
   const heroTranslateY = useSharedValue(-22);
+  const cardOpacity = useSharedValue(0);
+  const cardTranslateY = useSharedValue(26);
 
   const heroAnimatedStyle = useAnimatedStyle(() => ({
     opacity: heroOpacity.value,
     transform: [{ translateY: heroTranslateY.value }],
   }));
 
+  const cardAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: cardOpacity.value,
+    transform: [{ translateY: cardTranslateY.value }],
+  }));
+
   useEffect(() => {
     heroOpacity.value = withTiming(1, { duration: 420 });
     heroTranslateY.value = withTiming(0, { duration: 460 });
-  }, [heroOpacity, heroTranslateY]);
+    cardOpacity.value = withDelay(170, withTiming(1, { duration: 380 }));
+    cardTranslateY.value = withDelay(170, withTiming(0, { duration: 420 }));
+  }, [cardOpacity, cardTranslateY, heroOpacity, heroTranslateY]);
 
   const handleSignup = async () => {
     const trimmedEmail = email.trim().toLowerCase();
@@ -118,7 +127,7 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
               </Text>
             </Animated.View>
 
-            <View className="-mt-10 flex-1 rounded-t-[34px] bg-white px-6 pt-10 pb-8">
+            <Animated.View className="-mt-10 flex-1 rounded-t-[34px] bg-white px-6 pt-10 pb-8" style={cardAnimatedStyle}>
               <Text className="text-center text-[44px] font-extrabold tracking-tight text-[#29293D]">
                 Get started free.
               </Text>
@@ -203,7 +212,7 @@ const SignupScreen = ({ onSwitchToLogin }: SignupScreenProps) => {
                   <Text className="ml-2 text-[15px] font-semibold text-[#3A3A50]">Facebook</Text>
                 </Pressable>
               </View>
-            </View>
+            </Animated.View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
