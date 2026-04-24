@@ -116,7 +116,8 @@ const LoginScreen = ({ onSwitchToSignup }: LoginScreenProps) => {
       setIsSigningIn(true);
       const savedUserRaw = await AsyncStorage.getItem('auth_user');
       if (!savedUserRaw) {
-        Alert.alert('No account', 'No registered account found in local storage.');
+        Alert.alert('No account', 'No account found. Please sign up first.');
+        onSwitchToSignup();
         return;
       }
 
