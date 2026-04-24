@@ -18,9 +18,10 @@ import Animated, { useAnimatedStyle, useSharedValue, withDelay, withRepeat, with
 
 type LoginScreenProps = {
   onSwitchToSignup: () => void;
+  onLoginSuccess: () => void;
 };
 
-const LoginScreen = ({ onSwitchToSignup }: LoginScreenProps) => {
+const LoginScreen = ({ onSwitchToSignup, onLoginSuccess }: LoginScreenProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -135,7 +136,12 @@ const LoginScreen = ({ onSwitchToSignup }: LoginScreenProps) => {
         return;
       }
 
-      Alert.alert('Login successful', `Welcome back, ${savedUser.name || 'User'}!`);
+      Alert.alert('Login successful', `Welcome back, ${savedUser.name || 'User'}!`, [
+        {
+          text: 'Continue',
+          onPress: onLoginSuccess,
+        },
+      ]);
       setEmail('');
       setPassword('');
     } catch {
