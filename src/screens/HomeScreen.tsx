@@ -5,9 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 type HomeScreenProps = {
   onOpenProfile: () => void;
   onOpenSettings: () => void;
+  onOpenDailyQuote: () => void;
 };
 
-const HomeScreen = ({ onOpenProfile, onOpenSettings }: HomeScreenProps) => {
+const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote }: HomeScreenProps) => {
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
@@ -23,6 +24,10 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings }: HomeScreenProps) => {
 
         <Pressable className="mt-3 rounded-2xl border border-[#E7E7F0] px-5 py-3" onPress={onOpenSettings}>
           <Text className="text-[15px] font-semibold text-[#29293D]">Open Settings</Text>
+        </Pressable>
+
+        <Pressable className="mt-3 rounded-2xl border border-[#5548EF] px-5 py-3" onPress={onOpenDailyQuote}>
+          <Text className="text-[15px] font-semibold text-[#5548EF]">Daily Quote</Text>
         </Pressable>
       </View>
     </SafeAreaView>

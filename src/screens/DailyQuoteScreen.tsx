@@ -4,7 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeft, ChevronRight, Heart } from 'lucide-react-native';
 import { dailyQuotes } from '../data/quoteData';
 
-const DailyQuoteScreen = () => {
+type DailyQuoteScreenProps = {
+  onBackToHome: () => void;
+};
+
+const DailyQuoteScreen = ({ onBackToHome }: DailyQuoteScreenProps) => {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [savedQuoteIds, setSavedQuoteIds] = useState<number[]>([]);
   const quote = dailyQuotes[currentQuoteIndex];

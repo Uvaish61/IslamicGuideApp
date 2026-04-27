@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DailyQuoteScreen from './src/screens/DailyQuoteScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
@@ -6,7 +7,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import SignupScreen from './src/screens/SignupScreen';
 
 const App = () => {
-  const [screen, setScreen] = useState<'login' | 'signup' | 'home' | 'profile' | 'settings'>('login');
+  const [screen, setScreen] = useState<'login' | 'signup' | 'home' | 'profile' | 'settings' | 'daily-quote'>('login');
 
   if (screen === 'signup') {
     return (
@@ -18,7 +19,7 @@ const App = () => {
   }
 
   if (screen === 'home') {
-    return <HomeScreen onOpenProfile={() => setScreen('profile')} />;
+    return <HomeScreen onOpenProfile={() => setScreen('profile')} onOpenDailyQuote={() => setScreen('daily-quote')} />;
   }
 
   if (screen === 'profile') {
@@ -28,7 +29,9 @@ const App = () => {
   if (screen === 'settings') {
     return <SettingsScreen onBackToHome={() => setScreen('home')} />;
   }
-
+  if (screen === 'daily-quote') {
+    return <DailyQuoteScreen onBackToHome={() => setScreen('home')} />
+  }
   return (
     <LoginScreen
       onSwitchToSignup={() => setScreen('signup')}
