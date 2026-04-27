@@ -6,7 +6,15 @@ import { dailyQuotes } from '../data/quoteData';
 
 const DailyQuoteScreen = () => {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+  const [savedQuoteIds, setSavedQuoteIds] = useState<number[]>([]);
   const quote = dailyQuotes[currentQuoteIndex];
+  const isSaved = savedQuoteIds.includes(quote.id);
+
+  const toggleSaveQuote = () => {
+    setSavedQuoteIds((prev) =>
+      prev.includes(quote.id) ? prev.filter((id) => id !== quote.id) : [...prev, quote.id]
+    );
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
@@ -44,6 +52,15 @@ const DailyQuoteScreen = () => {
             <ChevronRight size={20} color="#3D3AE0" />
           </Pressable>
         </View>
+
+        <Pressable
+          className="mt-8 flex-row items-center justify-center gap-2 rounded-2xl bg-[#5548EF] px-6 py-3"
+          onPress={toggleSaveQuote}>
+          <Heart size={18} color={isSaved ? '#FF6B6B' : '#FFFFFF'} fill={isSaved ? '#FF6B6B' : 'none'} />
+          <Text className="text-[14px] font-semibold text-white">
+            {isSaved ? 'Saved' : 'Save Quote'}
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
