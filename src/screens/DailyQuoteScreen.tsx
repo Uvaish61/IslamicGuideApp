@@ -65,6 +65,10 @@ const DailyQuoteScreen = ({ onBackToHome }: DailyQuoteScreenProps) => {
             {isSaved ? 'Saved' : 'Save Quote'}
           </Text>
         </Pressable>
+
+        <Pressable className="mt-4 items-center" onPress={onBackToHome}>
+          <Text className="text-[14px] font-semibold text-[#7E7D94]">Back to Home</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
