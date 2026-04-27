@@ -1,8 +1,12 @@
 import React from 'react';
-import { StatusBar, Text, View } from 'react-native';
+import { Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const HomeScreen = () => {
+type HomeScreenProps = {
+  onOpenProfile: () => void;
+};
+
+const HomeScreen = ({ onOpenProfile }: HomeScreenProps) => {
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
@@ -11,6 +15,10 @@ const HomeScreen = () => {
         <Text className="mt-3 text-center text-base text-[#7E7D94]">
           User login successful, now navigated to home screen.
         </Text>
+
+        <Pressable className="mt-6 rounded-2xl bg-[#5548EF] px-5 py-3" onPress={onOpenProfile}>
+          <Text className="text-[15px] font-semibold text-white">Open Profile</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

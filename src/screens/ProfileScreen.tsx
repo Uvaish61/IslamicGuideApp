@@ -3,7 +3,11 @@ import { Alert, Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { profileData } from '../data/profileData';
 
-const ProfileScreen = () => {
+type ProfileScreenProps = {
+  onBackToHome: () => void;
+};
+
+const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
   const initials = profileData.name
     .split(' ')
     .filter(Boolean)
@@ -59,6 +63,10 @@ const ProfileScreen = () => {
           className="mt-8 items-center rounded-2xl bg-[#5548EF] py-4"
           onPress={() => Alert.alert('Edit Profile', 'Edit profile flow will be added in the next step.')}>
           <Text className="text-[16px] font-semibold text-white">Edit Profile</Text>
+        </Pressable>
+
+        <Pressable className="mt-4 items-center" onPress={onBackToHome}>
+          <Text className="text-[14px] font-semibold text-[#7E7D94]">Back to Home</Text>
         </Pressable>
       </View>
     </SafeAreaView>

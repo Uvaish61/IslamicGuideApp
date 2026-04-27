@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 import SignupScreen from './src/screens/SignupScreen';
 
 const App = () => {
-  const [screen, setScreen] = useState<'login' | 'signup' | 'home'>('login');
+  const [screen, setScreen] = useState<'login' | 'signup' | 'home' | 'profile'>('login');
 
   if (screen === 'signup') {
     return (
@@ -16,7 +17,11 @@ const App = () => {
   }
 
   if (screen === 'home') {
-    return <HomeScreen />;
+    return <HomeScreen onOpenProfile={() => setScreen('profile')} />;
+  }
+
+  if (screen === 'profile') {
+    return <ProfileScreen onBackToHome={() => setScreen('home')} />;
   }
 
   return (
