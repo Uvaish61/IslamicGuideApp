@@ -25,6 +25,35 @@ const ProfileScreen = () => {
             {profileData.name}
           </Text>
         </View>
+
+        <View className="mt-10 gap-4">
+          <View className="rounded-2xl border border-[#E7E7F0] bg-white px-4 py-4">
+            <Text className="text-[13px] font-semibold uppercase tracking-[1px] text-[#8D8CA3]">
+              Full Name
+            </Text>
+            <Text className="mt-2 text-[17px] font-semibold text-[#29293D]">
+              {profileData.name}
+            </Text>
+          </View>
+
+          <View className="rounded-2xl border border-[#E7E7F0] bg-white px-4 py-4">
+            <Text className="text-[13px] font-semibold uppercase tracking-[1px] text-[#8D8CA3]">
+              Email Address
+            </Text>
+            <Text className="mt-2 text-[17px] font-semibold text-[#29293D]">
+              {profileData.email}
+            </Text>
+          </View>
+
+          <View className="rounded-2xl border border-[#E7E7F0] bg-white px-4 py-4">
+            <Text className="text-[13px] font-semibold uppercase tracking-[1px] text-[#8D8CA3]">
+              Account Status
+            </Text>
+            <Text className="mt-2 text-[17px] font-semibold text-[#29293D]">
+              {profileData.accountStatus}
+            </Text>
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );
