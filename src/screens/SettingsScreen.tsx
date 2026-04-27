@@ -3,7 +3,11 @@ import { Alert, Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { settingsOptions } from '../data/settingsData';
 
-const SettingsScreen = () => {
+type SettingsScreenProps = {
+  onBackToHome: () => void;
+};
+
+const SettingsScreen = ({ onBackToHome }: SettingsScreenProps) => {
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
@@ -41,6 +45,10 @@ const SettingsScreen = () => {
           className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4"
           onPress={() => Alert.alert('Settings', 'Settings action will be expanded later.')}>
           <Text className="text-[16px] font-semibold text-white">Update Settings</Text>
+        </Pressable>
+
+        <Pressable className="mt-4 items-center" onPress={onBackToHome}>
+          <Text className="text-[14px] font-semibold text-[#7E7D94]">Back to Home</Text>
         </Pressable>
       </View>
     </SafeAreaView>
