@@ -23,6 +23,19 @@ const SettingsScreen = () => {
             {settingsOptions.length} options available
           </Text>
         </View>
+
+        <View className="mt-4 gap-3">
+          {settingsOptions.map(option => (
+            <View key={option.id} className="rounded-2xl border border-[#E7E7F0] bg-white px-4 py-4">
+              <Text className="text-[13px] font-semibold uppercase tracking-[1px] text-[#8D8CA3]">
+                {option.label}
+              </Text>
+              <Text className="mt-2 text-[17px] font-semibold text-[#29293D]">
+                {option.value}
+              </Text>
+            </View>
+          ))}
+        </View>
       </View>
     </SafeAreaView>
   );
