@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StatusBar, Text, View } from 'react-native';
+import { Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { dailyQuotes } from '../data/quoteData';
 
 const DailyQuoteScreen = () => {
@@ -20,6 +21,28 @@ const DailyQuoteScreen = () => {
           <Text className="mt-6 text-center text-[14px] font-semibold text-[#7E7D94]">
             — {quote.source}
           </Text>
+        </View>
+
+        <View className="mt-8 flex-row items-center justify-center gap-4">
+          <Pressable
+            className="rounded-full bg-[#E7E7F0] p-3"
+            onPress={() =>
+              setCurrentQuoteIndex((prev) => (prev === 0 ? dailyQuotes.length - 1 : prev - 1))
+            }>
+            <ChevronLeft size={20} color="#3D3AE0" />
+          </Pressable>
+
+          <Text className="text-[14px] font-semibold text-[#7E7D94]">
+            {currentQuoteIndex + 1} / {dailyQuotes.length}
+          </Text>
+
+          <Pressable
+            className="rounded-full bg-[#E7E7F0] p-3"
+            onPress={() =>
+              setCurrentQuoteIndex((prev) => (prev === dailyQuotes.length - 1 ? 0 : prev + 1))
+            }>
+            <ChevronRight size={20} color="#3D3AE0" />
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
