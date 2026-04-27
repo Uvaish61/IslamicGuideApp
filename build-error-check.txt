@@ -1,0 +1,563 @@
+﻿.\gradlew.bat : 
+At line:1 char:1
++ .\gradlew.bat app:assembleDebug --quiet 2>&1 | Out-File -FilePath ..\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task 
+':react-native-worklets:buildCMakeDebug[arm64-v8a][worklets]'.
+> com.android.ide.common.process.ProcessException: ninja: Entering directory `G
+:\self\IslamicGuideApp\node_modules\react-native-worklets\android\.cxx\Debug\4k
+6v3i5n\arm64-v8a'
+  [0/2] Re-checking globbed directories...
+  [1/1] Linking CXX shared library 
+..\..\..\..\build\intermediates\cxx\Debug\4k6v3i5n\obj\arm64-v8a\libworklets.so
+  FAILED: ../../../../build/intermediates/cxx/Debug/4k6v3i5n/obj/arm64-v8a/libw
+orklets.so 
+  cmd.exe /C "cd . && C:\Users\OWAISK~1\AppData\Local\Android\Sdk\ndk\271~1.122
+\TOOLCH~1\llvm\prebuilt\WINDOW~1\bin\CLANG_~1.EXE 
+--target=aarch64-none-linux-android24 --sysroot="C:/Users/owais khan/AppData/Lo
+cal/Android/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysro
+ot" -fPIC -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables 
+-fstack-protector-strong -no-canonical-prefixes -D__BIONIC_NO_PAGE_SIZE_MACRO 
+-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   
+-DREACT_NATIVE_MINOR_VERSION=84    -DWORKLETS_VERSION=0.8.1    -DWORKLETS_FEATU
+RE_FLAGS="[RUNTIME_TEST_FLAG:false][FETCH_PREVIEW_ENABLED:false][IOS_DYNAMIC_FR
+AMERATE_ENABLED:true]" -fno-omit-frame-pointer -fstack-protector-all 
+-DJS_RUNTIME_HERMES=1 -DHERMES_ENABLE_DEBUGGER=1 -fno-limit-debug-info  
+-Wl,-z,max-page-size=16384 -Wl,--build-id=sha1 -Wl,--no-rosegment 
+-Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined 
+-Qunused-arguments -shared -Wl,-soname,libworklets.so -o ..\..\..\..\build\inte
+rmediates\cxx\Debug\4k6v3i5n\obj\arm64-v8a\libworklets.so 
+@CMakeFiles\worklets.rsp  && cd ."
+  ld.lld: error: undefined symbol: std::__ndk1::mutex::~mutex()
+  >>> referenced by WorkletRuntimeRegistry.cpp:0 (G:/self/IslamicGuideApp/node_
+modules/react-native-worklets/Common/cpp/worklets/Registries/WorkletRuntimeRegi
+stry.cpp:0)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Registries/WorkletRuntimeRegistry.c
+pp.o:(__cxx_global_var_init.1)
+  >>> referenced by WorkletRuntimeRegistry.cpp:0 (G:/self/IslamicGuideApp/node_
+modules/react-native-worklets/Common/cpp/worklets/Registries/WorkletRuntimeRegi
+stry.cpp:0)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Registries/WorkletRuntimeRegistry.c
+pp.o:(__cxx_global_var_init.1)
+  >>> referenced by ThreadSafeQueue.h:16 (G:/self/IslamicGuideApp/node_modules/
+react-native-worklets/android/../Common/cpp/worklets/Tools/ThreadSafeQueue.h:16
+)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Tools/UIScheduler.cpp.o:(worklets::
+ThreadSafeQueue<std::__ndk1::function<void ()>>::~ThreadSafeQueue())
+  >>> referenced 11 more times
+  
+  ld.lld: error: undefined symbol: std::__ndk1::mutex::lock()
+  >>> referenced by unique_lock.h:41 (C:/Users/owais khan/AppData/Local/Android
+/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/incl
+ude/c++/v1/__mutex/unique_lock.h:41)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(std::
+__ndk1::unique_lock<std::__ndk1::mutex>::unique_lock[abi:ne180000](std::__ndk1:
+:mutex&))
+  >>> referenced by lock_guard.h:35 (C:/Users/owais khan/AppData/Local/Android/
+Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/inclu
+de/c++/v1/__mutex/lock_guard.h:35)
+  >>>               CMakeFiles/worklets.dir/1c5242be50e322e2aecfdac3285432ba/re
+act-native-worklets/Common/cpp/worklets/AnimationFrameQueue/AnimationFrameBatch
+inator.cpp.o:(std::__ndk1::lock_guard<std::__ndk1::mutex>::lock_guard[abi:ne180
+000](std::__ndk1::mutex&))
+  >>> referenced by RuntimeManager.cpp:86 (G:/self/IslamicGuideApp/node_modules
+/react-native-worklets/Common/cpp/worklets/WorkletRuntime/RuntimeManager.cpp:86
+)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/WorkletRuntime/RuntimeManager.cpp.o
+:(worklets::RuntimeManager::pause())
+  
+  ld.lld: error: undefined symbol: std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>>::~basic_string()
+  >>> referenced by WorkletsVersion.cpp:25 (G:/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Tools/WorkletsVersion.cpp:25)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Tools/WorkletsVersion.cpp.o:(workle
+ts::injectWorkletsCppVersion(facebook::jsi::Runtime&))
+  >>> referenced by JSIWorkletsModuleProxy.cpp:72 (G:/self/IslamicGuideApp/node
+_modules/react-native-worklets/Common/cpp/worklets/NativeModules/JSIWorkletsMod
+uleProxy.cpp:72)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/NativeModules/JSIWorkletsModuleProx
+y.cpp.o:(worklets::runOnRuntimeSync(facebook::jsi::Runtime&, 
+facebook::jsi::Value const&, facebook::jsi::Value const&))
+  >>> referenced by WorkletsVersion.cpp:25 (G:/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Tools/WorkletsVersion.cpp:25)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Tools/WorkletsVersion.cpp.o:(workle
+ts::injectWorkletsCppVersion(facebook::jsi::Runtime&))
+  >>> referenced 433 more times
+  
+  ld.lld: error: undefined symbol: 
+std::__ndk1::condition_variable::notify_one()
+  >>> referenced by ThreadSafeQueue.h:32 (G:/self/IslamicGuideApp/node_modules/
+react-native-worklets/android/../Common/cpp/worklets/Tools/ThreadSafeQueue.h:32
+)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Tools/UIScheduler.cpp.o:(worklets::
+ThreadSafeQueue<std::__ndk1::function<void 
+()>>::push(std::__ndk1::function<void ()>&&))
+  >>> referenced by ThreadSafeQueue.h:39 (G:/self/IslamicGuideApp/node_modules/
+react-native-worklets/android/../Common/cpp/worklets/Tools/ThreadSafeQueue.h:39
+)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Tools/UIScheduler.cpp.o:(worklets::
+ThreadSafeQueue<std::__ndk1::function<void ()>>::empty() const)
+  >>> referenced by AsyncQueueImpl.cpp:60 (G:/self/IslamicGuideApp/node_modules
+/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp:60)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(workl
+ets::AsyncQueueImpl::push(std::__ndk1::function<void ()>&&))
+  >>> referenced 1 more times
+  
+  ld.lld: error: undefined symbol: __cxa_allocate_exception
+  >>> referenced by StableApi.cpp:82 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:82)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by StableApi.cpp:84 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:84)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by RecoverableError.h:41 (G:/self/IslamicGuideApp/node_modules
+/react-native/ReactCommon/cxxreact/RecoverableError.h:41)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/JScri
+ptBufferWrapper.cpp.o:(void facebook::react::RecoverableError::runRethrowingAsR
+ecoverable<std::__ndk1::system_error>(std::__ndk1::function<void ()>))
+  >>> referenced 56 more times
+  
+  ld.lld: error: undefined symbol: std::runtime_error::runtime_error(char 
+const*)
+  >>> referenced by StableApi.cpp:82 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:82)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by StableApi.cpp:84 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:84)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by StableApi.cpp:86 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:86)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced 6 more times
+  
+  ld.lld: error: undefined symbol: typeinfo for std::runtime_error
+  >>> referenced by StableApi.cpp:82 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:82)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by StableApi.cpp:82 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:82)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by StableApi.cpp:84 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:84)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced 55 more times
+  
+  ld.lld: error: undefined symbol: std::runtime_error::~runtime_error()
+  >>> referenced by StableApi.cpp:82 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:82)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by StableApi.cpp:82 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:82)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by StableApi.cpp:84 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:84)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced 55 more times
+  
+  ld.lld: error: undefined symbol: __cxa_throw
+  >>> referenced by StableApi.cpp:82 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:82)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by RecoverableError.h:41 (G:/self/IslamicGuideApp/node_modules
+/react-native/ReactCommon/cxxreact/RecoverableError.h:41)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/JScri
+ptBufferWrapper.cpp.o:(void facebook::react::RecoverableError::runRethrowingAsR
+ecoverable<std::__ndk1::system_error>(std::__ndk1::function<void ()>))
+  >>> referenced by StableApi.cpp:84 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:84)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced 56 more times
+  
+  ld.lld: error: undefined symbol: __cxa_free_exception
+  >>> referenced by StableApi.cpp:82 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:82)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced by RecoverableError.h:41 (G:/self/IslamicGuideApp/node_modules
+/react-native/ReactCommon/cxxreact/RecoverableError.h:41)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/JScri
+ptBufferWrapper.cpp.o:(void facebook::react::RecoverableError::runRethrowingAsR
+ecoverable<std::__ndk1::system_error>(std::__ndk1::function<void ()>))
+  >>> referenced by StableApi.cpp:84 (G:/self/IslamicGuideApp/node_modules/reac
+t-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp:84)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Compat/StableApi.cpp.o:(worklets::e
+xtractSerializable(facebook::jsi::Runtime&, facebook::jsi::Value const&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&, worklets::Serializable::ValueType))
+  >>> referenced 50 more times
+  
+  ld.lld: error: undefined symbol: std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>>::basic_string(std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>> const&)
+  >>> referenced by pair.h:234 (C:/Users/owais khan/AppData/Local/Android/Sdk/n
+dk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c+
++/v1/__utility/pair.h:234)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Registries/EventHandlerRegistry.cpp
+.o:(std::__ndk1::pair<int, std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>>>::pair[abi:ne180000]<unsigned long, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>>, 0>(std::__ndk1::pair<unsigned long, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>>> const&))
+  >>> referenced by WorkletsModule.cpp:92 (G:/self/IslamicGuideApp/node_modules
+/react-native-worklets/android/src/main/cpp/worklets/android/WorkletsModule.cpp
+:92)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Workl
+etsModule.cpp.o:(worklets::WorkletsModule::initHybrid(facebook::jni::alias_ref<
+facebook::jni::detail::JTypeFor<facebook::jni::HybridClass<worklets::WorkletsMo
+dule, facebook::jni::detail::BaseHybridClass>::JavaPart, 
+facebook::jni::JObject, void>::_javaobject*>, unsigned char, long, facebook::jn
+i::alias_ref<facebook::jni::detail::JTypeFor<facebook::react::JavaMessageQueueT
+hread, facebook::jni::JObject, void>::_javaobject*>, facebook::jni::alias_ref<f
+acebook::jni::detail::JTypeFor<facebook::jni::HybridClass<facebook::react::Call
+InvokerHolder, facebook::jni::detail::BaseHybridClass>::JavaPart, 
+facebook::jni::JObject, void>::_javaobject*>, facebook::jni::alias_ref<facebook
+::jni::detail::JTypeFor<facebook::jni::HybridClass<worklets::AndroidUIScheduler
+, facebook::jni::detail::BaseHybridClass>::JavaPart, facebook::jni::JObject, 
+void>::_javaobject*>, facebook::jni::alias_ref<facebook::jni::detail::JTypeFor<
+facebook::jni::HybridClass<worklets::JScriptBufferWrapper, 
+facebook::jni::detail::BaseHybridClass>::JavaPart, facebook::jni::JObject, 
+void>::_javaobject*>))
+  >>> referenced by AsyncQueueImpl.cpp:34 (G:/self/IslamicGuideApp/node_modules
+/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp:34)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(workl
+ets::AsyncQueueImpl::AsyncQueueImpl(std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>> const&))
+  >>> referenced 36 more times
+  
+  ld.lld: error: undefined symbol: std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>>::__init(char 
+const*, unsigned long)
+  >>> referenced by string:954 (C:/Users/owais khan/AppData/Local/Android/Sdk/n
+dk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c+
++/v1/string:954)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/NativeModules/JSIWorkletsModuleProx
+y.cpp.o:(std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>>::basic_string[abi:ne180000]<0>(char const*))
+  >>> referenced by string:971 (C:/Users/owais khan/AppData/Local/Android/Sdk/n
+dk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c+
++/v1/string:971)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Andro
+idUIScheduler.cpp.o:(std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>>::basic_string[abi:ne180000](char const*, 
+unsigned long))
+  >>> referenced by string:1061 (C:/Users/owais khan/AppData/Local/Android/Sdk/
+ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c
+++/v1/string:1061)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Tools/JSISerializer.cpp.o:(std::__n
+dk1::basic_string<char, std::__ndk1::char_traits<char>, std::__ndk1::allocator<
+char>>::basic_string<std::__ndk1::basic_string_view<char, 
+std::__ndk1::char_traits<char>>, 0>(std::__ndk1::basic_string_view<char, 
+std::__ndk1::char_traits<char>> const&, std::__ndk1::allocator<char> const&))
+  
+  ld.lld: error: undefined symbol: operator new(unsigned long)
+  >>> referenced by Hybrid.h:226 (C:/gradle-cache/caches/9.0.0/transforms/6cb94
+eb4240b26bae55579cb79d8f81a/transformed/fbjni-0.7.0/prefab/modules/fbjni/includ
+e/fbjni/detail/Hybrid.h:226)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/JScri
+ptBufferWrapper.cpp.o:(facebook::jni::basic_strong_ref<facebook::jni::detail::H
+ybridData, facebook::jni::LocalReferenceAllocator> 
+facebook::jni::HybridClass<worklets::JScriptBufferWrapper, facebook::jni::detai
+l::BaseHybridClass>::makeCxxInstance<std::__ndk1::shared_ptr<worklets::ScriptBu
+ffer>, std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> 
+const&>(std::__ndk1::shared_ptr<worklets::ScriptBuffer>&&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&))
+  >>> referenced by Hybrid.h:226 (C:/gradle-cache/caches/9.0.0/transforms/6cb94
+eb4240b26bae55579cb79d8f81a/transformed/fbjni-0.7.0/prefab/modules/fbjni/includ
+e/fbjni/detail/Hybrid.h:226)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Andro
+idUIScheduler.cpp.o:(facebook::jni::basic_strong_ref<facebook::jni::detail::Hyb
+ridData, facebook::jni::LocalReferenceAllocator> 
+facebook::jni::HybridClass<worklets::AndroidUIScheduler, facebook::jni::detail:
+:BaseHybridClass>::makeCxxInstance<facebook::jni::alias_ref<facebook::jni::deta
+il::JTypeFor<facebook::jni::HybridClass<worklets::AndroidUIScheduler, 
+facebook::jni::detail::BaseHybridClass>::JavaPart, facebook::jni::JObject, void
+>::_javaobject*>&>(facebook::jni::alias_ref<facebook::jni::detail::JTypeFor<fac
+ebook::jni::HybridClass<worklets::AndroidUIScheduler, 
+facebook::jni::detail::BaseHybridClass>::JavaPart, facebook::jni::JObject, 
+void>::_javaobject*>&))
+  >>> referenced by thread.h:206 (C:/Users/owais khan/AppData/Local/Android/Sdk
+/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/
+c++/v1/__thread/thread.h:206)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(std::
+__ndk1::thread::thread<worklets::AsyncQueueImpl::AsyncQueueImpl(std::__ndk1::ba
+sic_string<char, std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>> 
+const&)::$_0, 
+void>(worklets::AsyncQueueImpl::AsyncQueueImpl(std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>> const&)::$_0&&))
+  >>> referenced 43 more times
+  
+  ld.lld: error: undefined symbol: std::__ndk1::condition_variable::wait(std::_
+_ndk1::unique_lock<std::__ndk1::mutex>&)
+  >>> referenced by condition_variable.h:146 (C:/Users/owais khan/AppData/Local
+/Android/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/
+usr/include/c++/v1/__condition_variable/condition_variable.h:146)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(void 
+std::__ndk1::condition_variable::wait<worklets::AsyncQueueImpl::runLoop(std::__
+ndk1::shared_ptr<worklets::AsyncQueueState> 
+const&)::$_0>(std::__ndk1::unique_lock<std::__ndk1::mutex>&, worklets::AsyncQue
+ueImpl::runLoop(std::__ndk1::shared_ptr<worklets::AsyncQueueState> 
+const&)::$_0))
+  >>> referenced by ThreadSafeQueue.h:21 (G:/self/IslamicGuideApp/node_modules/
+react-native-worklets/android/../Common/cpp/worklets/Tools/ThreadSafeQueue.h:21
+)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/Tools/UIScheduler.cpp.o:(worklets::
+ThreadSafeQueue<std::__ndk1::function<void ()>>::pop())
+  >>> referenced by condition_variable.h:146 (C:/Users/owais khan/AppData/Local
+/Android/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/
+usr/include/c++/v1/__condition_variable/condition_variable.h:146)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/SharedItems/SynchronizableAccess.cp
+p.o:(void std::__ndk1::condition_variable::wait<worklets::SynchronizableAccess:
+:getBlockingBefore()::$_0>(std::__ndk1::unique_lock<std::__ndk1::mutex>&, 
+worklets::SynchronizableAccess::getBlockingBefore()::$_0))
+  >>> referenced 3 more times
+  
+  ld.lld: error: undefined symbol: operator delete(void*)
+  >>> referenced by Hybrid.h:225 (C:/gradle-cache/caches/9.0.0/transforms/6cb94
+eb4240b26bae55579cb79d8f81a/transformed/fbjni-0.7.0/prefab/modules/fbjni/includ
+e/fbjni/detail/Hybrid.h:225)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/JScri
+ptBufferWrapper.cpp.o:(facebook::jni::basic_strong_ref<facebook::jni::detail::H
+ybridData, facebook::jni::LocalReferenceAllocator> 
+facebook::jni::HybridClass<worklets::JScriptBufferWrapper, facebook::jni::detai
+l::BaseHybridClass>::makeCxxInstance<std::__ndk1::shared_ptr<worklets::ScriptBu
+ffer>, std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> 
+const&>(std::__ndk1::shared_ptr<worklets::ScriptBuffer>&&, 
+std::__ndk1::basic_string<char, std::__ndk1::char_traits<char>, 
+std::__ndk1::allocator<char>> const&))
+  >>> referenced by function.h:250 (C:/Users/owais khan/AppData/Local/Android/S
+dk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/includ
+e/c++/v1/__functional/function.h:250)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Workl
+etsOnLoad.cpp.o:(std::__ndk1::__function::__func<JNI_OnLoad::$_0, 
+std::__ndk1::allocator<JNI_OnLoad::$_0>, void ()>::~__func())
+  >>> referenced by thread.h:206 (C:/Users/owais khan/AppData/Local/Android/Sdk
+/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/
+c++/v1/__thread/thread.h:206)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(std::
+__ndk1::thread::thread<worklets::AsyncQueueImpl::AsyncQueueImpl(std::__ndk1::ba
+sic_string<char, std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>> 
+const&)::$_0, 
+void>(worklets::AsyncQueueImpl::AsyncQueueImpl(std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>> const&)::$_0&&))
+  >>> referenced 278 more times
+  
+  ld.lld: error: undefined symbol: __cxa_guard_acquire
+  >>> referenced by Hybrid.h:336 (C:/gradle-cache/caches/9.0.0/transforms/6cb94
+eb4240b26bae55579cb79d8f81a/transformed/fbjni-0.7.0/prefab/modules/fbjni/includ
+e/fbjni/detail/Hybrid.h:336)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Workl
+etsModule.cpp.o:(facebook::jni::HybridClass<facebook::react::CallInvokerHolder,
+ facebook::jni::detail::BaseHybridClass>::JavaPart::cthis() const)
+  >>> referenced by Hybrid.h:336 (C:/gradle-cache/caches/9.0.0/transforms/6cb94
+eb4240b26bae55579cb79d8f81a/transformed/fbjni-0.7.0/prefab/modules/fbjni/includ
+e/fbjni/detail/Hybrid.h:336)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Workl
+etsModule.cpp.o:(facebook::jni::HybridClass<worklets::JScriptBufferWrapper, 
+facebook::jni::detail::BaseHybridClass>::JavaPart::cthis() const)
+  >>> referenced by AndroidUIScheduler.cpp:40 (G:/self/IslamicGuideApp/node_mod
+ules/react-native-worklets/android/src/main/cpp/worklets/android/AndroidUISched
+uler.cpp:40)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Andro
+idUIScheduler.cpp.o:(worklets::AndroidUIScheduler::scheduleTriggerOnUI())
+  >>> referenced 19 more times
+  
+  ld.lld: error: undefined symbol: __cxa_guard_release
+  >>> referenced by Hybrid.h:336 (C:/gradle-cache/caches/9.0.0/transforms/6cb94
+eb4240b26bae55579cb79d8f81a/transformed/fbjni-0.7.0/prefab/modules/fbjni/includ
+e/fbjni/detail/Hybrid.h:336)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Workl
+etsModule.cpp.o:(facebook::jni::HybridClass<facebook::react::CallInvokerHolder,
+ facebook::jni::detail::BaseHybridClass>::JavaPart::cthis() const)
+  >>> referenced by Hybrid.h:336 (C:/gradle-cache/caches/9.0.0/transforms/6cb94
+eb4240b26bae55579cb79d8f81a/transformed/fbjni-0.7.0/prefab/modules/fbjni/includ
+e/fbjni/detail/Hybrid.h:336)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Workl
+etsModule.cpp.o:(facebook::jni::HybridClass<worklets::JScriptBufferWrapper, 
+facebook::jni::detail::BaseHybridClass>::JavaPart::cthis() const)
+  >>> referenced by AndroidUIScheduler.cpp:40 (G:/self/IslamicGuideApp/node_mod
+ules/react-native-worklets/android/src/main/cpp/worklets/android/AndroidUISched
+uler.cpp:40)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Andro
+idUIScheduler.cpp.o:(worklets::AndroidUIScheduler::scheduleTriggerOnUI())
+  >>> referenced 19 more times
+  
+  ld.lld: error: undefined symbol: std::__ndk1::__throw_system_error(int, char 
+const*)
+  >>> referenced by unique_lock.h:159 (C:/Users/owais khan/AppData/Local/Androi
+d/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/inc
+lude/c++/v1/__mutex/unique_lock.h:159)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(std::
+__ndk1::unique_lock<std::__ndk1::mutex>::unlock())
+  >>> referenced by thread.h:213 (C:/Users/owais khan/AppData/Local/Android/Sdk
+/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/
+c++/v1/__thread/thread.h:213)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(std::
+__ndk1::thread::thread<worklets::AsyncQueueImpl::AsyncQueueImpl(std::__ndk1::ba
+sic_string<char, std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>> 
+const&)::$_0, 
+void>(worklets::AsyncQueueImpl::AsyncQueueImpl(std::__ndk1::basic_string<char, 
+std::__ndk1::char_traits<char>, std::__ndk1::allocator<char>> const&)::$_0&&))
+  >>> referenced by thread.h:213 (C:/Users/owais khan/AppData/Local/Android/Sdk
+/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/
+c++/v1/__thread/thread.h:213)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/EventLoop.cpp.o:(std::__ndk
+1::thread::thread<worklets::EventLoop::run()::$_0, 
+void>(worklets::EventLoop::run()::$_0&&))
+  
+  ld.lld: error: undefined symbol: __cxa_guard_abort
+  >>> referenced by Hybrid.h:336 (C:/gradle-cache/caches/9.0.0/transforms/6cb94
+eb4240b26bae55579cb79d8f81a/transformed/fbjni-0.7.0/prefab/modules/fbjni/includ
+e/fbjni/detail/Hybrid.h:336)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Workl
+etsModule.cpp.o:(facebook::jni::HybridClass<facebook::react::CallInvokerHolder,
+ facebook::jni::detail::BaseHybridClass>::JavaPart::cthis() const)
+  >>> referenced by Hybrid.h:336 (C:/gradle-cache/caches/9.0.0/transforms/6cb94
+eb4240b26bae55579cb79d8f81a/transformed/fbjni-0.7.0/prefab/modules/fbjni/includ
+e/fbjni/detail/Hybrid.h:336)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Workl
+etsModule.cpp.o:(facebook::jni::HybridClass<worklets::JScriptBufferWrapper, 
+facebook::jni::detail::BaseHybridClass>::JavaPart::cthis() const)
+  >>> referenced by AndroidUIScheduler.cpp:40 (G:/self/IslamicGuideApp/node_mod
+ules/react-native-worklets/android/src/main/cpp/worklets/android/AndroidUISched
+uler.cpp:40)
+  >>>               CMakeFiles/worklets.dir/src/main/cpp/worklets/android/Andro
+idUIScheduler.cpp.o:(worklets::AndroidUIScheduler::scheduleTriggerOnUI())
+  >>> referenced 19 more times
+  
+  ld.lld: error: undefined symbol: std::__ndk1::mutex::unlock()
+  >>> referenced by unique_lock.h:160 (C:/Users/owais khan/AppData/Local/Androi
+d/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/inc
+lude/c++/v1/__mutex/unique_lock.h:160)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(std::
+__ndk1::unique_lock<std::__ndk1::mutex>::unlock())
+  >>> referenced by unique_lock.h:63 (C:/Users/owais khan/AppData/Local/Android
+/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/incl
+ude/c++/v1/__mutex/unique_lock.h:63)
+  >>>               CMakeFiles/worklets.dir/G_/self/IslamicGuideApp/node_module
+s/react-native-worklets/Common/cpp/worklets/RunLoop/AsyncQueueImpl.cpp.o:(std::
+__ndk1::unique_lock<std::__ndk1::mutex>::~unique_lock[abi:ne180000]())
+  >>> referenced by lock_guard.h:41 (C:/Users/owais khan/AppData/Local/Android/
+Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/inclu
+de/c++/v1/__mutex/lock_guard.h:41)
+  >>>               CMakeFiles/worklets.dir/1c5242be50e322e2aecfdac3285432ba/re
+act-native-worklets/Common/cpp/worklets/AnimationFrameQueue/AnimationFrameBatch
+inator.cpp.o:(std::__ndk1::lock_guard<std::__ndk1::mutex>::~lock_guard[abi:ne18
+0000]())
+  >>> referenced 1 more times
+  
+  ld.lld: error: too many errors emitted, stopping now (use --error-limit=0 to 
+see all errors)
+  CLANG_~1: error: linker command failed with exit code 1 (use -v to see 
+invocation)
+  ninja: build stopped: subcommand failed.
+  
+  C++ build system [build] failed while executing:
+      @echo off
+      "C:\\Users\\owais 
+khan\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe" ^
+        -C ^
+        "G:\\self\\IslamicGuideApp\\node_modules\\react-native-worklets\\androi
+d\\.cxx\\Debug\\4k6v3i5n\\arm64-v8a" ^
+        worklets
+    from G:\self\IslamicGuideApp\node_modules\react-native-worklets\android
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (Powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 5s
