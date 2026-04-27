@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeft, ChevronRight } from 'lucide-react-native';
+import { ChevronLeft, ChevronRight, Heart } from 'lucide-react-native';
 import { dailyQuotes } from '../data/quoteData';
 
 const DailyQuoteScreen = () => {
