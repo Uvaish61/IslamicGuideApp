@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import DailyQuoteScreen from './src/screens/DailyQuoteScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
@@ -68,17 +70,19 @@ const App = () => {
 
   // screens with bottom nav
   return (
-    <>
-      {screen === 'home' && (
-        <HomeScreen onOpenProfile={() => setScreen('profile')} onOpenDailyQuote={() => setScreen('daily-quote')} onOpenSettings={() => setScreen('settings')} />
-      )}
-      {screen === 'profile' && <ProfileScreen onBackToHome={() => setScreen('home')} />}
-      {screen === 'settings' && <SettingsScreen onBackToHome={() => setScreen('home')} />}
-      {screen === 'daily-quote' && <DailyQuoteScreen onBackToHome={() => setScreen('home')} />}
-      {screen === 'favorites' && <FavoritesScreen />}
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#ECEBFA' }}>
+      <View style={{ flex: 1 }}>
+        {screen === 'home' && (
+          <HomeScreen onOpenProfile={() => setScreen('profile')} onOpenDailyQuote={() => setScreen('daily-quote')} onOpenSettings={() => setScreen('settings')} />
+        )}
+        {screen === 'profile' && <ProfileScreen onBackToHome={() => setScreen('home')} />}
+        {screen === 'settings' && <SettingsScreen onBackToHome={() => setScreen('home')} />}
+        {screen === 'daily-quote' && <DailyQuoteScreen onBackToHome={() => setScreen('home')} />}
+        {screen === 'favorites' && <FavoritesScreen />}
+      </View>
 
       <BottomNav active={getActiveTab()} onTabPress={handleTabPress} />
-    </>
+    </SafeAreaView>
   );
 };
 
