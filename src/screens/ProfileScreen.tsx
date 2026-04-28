@@ -1,5 +1,5 @@
-import React from 'react';
-import { Alert, Pressable, StatusBar, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Modal, Pressable, StatusBar, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { profileData } from '../data/profileData';
 
@@ -8,13 +8,38 @@ type ProfileScreenProps = {
 };
 
 const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
-  const initials = profileData.name
-    .split(' ')
-    .filter(Boolean)
-    .map(part => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
+  const [editMode, setEditMode] = useState(false);
+  const [editName, setEditName] = useState(profileData.name);
+  const [editEmail, setEditEmail] = useState(profileData.email);
+
+  const initials = editMode
+    ? editName
+        .split(' ')
+        .filter(Boolean)
+        .map(part => part[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase()
+    : profileData.name
+        .split(' ')
+        .filter(Boolean)
+        .map(part => part[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase();
+
+  const handleSaveProfile = () => {
+    if (!editName.trim()) {
+      Alert.alert('Error', 'Name cannot be empty');
+      return;
+    }
+    if (!editEmail.trim()) {
+      Alert.alert('Error', 'Email cannot be empty');
+      return;
+    }
+    Alert.alert('Success', 'Profile updated successfully!');
+    setEditMode(false);
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
@@ -53,7 +78,7 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
         <View className="mt-8 gap-3">
           <Pressable
             className="items-center rounded-2xl bg-[#5548EF] py-4"
-            onPress={() => Alert.alert('Edit Profile', 'Edit profile flow will be added in the next step.')}>
+            onPress={() => setEditMode(true)}>
             <Text className="text-[16px] font-semibold text-white">Edit Profile</Text>
           </Pressable>
 
@@ -62,7 +87,59 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
           </Pressable>
         </View>
       </View>
-    </SafeAreaView>
+
+      {/* Edit Profile Modal */}
+      <Modal visible={editMode} transparent animationType="fade">
+        <View className="flex-1 items-center justify-center bg-black/50">
+          <View className="w-5/6 rounded-3xl bg-white p-6">
+            <Text className="text-2xl font-extrabold text-[#29293D]">Edit Profile</Text>
+
+            <View className="mt-6 gap-4">
+              {/* Name Input */}
+              <View>
+                <Text className="text-sm font-semibold text-[#8D8CA3]">Full Name</Text>
+                <TextInput
+                  className="mt-2 rounded-xl border border-[#E7E7F0] bg-[#F8F8FC] px-4 py-3 text-[#29293D]"
+                  value={editName}
+                  onChangeText={setEditName}
+                  placeholder="Enter your name"
+                />
+              </View>
+
+              {/* Email Input */}
+              <View>
+                <Text className="text-sm font-semibold text-[#8D8CA3]">Email Address</Text>
+                <TextInput
+                  className="mt-2 rounded-xl border border-[#E7E7F0] bg-[#F8F8FC] px-4 py-3 text-[#29293D]"
+                  value={editEmail}
+                  onChangeText={setEditEmail}
+                  placeholder="Enter your email"
+                  keyboardType="email-address"
+                />
+              </View>
+            </View>
+
+            {/* Modal Buttons */}
+            <View className="mt-8 gap-3">
+              <Pressable
+                className="items-center rounded-2xl bg-[#5548EF] py-3"
+                onPress={handleSaveProfile}>
+                <Text className="text-[16px] font-semibold text-white">Save Changes</Text>
+              </Pressable>
+
+              <Pressable
+                className="items-center rounded-2xl border border-[#E7E7F0] bg-white py-3"
+                onPress={() => {
+                  setEditMode(false);
+                  setEditName(profileData.name);
+                  setEditEmail(profileData.email);
+                }}>
+                <Text className="text-[16px] font-semibold text-[#29293D]">Cancel</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
   );
 };
 
