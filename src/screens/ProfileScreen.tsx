@@ -41,6 +41,24 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
     setEditMode(false);
   };
 
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+        {
+          text: 'Logout',
+          onPress: () => {
+            Alert.alert('Logged Out', 'You have been logged out successfully.');
+            onBackToHome();
+          },
+          style: 'destructive',
+        },
+      ]
+    );
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
@@ -126,11 +144,17 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
         </View>
 
         {/* Action Buttons */}
-        <View className="mt-8 gap-3">
+        <View className="mt-8 gap-3 pb-8">
           <Pressable
             className="items-center rounded-2xl bg-[#5548EF] py-4"
             onPress={() => setEditMode(true)}>
             <Text className="text-[16px] font-semibold text-white">Edit Profile</Text>
+          </Pressable>
+
+          <Pressable 
+            className="items-center rounded-2xl border border-[#FF6B6B] bg-[#FFE7E7] py-4"
+            onPress={handleLogout}>
+            <Text className="text-[16px] font-semibold text-[#FF6B6B]">Logout</Text>
           </Pressable>
 
           <Pressable className="items-center rounded-2xl border border-[#E7E7F0] bg-white py-4" onPress={onBackToHome}>
