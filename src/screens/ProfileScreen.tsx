@@ -93,6 +93,38 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
           </View>
         </View>
 
+        {/* Streak & Achievements Section */}
+        <View className="mt-8 gap-3">
+          {/* Reading Streak */}
+          <View className="rounded-2xl border border-[#E7E7F0] bg-white p-4">
+            <View className="flex-row items-center justify-between">
+              <View>
+                <Text className="text-sm font-semibold text-[#8D8CA3]">Reading Streak</Text>
+                <Text className="mt-2 text-2xl font-extrabold text-[#5548EF]">7 days 🔥</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Achievements */}
+          <View>
+            <Text className="mb-3 text-sm font-semibold text-[#8D8CA3]">Achievements</Text>
+            <View className="flex-row gap-2">
+              <View className="flex-1 items-center rounded-2xl border border-[#E7E7F0] bg-white p-4">
+                <Text className="text-2xl">⭐</Text>
+                <Text className="mt-2 text-center text-xs font-semibold text-[#29293D]">Quote Master</Text>
+              </View>
+              <View className="flex-1 items-center rounded-2xl border border-[#E7E7F0] bg-white p-4">
+                <Text className="text-2xl">❤️</Text>
+                <Text className="mt-2 text-center text-xs font-semibold text-[#29293D]">Fav Collector</Text>
+              </View>
+              <View className="flex-1 items-center rounded-2xl border border-[#E7E7F0] bg-white p-4">
+                <Text className="text-2xl">🎯</Text>
+                <Text className="mt-2 text-center text-xs font-semibold text-[#29293D]">Streak Master</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
         {/* Action Buttons */}
         <View className="mt-8 gap-3">
           <Pressable
