@@ -74,6 +74,25 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
           </View>
         </View>
 
+        {/* Statistics Section */}
+        <View className="mt-8 gap-3">
+          <View className="flex-row gap-3">
+            {/* Quotes Read */}
+            <View className="flex-1 rounded-2xl border border-[#E7E7F0] bg-white p-4">
+              <Text className="text-sm font-semibold text-[#8D8CA3]">Quotes Read</Text>
+              <Text className="mt-3 text-3xl font-extrabold text-[#5548EF]">42</Text>
+              <Text className="mt-1 text-xs text-[#7E7D94]">this month</Text>
+            </View>
+
+            {/* Favorites */}
+            <View className="flex-1 rounded-2xl border border-[#E7E7F0] bg-white p-4">
+              <Text className="text-sm font-semibold text-[#8D8CA3]">Favorites</Text>
+              <Text className="mt-3 text-3xl font-extrabold text-[#5548EF]">18</Text>
+              <Text className="mt-1 text-xs text-[#7E7D94]">saved</Text>
+            </View>
+          </View>
+        </View>
+
         {/* Action Buttons */}
         <View className="mt-8 gap-3">
           <Pressable
