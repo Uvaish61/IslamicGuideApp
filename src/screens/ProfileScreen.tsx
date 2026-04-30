@@ -221,6 +221,7 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
           </View>
         </View>
       </Modal>
+    </SafeAreaView>
   );
 };
 
