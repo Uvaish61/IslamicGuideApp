@@ -8,10 +8,11 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import FavoritesScreen from './src/screens/FavoritesScreen';
+import TasbeehScreen from './src/screens/TasbeehScreen';
 import BottomNav from './src/components/BottomNav';
 
 const App = () => {
-  const [screen, setScreen] = useState<'login' | 'signup' | 'home' | 'profile' | 'settings' | 'daily-quote' | 'favorites'>('login');
+  const [screen, setScreen] = useState<'login' | 'signup' | 'home' | 'profile' | 'settings' | 'daily-quote' | 'favorites' | 'tasbeeh'>('login');
 
   const getActiveTab = () => {
     switch (screen) {
@@ -25,6 +26,8 @@ const App = () => {
         return 'profile';
       case 'settings':
         return 'settings';
+      case 'tasbeeh':
+        return 'home';
       default:
         return 'home';
     }
@@ -73,15 +76,21 @@ const App = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: '#ECEBFA' }}>
       <View style={{ flex: 1 }}>
         {screen === 'home' && (
-          <HomeScreen onOpenProfile={() => setScreen('profile')} onOpenDailyQuote={() => setScreen('daily-quote')} onOpenSettings={() => setScreen('settings')} />
+          <HomeScreen
+            onOpenProfile={() => setScreen('profile')}
+            onOpenDailyQuote={() => setScreen('daily-quote')}
+            onOpenSettings={() => setScreen('settings')}
+            onOpenTasbeeh={() => setScreen('tasbeeh')}
+          />
         )}
         {screen === 'profile' && <ProfileScreen onBackToHome={() => setScreen('home')} />}
         {screen === 'settings' && <SettingsScreen onBackToHome={() => setScreen('home')} />}
         {screen === 'daily-quote' && <DailyQuoteScreen onBackToHome={() => setScreen('home')} />}
         {screen === 'favorites' && <FavoritesScreen />}
+        {screen === 'tasbeeh' && <TasbeehScreen onBackToHome={() => setScreen('home')} />}
       </View>
 
-      <BottomNav active={getActiveTab()} onTabPress={handleTabPress} />
+      {screen !== 'tasbeeh' && <BottomNav active={getActiveTab()} onTabPress={handleTabPress} />}
     </SafeAreaView>
   );
 };

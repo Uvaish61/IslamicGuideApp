@@ -6,9 +6,10 @@ type HomeScreenProps = {
   onOpenProfile: () => void;
   onOpenSettings: () => void;
   onOpenDailyQuote: () => void;
+  onOpenTasbeeh: () => void;
 };
 
-const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote }: HomeScreenProps) => {
+const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTasbeeh }: HomeScreenProps) => {
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
@@ -28,6 +29,10 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote }: HomeScr
 
         <Pressable className="mt-3 rounded-2xl border border-[#5548EF] px-5 py-3" onPress={onOpenDailyQuote}>
           <Text className="text-[15px] font-semibold text-[#5548EF]">Daily Quote</Text>
+        </Pressable>
+
+        <Pressable className="mt-3 rounded-2xl bg-[#4ECDC4] px-5 py-3" onPress={onOpenTasbeeh}>
+          <Text className="text-[15px] font-semibold text-white">Tasbeeh Counter</Text>
         </Pressable>
       </View>
     </SafeAreaView>
