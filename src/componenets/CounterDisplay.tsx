@@ -8,6 +8,7 @@ type CounterDisplayProps = {
   targetRange: number;
   progressPercentage: number;
   onIncrement: () => void;
+  onReset: () => void;
 };
 
 const CounterDisplay = ({
@@ -16,6 +17,7 @@ const CounterDisplay = ({
   targetRange,
   progressPercentage,
   onIncrement,
+  onReset,
 }: CounterDisplayProps) => {
   const isCompleted = counter >= targetRange;
 
@@ -66,6 +68,10 @@ const CounterDisplay = ({
         <Text className="text-center text-base font-bold text-white">
           {isCompleted ? 'Range Complete' : 'Tap to Count'}
         </Text>
+      </Pressable>
+
+      <Pressable className="mt-3 rounded-2xl border border-[#E7E7F0] py-4" onPress={onReset}>
+        <Text className="text-center text-base font-bold text-[#29293D]">Reset Counter</Text>
       </Pressable>
     </View>
   );

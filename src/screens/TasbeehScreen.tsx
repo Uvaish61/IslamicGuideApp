@@ -63,6 +63,7 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
           targetRange={getActiveRange()}
           progressPercentage={getProgressPercentage()}
           onIncrement={incrementCounter}
+          onReset={resetCounter}
         />
       </View>
     </SafeAreaView>
