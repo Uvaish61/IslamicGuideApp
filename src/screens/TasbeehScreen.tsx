@@ -54,10 +54,38 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
       <View className="flex-1 px-6 py-6">
         {/* Header with back button */}
         <View className="mb-8 flex-row items-center justify-between">
-          <Text className="text-3xl font-extrabold text-[#29293D]">Tasbeeh Counter</Text>
+          <View>
+            <Text className="text-3xl font-extrabold text-[#29293D]">Tasbeeh Counter</Text>
+            <Text className="mt-1 text-sm font-medium text-[#7E7D94]">Pick a dhikr, set a target, and tap to count.</Text>
+          </View>
           <Pressable onPress={onBackToHome}>
             <Text className="text-base font-semibold text-[#5548EF]">Back</Text>
           </Pressable>
+        </View>
+
+        <View className="mb-6 rounded-3xl bg-[#FFFFFF] px-5 py-4">
+          <Text className="mb-3 text-sm font-semibold text-[#7E7D94]">Choose Tasbeeh</Text>
+          <View className="flex-row flex-wrap gap-2">
+            {tasbeehPhrases.map((phrase) => {
+              const isSelected = selectedPhrase.id === phrase.id;
+
+              return (
+                <Pressable
+                  key={phrase.id}
+                  className={`rounded-full border px-4 py-2 ${
+                    isSelected ? 'bg-[#5548EF]' : 'border-[#E7E7F0] bg-white'
+                  }`}
+                  onPress={() => {
+                    setSelectedPhrase(phrase);
+                    setCounter(0);
+                  }}>
+                  <Text className={`text-sm font-semibold ${isSelected ? 'text-white' : 'text-[#29293D]'}`}>
+                    {phrase.name}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
         </View>
 
         {/* Main content will go here */}
