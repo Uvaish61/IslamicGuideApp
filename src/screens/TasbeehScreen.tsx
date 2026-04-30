@@ -56,6 +56,9 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
           customRange={customRange}
           onCustomRangeChange={setCustomRange}
         />
+
+        {/* Counter section will be added next */}
+        <View className="flex-1" />
       </View>
     </SafeAreaView>
   );
