@@ -9,6 +9,8 @@ type RangeSelectorProps = {
   onToggleCustom: (isCustom: boolean) => void;
   customRange: string;
   onCustomRangeChange: (value: string) => void;
+  onDecreaseRange: () => void;
+  onIncreaseRange: () => void;
 };
 
 const RangeSelector = ({
@@ -18,6 +20,8 @@ const RangeSelector = ({
   onToggleCustom,
   customRange,
   onCustomRangeChange,
+  onDecreaseRange,
+  onIncreaseRange,
 }: RangeSelectorProps) => {
   return (
     <View className="mb-8 rounded-2xl bg-white p-5">
@@ -94,6 +98,20 @@ const RangeSelector = ({
             value={customRange}
             onChangeText={onCustomRangeChange}
           />
+
+          <View className="mt-4 flex-row items-center justify-between gap-3">
+            <Pressable className="flex-1 rounded-xl border border-[#E7E7F0] py-3" onPress={onDecreaseRange}>
+              <Text className="text-center text-lg font-bold text-[#29293D]">−</Text>
+            </Pressable>
+
+            <View className="flex-1 rounded-xl bg-[#F5F4FF] py-3">
+              <Text className="text-center text-sm font-semibold text-[#5548EF]">Adjust Range</Text>
+            </View>
+
+            <Pressable className="flex-1 rounded-xl border border-[#E7E7F0] py-3" onPress={onIncreaseRange}>
+              <Text className="text-center text-lg font-bold text-[#29293D]">+</Text>
+            </Pressable>
+          </View>
         </View>
       )}
     </View>

@@ -28,6 +28,20 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
     setCounter(0);
   };
 
+  const decreaseRange = () => {
+    setCustomRange((currentRange) => {
+      const nextRange = Math.max((parseInt(currentRange) || 33) - 1, 1);
+      return String(nextRange);
+    });
+  };
+
+  const increaseRange = () => {
+    setCustomRange((currentRange) => {
+      const nextRange = Math.max(parseInt(currentRange) || 33, 1) + 1;
+      return String(nextRange);
+    });
+  };
+
   const getProgressPercentage = () => {
     const range = getActiveRange();
     return (counter / range) * 100;
@@ -54,6 +68,8 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
           onToggleCustom={setIsCustomRange}
           customRange={customRange}
           onCustomRangeChange={setCustomRange}
+          onDecreaseRange={decreaseRange}
+          onIncreaseRange={increaseRange}
         />
 
         {/* Counter section will be added next */}
