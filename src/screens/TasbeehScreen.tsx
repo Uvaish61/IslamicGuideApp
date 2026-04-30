@@ -1,14 +1,37 @@
 import React, { useState } from 'react';
 import { Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { tasbeehPhrases, predefinedRanges } from '../data/tasbeehData';
 
 type TasbeehScreenProps = {
   onBackToHome: () => void;
 };
 
 const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
-  const [selectedRange, setSelectedRange] = useState(33); // Default Tasbeeh range
+  const [selectedPhrase, setSelectedPhrase] = useState(tasbeehPhrases[0]); // Default first phrase
+  const [selectedRange, setSelectedRange] = useState(predefinedRanges[0].value); // Default 33
   const [counter, setCounter] = useState(0);
+  const [isCustomRange, setIsCustomRange] = useState(false);
+  const [customRange, setCustomRange] = useState('33');
+
+  // Helper functions
+  const getActiveRange = () => (isCustomRange ? parseInt(customRange) || 33 : selectedRange);
+
+  const incrementCounter = () => {
+    const range = getActiveRange();
+    if (counter < range) {
+      setCounter(counter + 1);
+    }
+  };
+
+  const resetCounter = () => {
+    setCounter(0);
+  };
+
+  const getProgressPercentage = () => {
+    const range = getActiveRange();
+    return (counter / range) * 100;
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
