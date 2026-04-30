@@ -3,6 +3,7 @@ import { Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { tasbeehPhrases, predefinedRanges } from '../data/tasbeehData';
 import RangeSelector from '../componenets/RangeSelector';
+import CounterDisplay from '../componenets/CounterDisplay';
 
 type TasbeehScreenProps = {
   onBackToHome: () => void;
@@ -58,7 +59,12 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
         />
 
         {/* Counter section will be added next */}
-        <View className="flex-1" />
+        <CounterDisplay
+          phrase={selectedPhrase}
+          counter={counter}
+          targetRange={getActiveRange()}
+          progressPercentage={getProgressPercentage()}
+        />
       </View>
     </SafeAreaView>
   );
