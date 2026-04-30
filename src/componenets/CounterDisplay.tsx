@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { TasbeehPhrase } from '../data/tasbeehData';
 
 type CounterDisplayProps = {
@@ -7,6 +7,7 @@ type CounterDisplayProps = {
   counter: number;
   targetRange: number;
   progressPercentage: number;
+  onIncrement: () => void;
 };
 
 const CounterDisplay = ({
@@ -14,6 +15,7 @@ const CounterDisplay = ({
   counter,
   targetRange,
   progressPercentage,
+  onIncrement,
 }: CounterDisplayProps) => {
   const isCompleted = counter >= targetRange;
 
@@ -56,6 +58,15 @@ const CounterDisplay = ({
           <Text className="text-center font-semibold text-[#2E7D32]">✓ Completed!</Text>
         </View>
       )}
+
+      <Pressable
+        className="mt-6 rounded-2xl bg-[#5548EF] py-4"
+        onPress={onIncrement}
+        disabled={isCompleted}>
+        <Text className="text-center text-base font-bold text-white">
+          {isCompleted ? 'Range Complete' : 'Tap to Count'}
+        </Text>
+      </Pressable>
     </View>
   );
 };
