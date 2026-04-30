@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { tasbeehPhrases, predefinedRanges } from '../data/tasbeehData';
+import RangeSelector from '../componenets/RangeSelector';
 
 type TasbeehScreenProps = {
   onBackToHome: () => void;
@@ -47,9 +48,14 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
         </View>
 
         {/* Main content will go here */}
-        <View className="flex-1 items-center justify-center">
-          <Text className="text-base text-[#7E7D94]">Tasbeeh Counter Screen</Text>
-        </View>
+        <RangeSelector
+          selectedRange={selectedRange}
+          onRangeSelect={setSelectedRange}
+          isCustomRange={isCustomRange}
+          onToggleCustom={setIsCustomRange}
+          customRange={customRange}
+          onCustomRangeChange={setCustomRange}
+        />
       </View>
     </SafeAreaView>
   );
