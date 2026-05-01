@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Bell, BookOpen, Heart, MapPin, MoonStar, Settings, UserRound } from 'lucide-react-native';
+import { Bell, BookOpen, Heart, Landmark, MapPin, MoonStar, ScrollText, Settings, UserRound } from 'lucide-react-native';
 
 type HomeScreenProps = {
   onOpenProfile: () => void;
@@ -17,6 +17,36 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
     { id: 'favorites', label: 'Saved', Icon: Heart, tone: '#F7E1E4' },
     { id: 'profile', label: 'Profile', Icon: UserRound, tone: '#E4E3FB' },
     { id: 'settings', label: 'Tools', Icon: Settings, tone: '#E2F1EE' },
+  ] as const;
+
+  const featuredCards = [
+    {
+      id: 'quran',
+      title: 'Quran Companion',
+      subtitle: 'Continue reading with a calm focus view.',
+      label: 'Read Now',
+      Icon: ScrollText,
+      tone: '#EAF0C5',
+      accent: '#62713F',
+    },
+    {
+      id: 'umrah',
+      title: 'Umrah Guide',
+      subtitle: 'A clean journey card for planning essentials.',
+      label: 'Explore',
+      Icon: Landmark,
+      tone: '#F7EBD8',
+      accent: '#8F5D20',
+    },
+    {
+      id: 'zakat',
+      title: 'Zakat Planner',
+      subtitle: 'Organize your yearly giving with clarity.',
+      label: 'Calculate',
+      Icon: Heart,
+      tone: '#E4F1EA',
+      accent: '#3C7A63',
+    },
   ] as const;
 
   return (
@@ -139,6 +169,32 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
           <Pressable className="rounded-2xl bg-[#4ECDC4] px-5 py-3" onPress={onOpenTasbeeh}>
             <Text className="text-[15px] font-semibold text-white">Tasbeeh Counter</Text>
           </Pressable>
+        </View>
+
+        <View className="mb-4">
+          <Text className="mb-3 text-[13px] font-semibold uppercase tracking-[1px] text-[#8C8AA0]">
+            Featured
+          </Text>
+          <View className="flex-row flex-wrap justify-between gap-y-3">
+            {featuredCards.map(({ id, title, subtitle, label, Icon, tone, accent }) => (
+              <View
+                key={id}
+                className="w-[48%] overflow-hidden rounded-[26px] px-4 py-4"
+                style={{ backgroundColor: tone }}>
+                <View className="mb-10 flex-row items-start justify-between">
+                  <View className="h-10 w-10 items-center justify-center rounded-full bg-white/80">
+                    <Icon size={18} color={accent} />
+                  </View>
+                  <View className="h-5 w-5 rounded-full bg-white/60" />
+                </View>
+                <Text className="text-[16px] font-extrabold text-[#29293D]">{title}</Text>
+                <Text className="mt-2 text-[12px] leading-4 text-[#6F6E84]">{subtitle}</Text>
+                <View className="mt-4 self-start rounded-full bg-[#29293D] px-4 py-2">
+                  <Text className="text-[11px] font-semibold text-white">{label}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
         </View>
       </View>
     </SafeAreaView>
