@@ -73,9 +73,10 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
                 </Text>
               </View>
               <Text className="mt-2 text-[26px] font-extrabold leading-8 text-[#29293D]">
+              <Text className="mt-2 text-[28px] font-extrabold leading-9 tracking-[-0.8px] text-[#29293D]">
                 Ramadan Kareem
               </Text>
-              <Text className="mt-3 max-w-[260px] text-[13px] leading-5 text-[#7E7D94]">
+              <Text className="mt-3 max-w-[260px] text-[14px] leading-6 text-[#7E7D94]">
                 A calm space for prayer, reflection, and small daily reminders.
               </Text>
             </View>
@@ -89,10 +90,10 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
 
           <View className="mt-5 flex-row items-center gap-3">
             <View className="rounded-full bg-[#EEF4DC] px-3 py-1.5">
-              <Text className="text-[11px] font-semibold text-[#6F8B42]">Today</Text>
+              <Text className="text-[11px] font-semibold tracking-[0.2px] text-[#6F8B42]">Today</Text>
             </View>
             <View className="rounded-full bg-white/70 px-3 py-1.5">
-              <Text className="text-[11px] font-semibold text-[#8C7A42]">Peaceful focus</Text>
+              <Text className="text-[11px] font-semibold tracking-[0.2px] text-[#8C7A42]">Peaceful focus</Text>
             </View>
           </View>
         </View>
@@ -101,8 +102,10 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
           <View className="w-full overflow-hidden rounded-[30px] bg-[#E9F0BF] px-5 py-5">
             <View className="flex-row items-start justify-between">
               <View className="flex-1 pr-4">
-                <Text className="text-[13px] font-semibold text-[#56643F]">1 Ramadan 1446 Hijria</Text>
-                <Text className="mt-3 text-[44px] font-extrabold leading-[48px] tracking-[-1px] text-[#1F2417]">
+                <Text className="text-[12px] font-semibold uppercase tracking-[1px] text-[#56643F]">
+                  1 Ramadan 1446 Hijria
+                </Text>
+                <Text className="mt-3 text-[46px] font-extrabold leading-[50px] tracking-[-1.2px] text-[#1F2417]">
                   17:21
                 </Text>
                 <View className="mt-3 flex-row items-center gap-2">
@@ -110,8 +113,8 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
                     <Text className="text-[12px] font-bold text-[#56643F]">◔</Text>
                   </View>
                   <View>
-                    <Text className="text-[12px] font-semibold text-[#56643F]">Next Prayer</Text>
-                    <Text className="text-[11px] text-[#72814E]">4:30 PM</Text>
+                    <Text className="text-[12px] font-semibold tracking-[0.2px] text-[#56643F]">Next Prayer</Text>
+                    <Text className="text-[11px] tracking-[0.2px] text-[#72814E]">4:30 PM</Text>
                   </View>
                 </View>
               </View>
@@ -128,19 +131,21 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
 
             <View className="mt-4 flex-row items-center justify-between rounded-[22px] bg-[#DDE8A1] px-4 py-3">
               <View>
-                <Text className="text-[11px] font-semibold uppercase tracking-[1px] text-[#647246]">
+                <Text className="text-[11px] font-semibold uppercase tracking-[1.4px] text-[#647246]">
                   Focus window
                 </Text>
-                <Text className="mt-1 text-[15px] font-bold text-[#1F2417]">Prepare for the next salah</Text>
+                <Text className="mt-1 text-[16px] font-bold leading-6 text-[#1F2417]">
+                  Prepare for the next salah
+                </Text>
               </View>
               <View className="rounded-full bg-[#55643E] px-4 py-2">
-                <Text className="text-[12px] font-semibold text-white">View times</Text>
+                <Text className="text-[12px] font-semibold tracking-[0.2px] text-white">View times</Text>
               </View>
             </View>
           </View>
 
           <View className="mt-4">
-            <Text className="mb-3 text-[13px] font-semibold uppercase tracking-[1px] text-[#8C8AA0]">
+            <Text className="mb-3 text-[11px] font-semibold uppercase tracking-[1.6px] text-[#8C8AA0]">
               Quick actions
             </Text>
             <View className="flex-row flex-wrap justify-between gap-y-3">
@@ -152,7 +157,7 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
                   <View className="h-11 w-11 items-center justify-center rounded-full bg-white/80">
                     <Icon size={18} color="#29293D" />
                   </View>
-                  <Text className="mt-2 text-[11px] font-semibold text-[#29293D]">{label}</Text>
+                  <Text className="mt-2 text-[10px] font-semibold tracking-[0.2px] text-[#29293D]">{label}</Text>
                 </View>
               ))}
             </View>
@@ -178,33 +183,33 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
         </View>
 
         <View className="mb-4">
-          <Text className="mb-3 text-[13px] font-semibold uppercase tracking-[1px] text-[#8C8AA0]">
+          <Text className="text-[11px] font-semibold uppercase tracking-[1.6px] text-[#8F6A26]">
             Featured
           </Text>
-          <View className="flex-row flex-wrap justify-between gap-y-3">
+          <Text className="mt-3 text-[19px] font-extrabold leading-8 tracking-[-0.4px] text-[#29293D]">
             {featuredCards.map(({ id, title, subtitle, label, Icon, tone, accent }) => (
               <View
-                key={id}
+          <Text className="mt-3 max-w-[260px] text-[13px] leading-6 text-[#7E7D94]">
                 className="w-[48%] overflow-hidden rounded-[26px] px-4 py-4"
                 style={{ backgroundColor: tone }}>
                 <View className="mb-10 flex-row items-start justify-between">
                   <View className="h-10 w-10 items-center justify-center rounded-full bg-white/80">
-                    <Icon size={18} color={accent} />
+            <Text className="text-[12px] font-semibold tracking-[0.2px] text-[#29293D]">Open today&apos;s note</Text>
                   </View>
                   <View className="h-5 w-5 rounded-full bg-white/60" />
                 </View>
                 <Text className="text-[16px] font-extrabold text-[#29293D]">{title}</Text>
                 <Text className="mt-2 text-[12px] leading-4 text-[#6F6E84]">{subtitle}</Text>
                 <View className="mt-4 self-start rounded-full bg-[#29293D] px-4 py-2">
-                  <Text className="text-[11px] font-semibold text-white">{label}</Text>
+              <Text className="text-[11px] font-semibold uppercase tracking-[1.6px] text-[#8C8AA0]">
                 </View>
               </View>
-            ))}
+              <Text className="mt-1 text-[17px] font-extrabold leading-6 text-[#29293D]">
           </View>
         </View>
 
         <View className="mb-2 overflow-hidden rounded-[28px] bg-[#F8F2E2] px-5 py-5">
-          <View className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-[#FFE7B8]" />
+              <Text className="text-[11px] font-semibold tracking-[0.2px] text-[#5548EF]">Updated today</Text>
           <View className="absolute bottom-4 right-5 h-2.5 w-2.5 rounded-full bg-[#D7A64D]" />
           <Text className="text-[12px] font-semibold uppercase tracking-[1px] text-[#8F6A26]">
             Reflection
@@ -248,10 +253,10 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
                 <View
                   className={`h-2.5 w-2.5 rounded-full ${item.active ? 'bg-[#F0A11A]' : 'bg-[#D7D7E3]'}`}
                 />
-                <Text className={`mt-2 text-[12px] font-semibold ${item.active ? 'text-[#F0A11A]' : 'text-[#6F6E84]'}`}>
+                <Text className={`mt-2 text-[11px] font-semibold ${item.active ? 'text-[#F0A11A]' : 'text-[#6F6E84]'}`}>
                   {item.name}
                 </Text>
-                <Text className={`mt-1 text-[11px] ${item.active ? 'font-bold text-[#29293D]' : 'text-[#9A98AF]'}`}>
+                <Text className={`mt-1 text-[10px] ${item.active ? 'font-bold text-[#29293D]' : 'text-[#9A98AF]'}`}>
                   {item.time}
                 </Text>
               </View>
