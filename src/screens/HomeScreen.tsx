@@ -86,14 +86,14 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
 
       <View className="absolute -left-14 top-20 h-36 w-36 rounded-full bg-[#DDEBC7] opacity-50" />
-      <View className="absolute -right-16 top-44 h-44 w-44 rounded-full bg-[#FFE7A7] opacity-35" />
+      <View className="absolute -right-16 top-44 h-44 w-44 rounded-full bg-[#FFE7A7] opacity-25" />
       <View className="absolute left-10 top-1/2 h-3 w-3 rounded-full bg-[#8DC47A] opacity-60" />
-      <View className="absolute bottom-8 right-10 h-24 w-24 rounded-full bg-[#F2D9A8] opacity-45" />
-      <View className="absolute bottom-0 left-0 right-0 h-28 bg-[#F6EFCF] opacity-70" />
+      <View className="absolute bottom-8 right-10 h-24 w-24 rounded-full bg-[#F2D9A8] opacity-30" />
+      <View className="absolute bottom-0 left-0 right-0 h-28 bg-[#F6EFCF] opacity-60" />
 
       <ScrollView
         className="relative z-10 flex-1 px-5 pt-3"
-        contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 28 }}
         showsVerticalScrollIndicator={false}>
         <View className="relative overflow-hidden rounded-[32px] bg-[#F8F6E8] px-5 py-5" style={cardShadow}>
           <View className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#FFE7A7] opacity-80" />
