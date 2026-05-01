@@ -162,7 +162,6 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
               ))}
             </View>
           </View>
-        </View>
 
         <View className="mb-4 flex-row flex-wrap justify-center gap-3">
           <Pressable className="rounded-2xl bg-[#5548EF] px-5 py-3" onPress={onOpenProfile}>
