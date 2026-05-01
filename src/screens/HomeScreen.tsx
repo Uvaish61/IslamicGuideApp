@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Bell, MapPin } from 'lucide-react-native';
+import { Bell, BookOpen, Heart, MapPin, MoonStar, Settings, UserRound } from 'lucide-react-native';
 
 type HomeScreenProps = {
   onOpenProfile: () => void;
@@ -11,6 +11,14 @@ type HomeScreenProps = {
 };
 
 const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTasbeeh }: HomeScreenProps) => {
+  const quickActions = [
+    { id: 'quran', label: 'Quran', Icon: BookOpen, tone: '#EEF4DC' },
+    { id: 'duas', label: 'Duas', Icon: MoonStar, tone: '#FDEBD7' },
+    { id: 'favorites', label: 'Saved', Icon: Heart, tone: '#F7E1E4' },
+    { id: 'profile', label: 'Profile', Icon: UserRound, tone: '#E4E3FB' },
+    { id: 'settings', label: 'Tools', Icon: Settings, tone: '#E2F1EE' },
+  ] as const;
+
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
@@ -92,6 +100,25 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
               <View className="rounded-full bg-[#55643E] px-4 py-2">
                 <Text className="text-[12px] font-semibold text-white">View times</Text>
               </View>
+            </View>
+          </View>
+
+          <View className="mt-4">
+            <Text className="mb-3 text-[13px] font-semibold uppercase tracking-[1px] text-[#8C8AA0]">
+              Quick actions
+            </Text>
+            <View className="flex-row flex-wrap justify-between gap-y-3">
+              {quickActions.map(({ id, label, Icon, tone }) => (
+                <View
+                  key={id}
+                  className="w-[18%] min-w-[58px] items-center rounded-[20px] bg-white px-2 py-3"
+                  style={{ backgroundColor: tone }}>
+                  <View className="h-11 w-11 items-center justify-center rounded-full bg-white/80">
+                    <Icon size={18} color="#29293D" />
+                  </View>
+                  <Text className="mt-2 text-[11px] font-semibold text-[#29293D]">{label}</Text>
+                </View>
+              ))}
             </View>
           </View>
         </View>
