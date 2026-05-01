@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StatusBar, Text, View } from 'react-native';
+import { Pressable, ScrollView, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Bell,
@@ -91,7 +91,10 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
       <View className="absolute bottom-8 right-10 h-24 w-24 rounded-full bg-[#F2D9A8] opacity-45" />
       <View className="absolute bottom-0 left-0 right-0 h-28 bg-[#F6EFCF] opacity-70" />
 
-      <View className="relative z-10 flex-1 px-5 pt-3">
+      <ScrollView
+        className="relative z-10 flex-1 px-5 pt-3"
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
+        showsVerticalScrollIndicator={false}>
         <View className="relative overflow-hidden rounded-[32px] bg-[#F8F6E8] px-5 py-5" style={cardShadow}>
           <View className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#FFE7A7] opacity-80" />
           <View className="absolute -bottom-8 right-8 h-24 w-24 rounded-full bg-[#DDEBC7]" />
@@ -182,7 +185,7 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
               {quickActions.map(({ id, label, Icon, tone }) => (
                 <View
                   key={id}
-                  className="w-[18%] min-w-[58px] items-center rounded-[20px] bg-white px-2 py-3"
+                  className="basis-[18%] min-w-[58px] flex-1 items-center rounded-[20px] bg-white px-2 py-3"
                   style={[{ backgroundColor: tone }, cardShadow]}>
                   <View className="h-11 w-11 items-center justify-center rounded-full bg-white/80">
                     <Icon {...iconProps} />
@@ -195,25 +198,25 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
         </View>
 
         <View className="mb-4 flex-row flex-wrap justify-center gap-3">
-          <Pressable className="rounded-2xl bg-[#5548EF] px-5 py-3" onPress={onOpenProfile} style={cardShadow}>
+          <Pressable className="min-w-[46%] flex-1 rounded-2xl bg-[#5548EF] px-5 py-3" onPress={onOpenProfile} style={cardShadow}>
             <Text className="text-[15px] font-semibold text-white">Open Profile</Text>
           </Pressable>
 
           <Pressable
-            className="rounded-2xl border border-[#E7E7F0] bg-white px-5 py-3"
+            className="min-w-[46%] flex-1 rounded-2xl border border-[#E7E7F0] bg-white px-5 py-3"
             onPress={onOpenSettings}
             style={cardShadow}>
             <Text className="text-[15px] font-semibold text-[#29293D]">Open Settings</Text>
           </Pressable>
 
           <Pressable
-            className="rounded-2xl border border-[#5548EF] bg-white px-5 py-3"
+            className="min-w-[46%] flex-1 rounded-2xl border border-[#5548EF] bg-white px-5 py-3"
             onPress={onOpenDailyQuote}
             style={cardShadow}>
             <Text className="text-[15px] font-semibold text-[#5548EF]">Daily Quote</Text>
           </Pressable>
 
-          <Pressable className="rounded-2xl bg-[#4ECDC4] px-5 py-3" onPress={onOpenTasbeeh} style={cardShadow}>
+          <Pressable className="min-w-[46%] flex-1 rounded-2xl bg-[#4ECDC4] px-5 py-3" onPress={onOpenTasbeeh} style={cardShadow}>
             <Text className="text-[15px] font-semibold text-white">Tasbeeh Counter</Text>
           </Pressable>
         </View>
@@ -282,7 +285,7 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
             ))}
           </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
