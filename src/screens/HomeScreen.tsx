@@ -214,6 +214,44 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
             <Text className="text-[12px] font-semibold text-[#29293D]">Open today&apos;s note</Text>
           </View>
         </View>
+
+        <View className="mb-4 rounded-[28px] bg-white px-5 py-5">
+          <View className="flex-row items-center justify-between">
+            <View>
+              <Text className="text-[13px] font-semibold uppercase tracking-[1px] text-[#8C8AA0]">
+                Prayer timings
+              </Text>
+              <Text className="mt-1 text-[16px] font-extrabold text-[#29293D]">
+                Plan the rest of your day with clarity
+              </Text>
+            </View>
+            <View className="rounded-full bg-[#F1F0FA] px-3 py-1.5">
+              <Text className="text-[11px] font-semibold text-[#5548EF]">Updated today</Text>
+            </View>
+          </View>
+
+          <View className="mt-4 flex-row items-end justify-between rounded-[22px] bg-[#F7F7FB] px-3 py-4">
+            {[
+              { name: 'Fajr', time: '04:28', active: false },
+              { name: 'Dhuhr', time: '12:13', active: false },
+              { name: 'Asr', time: '04:36', active: false },
+              { name: 'Maghrib', time: '06:15', active: true },
+              { name: 'Isha', time: '07:41', active: false },
+            ].map((item) => (
+              <View key={item.name} className="items-center">
+                <View
+                  className={`h-2.5 w-2.5 rounded-full ${item.active ? 'bg-[#F0A11A]' : 'bg-[#D7D7E3]'}`}
+                />
+                <Text className={`mt-2 text-[12px] font-semibold ${item.active ? 'text-[#F0A11A]' : 'text-[#6F6E84]'}`}>
+                  {item.name}
+                </Text>
+                <Text className={`mt-1 text-[11px] ${item.active ? 'font-bold text-[#29293D]' : 'text-[#9A98AF]'}`}>
+                  {item.time}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );
