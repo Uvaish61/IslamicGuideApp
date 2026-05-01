@@ -196,6 +196,24 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
             ))}
           </View>
         </View>
+
+        <View className="mb-2 overflow-hidden rounded-[28px] bg-[#F8F2E2] px-5 py-5">
+          <View className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-[#FFE7B8]" />
+          <View className="absolute bottom-4 right-5 h-2.5 w-2.5 rounded-full bg-[#D7A64D]" />
+          <Text className="text-[12px] font-semibold uppercase tracking-[1px] text-[#8F6A26]">
+            Reflection
+          </Text>
+          <Text className="mt-3 text-[18px] font-extrabold leading-7 text-[#29293D]">
+            Keep your heart steady, and let the day unfold with quiet intention.
+          </Text>
+          <Text className="mt-3 max-w-[260px] text-[13px] leading-5 text-[#7E7D94]">
+            A minimal reminder card that gives the home screen a calmer, more personal feel.
+          </Text>
+          <View className="mt-4 flex-row items-center gap-2 self-start rounded-full bg-white px-4 py-2">
+            <View className="h-2 w-2 rounded-full bg-[#D7A64D]" />
+            <Text className="text-[12px] font-semibold text-[#29293D]">Open today&apos;s note</Text>
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );
