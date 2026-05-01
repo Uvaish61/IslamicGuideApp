@@ -54,12 +54,46 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
         </View>
 
         <View className="mt-5 flex-1 items-center justify-center px-1">
-          <Text className="text-center text-[17px] font-semibold text-[#29293D]">
-            Next we can build the prayer card below this header.
-          </Text>
-          <Text className="mt-2 text-center text-[13px] leading-5 text-[#7E7D94]">
-            The navigation stays the same, and each design slice can be added one at a time.
-          </Text>
+          <View className="w-full overflow-hidden rounded-[30px] bg-[#E9F0BF] px-5 py-5">
+            <View className="flex-row items-start justify-between">
+              <View className="flex-1 pr-4">
+                <Text className="text-[13px] font-semibold text-[#56643F]">1 Ramadan 1446 Hijria</Text>
+                <Text className="mt-3 text-[44px] font-extrabold leading-[48px] tracking-[-1px] text-[#1F2417]">
+                  17:21
+                </Text>
+                <View className="mt-3 flex-row items-center gap-2">
+                  <View className="h-8 w-8 items-center justify-center rounded-full border border-[#91A16A] bg-[#F3F7DD]">
+                    <Text className="text-[12px] font-bold text-[#56643F]">◔</Text>
+                  </View>
+                  <View>
+                    <Text className="text-[12px] font-semibold text-[#56643F]">Next Prayer</Text>
+                    <Text className="text-[11px] text-[#72814E]">4:30 PM</Text>
+                  </View>
+                </View>
+              </View>
+
+              <View className="h-[150px] w-[132px] items-center justify-end overflow-hidden rounded-[26px] bg-[#F6E08C]">
+                <View className="absolute right-2 top-3 h-10 w-10 rounded-full bg-[#F4B800]" />
+                <View className="absolute left-4 top-14 h-16 w-16 rounded-t-full border-l-4 border-r-4 border-t-4 border-[#F4E7D0] bg-[#FBE8D0]" />
+                <View className="absolute bottom-0 left-0 right-0 h-10 rounded-t-[30px] bg-[#F2D1A8]" />
+                <View className="absolute bottom-0 left-4 h-20 w-4 rounded-t-full bg-[#E68B52]" />
+                <View className="absolute bottom-0 right-6 h-14 w-3 rounded-t-full bg-[#E68B52]" />
+                <View className="absolute right-7 top-1 h-4 w-6 rounded-full bg-[#FFF4D3]" />
+              </View>
+            </View>
+
+            <View className="mt-4 flex-row items-center justify-between rounded-[22px] bg-[#DDE8A1] px-4 py-3">
+              <View>
+                <Text className="text-[11px] font-semibold uppercase tracking-[1px] text-[#647246]">
+                  Focus window
+                </Text>
+                <Text className="mt-1 text-[15px] font-bold text-[#1F2417]">Prepare for the next salah</Text>
+              </View>
+              <View className="rounded-full bg-[#55643E] px-4 py-2">
+                <Text className="text-[12px] font-semibold text-white">View times</Text>
+              </View>
+            </View>
+          </View>
         </View>
 
         <View className="mb-4 flex-row flex-wrap justify-center gap-3">
