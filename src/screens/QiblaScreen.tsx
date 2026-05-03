@@ -28,6 +28,40 @@ const QiblaScreen = ({ onBackToHome }: QiblaScreenProps) => {
     setRelativeQiblaAngle(angle);
   }, [qiblaBearing, deviceHeading]);
 
+  // Initialize with mock location (default to user's approximate location)
+  useEffect(() => {
+    // Set mock location (can be replaced with real geolocation)
+    const mockLocation = { latitude: 24.8607, longitude: 67.0011 }; // Karachi, Pakistan
+    setUserLocation(mockLocation);
+    setLocationPermission(true);
+    setIsCompassAvailable(true);
+    
+    // Calculate initial Qibla bearing
+    const bearing = calculateQiblaBearing(
+      mockLocation.latitude,
+      mockLocation.longitude,
+      MECCA_LAT,
+      MECCA_LNG
+    );
+    setQiblaBearing(bearing);
+    
+    // Simulate device heading changes
+    const interval = setInterval(() => {
+      setDeviceHeading((prev) => (prev + 1) % 360);
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Handle request location permission
+  const handleRequestLocation = () => {
+    // Mock function - in production, use react-native-geolocation-service
+    const randomLat = 24 + Math.random() * 10;
+    const randomLng = 67 + Math.random() * 10;
+    setUserLocation({ latitude: randomLat, longitude: randomLng });
+    setLocationPermission(true);
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-[#ECEBFA]">
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
@@ -37,8 +71,13 @@ const QiblaScreen = ({ onBackToHome }: QiblaScreenProps) => {
           <Pressable onPress={onBackToHome}>
             <ChevronLeft size={24} color="#29293D" />
           </Pressable>
-          <Text className="text-2xl font-bold text-[#29293D]">Qibla Finder</Text>
-          <View style={{ width: 24 }} />
+          <View className="flex-row items-center gap-2">
+            <Navigation size={20} color="#3D3AE0" />
+            <Text className="text-2xl font-bold text-[#29293D]">Qibla</Text>
+          </View>
+          <Pressable onPress={() => setDeviceHeading((prev) => (prev + 5) % 360))}>
+            <RefreshCw size={24} color="#5548EF" />
+          </Pressable>
         </View>
 
         {/* Direction Display */}
