@@ -13,7 +13,7 @@ import QiblaScreen from './src/screens/QiblaScreen';
 import BottomNav from './src/components/BottomNav';
 
 const App = () => {
-  const [screen, setScreen] = useState<'login' | 'signup' | 'home' | 'profile' | 'settings' | 'daily-quote' | 'favorites' | 'tasbeeh'>('login');
+  const [screen, setScreen] = useState<'login' | 'signup' | 'home' | 'profile' | 'settings' | 'daily-quote' | 'favorites' | 'tasbeeh' | 'qibla'>('login');
 
   const getActiveTab = () => {
     switch (screen) {
@@ -25,6 +25,8 @@ const App = () => {
         return 'favorites';
       case 'profile':
         return 'profile';
+      case 'qibla':
+        return 'qibla';
       case 'settings':
         return 'settings';
       case 'tasbeeh':
