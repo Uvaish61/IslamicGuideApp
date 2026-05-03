@@ -36,7 +36,7 @@ const App = () => {
     }
   };
 
-  const handleTabPress = (tab: 'home' | 'daily' | 'favorites' | 'profile' | 'settings') => {
+  const handleTabPress = (tab: 'home' | 'daily' | 'favorites' | 'profile' | 'settings' | 'qibla') => {
     switch (tab) {
       case 'home':
         setScreen('home');
@@ -49,6 +49,9 @@ const App = () => {
         break;
       case 'profile':
         setScreen('profile');
+        break;
+      case 'qibla':
+        setScreen('qibla');
         break;
       case 'settings':
         setScreen('settings');
