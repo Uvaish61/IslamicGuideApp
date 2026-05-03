@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Home, BookOpen, Heart, User, Settings as SettingsIcon } from 'lucide-react-native';
+import { Home, BookOpen, Heart, User, Settings as SettingsIcon, Compass } from 'lucide-react-native';
 
-type Tab = 'home' | 'daily' | 'favorites' | 'profile' | 'settings';
+type Tab = 'home' | 'daily' | 'favorites' | 'profile' | 'settings' | 'qibla';
 
 type Props = {
   active?: Tab;
