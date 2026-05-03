@@ -94,6 +94,7 @@ const App = () => {
         {screen === 'daily-quote' && <DailyQuoteScreen onBackToHome={() => setScreen('home')} />}
         {screen === 'favorites' && <FavoritesScreen />}
         {screen === 'tasbeeh' && <TasbeehScreen onBackToHome={() => setScreen('home')} />}
+        {screen === 'qibla' && <QiblaScreen onBackToHome={() => setScreen('home')} />}
       </View>
 
       {screen !== 'tasbeeh' && <BottomNav active={getActiveTab()} onTabPress={handleTabPress} />}
