@@ -97,7 +97,7 @@ const App = () => {
         {screen === 'qibla' && <QiblaScreen onBackToHome={() => setScreen('home')} />}
       </View>
 
-      {screen !== 'tasbeeh' && <BottomNav active={getActiveTab()} onTabPress={handleTabPress} />}
+      {screen !== 'tasbeeh' && screen !== 'login' && screen !== 'signup' && <BottomNav active={getActiveTab()} onTabPress={handleTabPress} />}
     </SafeAreaView>
   );
 };
