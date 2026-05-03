@@ -9,6 +9,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import FavoritesScreen from './src/screens/FavoritesScreen';
 import TasbeehScreen from './src/screens/TasbeehScreen';
+import QiblaScreen from './src/screens/QiblaScreen';
 import BottomNav from './src/components/BottomNav';
 
 const App = () => {

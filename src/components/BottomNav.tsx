@@ -12,9 +12,9 @@ type Props = {
 const TABS: { key: Tab; label: string; Icon: any }[] = [
   { key: 'home', label: 'Home', Icon: Home },
   { key: 'daily', label: 'Daily', Icon: BookOpen },
+  { key: 'qibla', label: 'Qibla', Icon: Compass },
   { key: 'favorites', label: 'Favorites', Icon: Heart },
   { key: 'profile', label: 'Profile', Icon: User },
-  { key: 'settings', label: 'Settings', Icon: SettingsIcon },
 ];
 
 const BottomNav = ({ active = 'home', onTabPress = () => {} }: Props) => {
