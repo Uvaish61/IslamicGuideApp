@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Pressable, StatusBar, Text, View, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeft, MapPin, Navigation, RefreshCw } from 'lucide-react-native';
-import { getCardinalDirection, getDetailedDirection } from '../utils/qiblaCalculations';
+import { getCardinalDirection, getDetailedDirection, calculateQiblaBearing } from '../utils/qiblaCalculations';
 import Compass from '../componenets/Compass';
 
 type QiblaScreenProps = {
@@ -116,13 +116,19 @@ const QiblaScreen = ({ onBackToHome }: QiblaScreenProps) => {
           </View>
 
           {/* Location Info */}
-          {userLocation && (
+          {userLocation ? (
             <View className="flex-row items-center gap-2 rounded-lg bg-[#E7E7F0] px-4 py-2">
               <MapPin size={16} color="#5548EF" />
               <Text className="text-xs font-semibold text-[#5548EF]">
                 {userLocation.latitude.toFixed(2)}°, {userLocation.longitude.toFixed(2)}°
               </Text>
             </View>
+          ) : (
+            <Pressable
+              className="rounded-lg bg-[#5548EF] px-4 py-2"
+              onPress={handleRequestLocation}>
+              <Text className="text-xs font-semibold text-white">Enable Location</Text>
+            </Pressable>
           )}
         </View>
       </View>
