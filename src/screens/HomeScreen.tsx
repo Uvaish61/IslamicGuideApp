@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import {
@@ -12,6 +12,12 @@ import {
   Settings,
   UserRound,
 } from 'lucide-react-native';
+import {
+  HYDERABAD_TIME_ZONE,
+  formatHijriDate,
+  formatLocalTime,
+  getMinutesInTimeZone,
+} from '../utils/homeTime';
 
 type HomeScreenProps = {
   onOpenProfile: () => void;
@@ -21,8 +27,20 @@ type HomeScreenProps = {
 };
 
 const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTasbeeh }: HomeScreenProps) => {
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const timerId = setInterval(() => setNow(new Date()), 1000);
+
+    return () => clearInterval(timerId);
+  }, []);
+
+  const hijriDate = useMemo(() => formatHijriDate(now, HYDERABAD_TIME_ZONE), [now]);
+  const currentTime = useMemo(() => formatLocalTime(now, HYDERABAD_TIME_ZONE), [now]);
+  const currentMinutes = useMemo(() => getMinutesInTimeZone(now, HYDERABAD_TIME_ZONE), [now]);
+
   const cardShadow = {
-    shadowColor: '#7C7660',
+    shadowColor: '#5548EF',
     shadowOpacity: 0.12,
     shadowRadius: 18,
     shadowOffset: { width: 0, height: 8 },
@@ -36,11 +54,11 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
   } as const;
 
   const quickActions = [
-    { id: 'quran', label: 'Quran', Icon: BookOpen, tone: '#EEF4DC' },
-    { id: 'duas', label: 'Duas', Icon: MoonStar, tone: '#FDEBD7' },
-    { id: 'favorites', label: 'Saved', Icon: Heart, tone: '#F7E1E4' },
-    { id: 'profile', label: 'Profile', Icon: UserRound, tone: '#E4E3FB' },
-    { id: 'settings', label: 'Tools', Icon: Settings, tone: '#E2F1EE' },
+    { id: 'quran', label: 'Quran', Icon: BookOpen, tone: '#F4F1FF' },
+    { id: 'duas', label: 'Duas', Icon: MoonStar, tone: '#FFF4E8' },
+    { id: 'favorites', label: 'Saved', Icon: Heart, tone: '#FDECEF' },
+    { id: 'profile', label: 'Profile', Icon: UserRound, tone: '#E9E7FF' },
+    { id: 'settings', label: 'Tools', Icon: Settings, tone: '#EAF6F4' },
   ] as const;
 
   const featuredCards = [
@@ -50,8 +68,8 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
       subtitle: 'Continue reading with a calm focus view.',
       label: 'Read Now',
       Icon: ScrollText,
-      tone: '#EAF0C5',
-      accent: '#62713F',
+      tone: '#F4F1FF',
+      accent: '#5548EF',
     },
     {
       id: 'umrah',
@@ -59,8 +77,8 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
       subtitle: 'A clean journey card for planning essentials.',
       label: 'Explore',
       Icon: Landmark,
-      tone: '#F7EBD8',
-      accent: '#8F5D20',
+      tone: '#F8F8FC',
+      accent: '#7E7D94',
     },
     {
       id: 'zakat',
@@ -68,18 +86,26 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
       subtitle: 'Organize your yearly giving with clarity.',
       label: 'Calculate',
       Icon: Heart,
-      tone: '#E4F1EA',
-      accent: '#3C7A63',
+      tone: '#EEF8F7',
+      accent: '#2F7E77',
     },
   ] as const;
 
   const prayerTimes = [
-    { name: 'Fajr', time: '04:28', active: false },
-    { name: 'Dhuhr', time: '12:13', active: false },
-    { name: 'Asr', time: '04:36', active: false },
-    { name: 'Maghrib', time: '06:15', active: true },
-    { name: 'Isha', time: '07:41', active: false },
+    { name: 'Fajr', time: '05:10 AM', minutes: 5 * 60 + 10 },
+    { name: 'Dhuhr', time: '12:20 PM', minutes: 12 * 60 + 20 },
+    { name: 'Asr', time: '04:05 PM', minutes: 16 * 60 + 5 },
+    { name: 'Maghrib', time: '06:15 PM', minutes: 18 * 60 + 15 },
+    { name: 'Isha', time: '07:45 PM', minutes: 19 * 60 + 45 },
   ] as const;
+
+  const nextPrayerIndex = prayerTimes.findIndex((item) => item.minutes > currentMinutes);
+  const nextPrayer = prayerTimes[nextPrayerIndex >= 0 ? nextPrayerIndex : 0];
+  const activePrayer =
+    prayerTimes.find((item, index) => {
+      const nextItem = prayerTimes[index + 1];
+      return currentMinutes >= item.minutes && (!nextItem || currentMinutes < nextItem.minutes);
+    }) ?? prayerTimes[0];
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -104,10 +130,10 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
             <View style={styles.headerLeft}>
               <View style={styles.locationRow}>
                 <MapPin size={14} color="#7E7D94" strokeWidth={1.8} />
-                <Text style={styles.locationText}>Mohammadpur, Dhaka, Bangladesh</Text>
+                <Text style={styles.locationText}>Hyderabad, India</Text>
               </View>
               <Text style={styles.headerTitle}>Ramadan Kareem</Text>
-              <Text style={styles.headerSubtitle}>A calm space for prayer, reflection, and small daily reminders.</Text>
+              <Text style={styles.headerSubtitle}>A calm space for prayer, reflection, and daily guidance.</Text>
             </View>
 
             <Pressable style={[styles.bellButton, cardShadow]} onPress={onOpenSettings}>
@@ -129,15 +155,18 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
           <View style={[styles.prayerCard, cardShadow]}>
             <View style={styles.prayerCardRow}>
               <View style={styles.prayerCardLeft}>
-                <Text style={styles.prayerLabel}>1 Ramadan 1446 Hijria</Text>
-                <Text style={styles.prayerTime}>17:21</Text>
+                <Text style={styles.prayerLabel}>Today in Hyderabad</Text>
+                <Text style={styles.prayerDate}>{hijriDate} Hijri</Text>
+                <Text style={styles.prayerTime}>{currentTime}</Text>
                 <View style={styles.nextPrayerRow}>
                   <View style={styles.moonIcon}>
                     <Text style={styles.moonText}>◔</Text>
                   </View>
                   <View>
                     <Text style={styles.nextPrayerLabel}>Next Prayer</Text>
-                    <Text style={styles.nextPrayerTime}>4:30 PM</Text>
+                    <Text style={styles.nextPrayerTime}>
+                      {nextPrayer.name} at {nextPrayer.time}
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -154,8 +183,8 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
 
             <View style={styles.focusWindow}>
               <View>
-                <Text style={styles.focusLabel}>Focus window</Text>
-                <Text style={styles.focusDescription}>Prepare for the next salah</Text>
+                <Text style={styles.focusLabel}>Current prayer window</Text>
+                <Text style={styles.focusDescription}>{activePrayer.name} is the active slot</Text>
               </View>
               <View style={styles.viewTimesButton}>
                 <Text style={styles.viewTimesText}>View times</Text>
@@ -438,7 +467,9 @@ const styles = StyleSheet.create({
     width: '100%',
     overflow: 'hidden',
     borderRadius: 30,
-    backgroundColor: '#E9F0BF',
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
@@ -456,15 +487,21 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textTransform: 'uppercase',
     letterSpacing: 1,
-    color: '#56643F',
+    color: '#5548EF',
+  },
+  prayerDate: {
+    marginTop: 8,
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#29293D',
   },
   prayerTime: {
-    marginTop: 12,
-    fontSize: 46,
-    lineHeight: 50,
+    marginTop: 8,
+    fontSize: 42,
+    lineHeight: 48,
     fontWeight: '800',
     letterSpacing: -1.2,
-    color: '#1F2417',
+    color: '#29293D',
   },
   nextPrayerRow: {
     marginTop: 12,
@@ -479,24 +516,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: '#91A16A',
-    backgroundColor: '#F3F7DD',
+    borderColor: '#D7D1FF',
+    backgroundColor: '#F7F4FF',
   },
   moonText: {
     fontSize: 12,
     fontWeight: '800',
-    color: '#56643F',
+    color: '#5548EF',
   },
   nextPrayerLabel: {
     fontSize: 12,
     fontWeight: '700',
     letterSpacing: 0.2,
-    color: '#56643F',
+    color: '#7E7D94',
   },
   nextPrayerTime: {
-    fontSize: 11,
+    fontSize: 12,
+    fontWeight: '700',
     letterSpacing: 0.2,
-    color: '#72814E',
+    color: '#29293D',
   },
   prayerArt: {
     height: 150,
@@ -505,7 +543,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     overflow: 'hidden',
     borderRadius: 26,
-    backgroundColor: '#F6E08C',
+    backgroundColor: '#EFEAFE',
   },
   artCircle: {
     position: 'absolute',
@@ -514,7 +552,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 999,
-    backgroundColor: '#F4B800',
+    backgroundColor: '#C9B8FF',
   },
   artCup: {
     position: 'absolute',
@@ -528,8 +566,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderRightWidth: 4,
     borderTopWidth: 4,
-    borderColor: '#F4E7D0',
-    backgroundColor: '#FBE8D0',
+    borderColor: '#D7D1FF',
+    backgroundColor: '#F7F4FF',
   },
   artBase: {
     position: 'absolute',
@@ -539,7 +577,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    backgroundColor: '#F2D1A8',
+    backgroundColor: '#DAD3FF',
   },
   artHandle1: {
     position: 'absolute',
@@ -549,7 +587,7 @@ const styles = StyleSheet.create({
     width: 4,
     borderTopLeftRadius: 999,
     borderTopRightRadius: 999,
-    backgroundColor: '#E68B52',
+    backgroundColor: '#5548EF',
   },
   artHandle2: {
     position: 'absolute',
@@ -559,7 +597,7 @@ const styles = StyleSheet.create({
     width: 3,
     borderTopLeftRadius: 999,
     borderTopRightRadius: 999,
-    backgroundColor: '#E68B52',
+    backgroundColor: '#5548EF',
   },
   artLight: {
     position: 'absolute',
@@ -568,7 +606,7 @@ const styles = StyleSheet.create({
     height: 16,
     width: 24,
     borderRadius: 999,
-    backgroundColor: '#FFF4D3',
+    backgroundColor: '#FFFFFF',
   },
   focusWindow: {
     marginTop: 16,
@@ -576,7 +614,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 22,
-    backgroundColor: '#DDE8A1',
+    backgroundColor: '#F5F4FF',
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
@@ -585,18 +623,18 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textTransform: 'uppercase',
     letterSpacing: 1.4,
-    color: '#647246',
+    color: '#5548EF',
   },
   focusDescription: {
     marginTop: 4,
     fontSize: 16,
     fontWeight: '800',
     lineHeight: 24,
-    color: '#1F2417',
+    color: '#29293D',
   },
   viewTimesButton: {
     borderRadius: 999,
-    backgroundColor: '#55643E',
+    backgroundColor: '#5548EF',
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
@@ -616,7 +654,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textTransform: 'uppercase',
     letterSpacing: 1.6,
-    color: '#8C8AA0',
+    color: '#5548EF',
   },
   quickActionsGrid: {
     flexDirection: 'row',
@@ -696,7 +734,7 @@ const styles = StyleSheet.create({
     minWidth: '46%',
     flex: 1,
     borderRadius: 16,
-    backgroundColor: '#4ECDC4',
+    backgroundColor: '#5548EF',
     paddingHorizontal: 20,
     paddingVertical: 12,
   },
@@ -714,7 +752,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textTransform: 'uppercase',
     letterSpacing: 1.6,
-    color: '#8F6A26',
+    color: '#5548EF',
   },
   featuredGrid: {
     flexDirection: 'row',
@@ -777,7 +815,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     overflow: 'hidden',
     borderRadius: 28,
-    backgroundColor: '#F8F2E2',
+    backgroundColor: '#F8F8FC',
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
@@ -788,7 +826,7 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 999,
-    backgroundColor: '#FFE7B8',
+    backgroundColor: '#E9E7FF',
   },
   reflectionDot: {
     position: 'absolute',
@@ -797,14 +835,14 @@ const styles = StyleSheet.create({
     height: 10,
     width: 10,
     borderRadius: 999,
-    backgroundColor: '#D7A64D',
+    backgroundColor: '#5548EF',
   },
   reflectionLabel: {
     fontSize: 11,
     fontWeight: '700',
     textTransform: 'uppercase',
     letterSpacing: 1.6,
-    color: '#8F6A26',
+    color: '#5548EF',
   },
   reflectionText: {
     marginTop: 12,
@@ -848,6 +886,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 28,
     backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
@@ -872,7 +912,7 @@ const styles = StyleSheet.create({
   },
   updatedBadge: {
     borderRadius: 999,
-    backgroundColor: '#F1F0FA',
+    backgroundColor: '#F5F4FF',
     paddingHorizontal: 12,
     paddingVertical: 6,
   },
@@ -888,7 +928,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'space-between',
     borderRadius: 22,
-    backgroundColor: '#F7F7FB',
+    backgroundColor: '#FAFAFD',
     paddingHorizontal: 12,
     paddingVertical: 16,
   },
