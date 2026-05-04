@@ -60,35 +60,35 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#ECEBFA]">
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
-      <View className="flex-1 overflow-y-auto px-4 pt-6">
+      <View style={styles.mainContainer}>
         {/* Header */}
-        <Text className="mb-6 text-center text-2xl font-extrabold text-[#29293D]">My Profile</Text>
+        <Text style={styles.headerTitle}>My Profile</Text>
 
         {/* User Info Card with Shadow */}
-        <View className="rounded-3xl border border-[#E7E7F0] bg-white p-6 shadow-lg" style={{ elevation: 4 }}>
+        <View style={styles.profileCard}>
           {/* Avatar */}
-          <View className="items-center">
-            <View className="h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-[#5548EF] to-[#3D3AE0] shadow-md" style={{ elevation: 3 }}>
-              <Text className="text-5xl font-extrabold text-white">{initials}</Text>
+          <View style={styles.avatarContainer}>
+            <View style={styles.avatar}>
+              <Text style={styles.avatarText}>{initials}</Text>
             </View>
           </View>
 
           {/* Name */}
-          <Text className="mt-8 text-center text-3xl font-extrabold text-[#29293D]">
+          <Text style={styles.profileName}>
             {profileData.name}
           </Text>
 
           {/* Email */}
-          <Text className="mt-2 text-center text-sm font-medium text-[#7E7D94]">
+          <Text style={styles.profileEmail}>
             {profileData.email}
           </Text>
 
           {/* Account Status Badge */}
-          <View className="mt-5 flex-row items-center justify-center">
-            <View className="rounded-full bg-gradient-to-r from-[#E8F0FE] to-[#F0E8FE] px-6 py-2">
-              <Text className="text-xs font-semibold tracking-wide text-[#5548EF]">
+          <View style={styles.statusContainer}>
+            <View style={styles.statusBadge}>
+              <Text style={styles.statusText}>
                 • {profileData.accountStatus.toUpperCase()}
               </Text>
             </View>
@@ -96,91 +96,91 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
         </View>
 
         {/* Statistics Section with improved styling */}
-        <View className="mt-8 gap-3">
-          <Text className="text-xs font-semibold tracking-widest text-[#8D8CA3]">STATISTICS</Text>
-          <View className="flex-row gap-3">
+        <View style={styles.statisticsSection}>
+          <Text style={styles.sectionLabel}>STATISTICS</Text>
+          <View style={styles.statisticsRow}>
             {/* Quotes Read */}
-            <View className="flex-1 rounded-2xl border border-[#E7E7F0] bg-white p-4 shadow-sm" style={{ elevation: 2 }}>
-              <Text className="text-xs font-semibold text-[#8D8CA3]">Quotes Read</Text>
-              <Text className="mt-4 text-3xl font-extrabold text-[#5548EF]">42</Text>
-              <Text className="mt-1 text-xs text-[#7E7D94]">this month</Text>
+            <View style={styles.statCard}>
+              <Text style={styles.statLabel}>Quotes Read</Text>
+              <Text style={styles.statNumber}>42</Text>
+              <Text style={styles.statSubtext}>this month</Text>
             </View>
 
             {/* Favorites */}
-            <View className="flex-1 rounded-2xl border border-[#E7E7F0] bg-white p-4 shadow-sm" style={{ elevation: 2 }}>
-              <Text className="text-xs font-semibold text-[#8D8CA3]">Favorites</Text>
-              <Text className="mt-4 text-3xl font-extrabold text-[#5548EF]">18</Text>
-              <Text className="mt-1 text-xs text-[#7E7D94]">saved</Text>
+            <View style={styles.statCard}>
+              <Text style={styles.statLabel}>Favorites</Text>
+              <Text style={styles.statNumber}>18</Text>
+              <Text style={styles.statSubtext}>saved</Text>
             </View>
           </View>
         </View>
 
         {/* Streak & Achievements Section */}
-        <View className="mt-8 gap-3">
-          <Text className="text-xs font-semibold tracking-widest text-[#8D8CA3]">PROGRESS</Text>
+        <View style={styles.progressSection}>
+          <Text style={styles.sectionLabel}>PROGRESS</Text>
 
           {/* Reading Streak */}
-          <View className="rounded-2xl border border-[#E7E7F0] bg-white p-4 shadow-sm" style={{ elevation: 2 }}>
-            <View className="flex-row items-center justify-between">
+          <View style={styles.streakCard}>
+            <View style={styles.streakContent}>
               <View>
-                <Text className="text-xs font-semibold text-[#8D8CA3]">Reading Streak</Text>
-                <Text className="mt-3 text-2xl font-extrabold text-[#5548EF]">7 days 🔥</Text>
+                <Text style={styles.streakLabel}>Reading Streak</Text>
+                <Text style={styles.streakNumber}>7 days 🔥</Text>
               </View>
             </View>
           </View>
 
           {/* Achievements */}
           <View>
-            <Text className="mb-3 text-xs font-semibold tracking-widest text-[#8D8CA3]">ACHIEVEMENTS</Text>
-            <View className="flex-row gap-2">
-              <View className="flex-1 items-center rounded-2xl border border-[#E7E7F0] bg-white p-4 shadow-sm" style={{ elevation: 2 }}>
-                <Text className="text-3xl">⭐</Text>
-                <Text className="mt-2 text-center text-xs font-semibold text-[#29293D]">Quote Master</Text>
+            <Text style={styles.achievementsLabel}>ACHIEVEMENTS</Text>
+            <View style={styles.achievementsRow}>
+              <View style={styles.achievementCard}>
+                <Text style={styles.achievementEmoji}>⭐</Text>
+                <Text style={styles.achievementText}>Quote Master</Text>
               </View>
-              <View className="flex-1 items-center rounded-2xl border border-[#E7E7F0] bg-white p-4 shadow-sm" style={{ elevation: 2 }}>
-                <Text className="text-3xl">❤️</Text>
-                <Text className="mt-2 text-center text-xs font-semibold text-[#29293D]">Fav Collector</Text>
+              <View style={styles.achievementCard}>
+                <Text style={styles.achievementEmoji}>❤️</Text>
+                <Text style={styles.achievementText}>Fav Collector</Text>
               </View>
-              <View className="flex-1 items-center rounded-2xl border border-[#E7E7F0] bg-white p-4 shadow-sm" style={{ elevation: 2 }}>
-                <Text className="text-3xl">🎯</Text>
-                <Text className="mt-2 text-center text-xs font-semibold text-[#29293D]">Streak Master</Text>
+              <View style={styles.achievementCard}>
+                <Text style={styles.achievementEmoji}>🎯</Text>
+                <Text style={styles.achievementText}>Streak Master</Text>
               </View>
             </View>
           </View>
         </View>
 
         {/* Action Buttons with enhanced styling */}
-        <View className="mt-10 gap-3 pb-8">
+        <View style={styles.buttonsSection}>
           <Pressable
-            className="items-center rounded-2xl bg-[#5548EF] py-4 active:bg-[#3D3AE0]"
+            style={styles.editButton}
             onPress={() => setEditMode(true)}>
-            <Text className="text-[16px] font-semibold text-white">✏️ Edit Profile</Text>
+            <Text style={styles.editButtonText}>✏️ Edit Profile</Text>
           </Pressable>
 
           <Pressable 
-            className="items-center rounded-2xl border border-[#FF6B6B] bg-[#FFE7E7] py-4 active:bg-[#FF9E9E]"
+            style={styles.logoutButton}
             onPress={handleLogout}>
-            <Text className="text-[16px] font-semibold text-[#FF6B6B]">🚪 Logout</Text>
+            <Text style={styles.logoutButtonText}>🚪 Logout</Text>
           </Pressable>
 
-          <Pressable className="items-center rounded-2xl border border-[#E7E7F0] bg-white py-4 active:bg-[#F8F8FC]" onPress={onBackToHome}>
-            <Text className="text-[16px] font-semibold text-[#29293D]">← Back to Home</Text>
+          <Pressable style={styles.backButton} onPress={onBackToHome}>
+            <Text style={styles.backButtonText}>← Back to Home</Text>
           </Pressable>
         </View>
       </View>
 
       {/* Edit Profile Modal */}
       <Modal visible={editMode} transparent animationType="fade">
-        <View className="flex-1 items-center justify-center bg-black/50">
-          <View className="w-5/6 rounded-3xl bg-white p-6">
-            <Text className="text-2xl font-extrabold text-[#29293D]">Edit Profile</Text>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Edit Profile</Text>
 
-            <View className="mt-6 gap-4">
+            <View style={styles.inputSection}>
               {/* Name Input */}
               <View>
-                <Text className="text-sm font-semibold text-[#8D8CA3]">Full Name</Text>
+                <Text style={styles.inputLabel}>Full Name</Text>
                 <TextInput
-                  className="mt-2 rounded-xl border border-[#E7E7F0] bg-[#F8F8FC] px-4 py-3 text-[#29293D]"
+                  style={styles.textInput}
                   value={editName}
                   onChangeText={setEditName}
                   placeholder="Enter your name"
@@ -189,9 +189,9 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
 
               {/* Email Input */}
               <View>
-                <Text className="text-sm font-semibold text-[#8D8CA3]">Email Address</Text>
+                <Text style={styles.inputLabel}>Email Address</Text>
                 <TextInput
-                  className="mt-2 rounded-xl border border-[#E7E7F0] bg-[#F8F8FC] px-4 py-3 text-[#29293D]"
+                  style={styles.textInput}
                   value={editEmail}
                   onChangeText={setEditEmail}
                   placeholder="Enter your email"
@@ -201,21 +201,21 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
             </View>
 
             {/* Modal Buttons */}
-            <View className="mt-8 gap-3">
+            <View style={styles.modalButtons}>
               <Pressable
-                className="items-center rounded-2xl bg-[#5548EF] py-3"
+                style={styles.saveButton}
                 onPress={handleSaveProfile}>
-                <Text className="text-[16px] font-semibold text-white">Save Changes</Text>
+                <Text style={styles.saveButtonText}>Save Changes</Text>
               </Pressable>
 
               <Pressable
-                className="items-center rounded-2xl border border-[#E7E7F0] bg-white py-3"
+                style={styles.cancelButton}
                 onPress={() => {
                   setEditMode(false);
                   setEditName(profileData.name);
                   setEditEmail(profileData.email);
                 }}>
-                <Text className="text-[16px] font-semibold text-[#29293D]">Cancel</Text>
+                <Text style={styles.cancelButtonText}>Cancel</Text>
               </Pressable>
             </View>
           </View>
@@ -224,5 +224,292 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ECEBFA',
+  },
+  mainContainer: {
+    flex: 1,
+    overflow: 'scroll',
+    paddingHorizontal: 16,
+    paddingTop: 24,
+  },
+  headerTitle: {
+    marginBottom: 24,
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  profileCard: {
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+    elevation: 4,
+  },
+  avatarContainer: {
+    alignItems: 'center',
+  },
+  avatar: {
+    width: 128,
+    height: 128,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 64,
+    backgroundColor: '#5548EF',
+    elevation: 3,
+  },
+  avatarText: {
+    fontSize: 48,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+  profileName: {
+    marginTop: 32,
+    textAlign: 'center',
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  profileEmail: {
+    marginTop: 8,
+    textAlign: 'center',
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#7E7D94',
+  },
+  statusContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statusBadge: {
+    borderRadius: 20,
+    backgroundColor: '#F0E8FE',
+    paddingHorizontal: 24,
+    paddingVertical: 8,
+  },
+  statusText: {
+    fontSize: 12,
+    fontWeight: '600',
+    letterSpacing: 1,
+    color: '#5548EF',
+  },
+  statisticsSection: {
+    marginTop: 32,
+    gap: 12,
+  },
+  sectionLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    letterSpacing: 2,
+    color: '#8D8CA3',
+  },
+  statisticsRow: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  statCard: {
+    flex: 1,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    elevation: 2,
+  },
+  statLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#8D8CA3',
+  },
+  statNumber: {
+    marginTop: 16,
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#5548EF',
+  },
+  statSubtext: {
+    marginTop: 4,
+    fontSize: 12,
+    color: '#7E7D94',
+  },
+  progressSection: {
+    marginTop: 32,
+    gap: 12,
+  },
+  streakCard: {
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    elevation: 2,
+  },
+  streakContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  streakLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#8D8CA3',
+  },
+  streakNumber: {
+    marginTop: 12,
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#5548EF',
+  },
+  achievementsLabel: {
+    marginBottom: 12,
+    fontSize: 12,
+    fontWeight: '600',
+    letterSpacing: 2,
+    color: '#8D8CA3',
+  },
+  achievementsRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  achievementCard: {
+    flex: 1,
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+    elevation: 2,
+  },
+  achievementEmoji: {
+    fontSize: 28,
+  },
+  achievementText: {
+    marginTop: 8,
+    textAlign: 'center',
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#29293D',
+  },
+  buttonsSection: {
+    marginTop: 40,
+    gap: 12,
+    paddingBottom: 32,
+  },
+  editButton: {
+    alignItems: 'center',
+    borderRadius: 16,
+    backgroundColor: '#5548EF',
+    paddingVertical: 16,
+  },
+  editButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  logoutButton: {
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#FF6B6B',
+    backgroundColor: '#FFE7E7',
+    paddingVertical: 16,
+  },
+  logoutButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FF6B6B',
+  },
+  backButton: {
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 16,
+  },
+  backButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#29293D',
+  },
+  modalOverlay: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '83%',
+    borderRadius: 24,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  inputSection: {
+    marginTop: 24,
+    gap: 16,
+  },
+  inputLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#8D8CA3',
+  },
+  textInput: {
+    marginTop: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#F8F8FC',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 14,
+    color: '#29293D',
+  },
+  modalButtons: {
+    marginTop: 32,
+    gap: 12,
+  },
+  saveButton: {
+    alignItems: 'center',
+    borderRadius: 16,
+    backgroundColor: '#5548EF',
+    paddingVertical: 12,
+  },
+  saveButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  cancelButton: {
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 12,
+  },
+  cancelButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#29293D',
+  },
+});
 
 export default ProfileScreen;

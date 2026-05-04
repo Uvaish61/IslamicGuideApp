@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, StatusBar, Text, View } from 'react-native';
+import { Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { tasbeehPhrases, predefinedRanges } from '../data/tasbeehData';
 import RangeSelector from '../componenets/RangeSelector';
@@ -48,38 +48,39 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#ECEBFA]">
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
       
-      <View className="flex-1 px-6 py-6">
+      <View style={styles.mainContainer}>
         {/* Header with back button */}
-        <View className="mb-8 flex-row items-center justify-between">
+        <View style={styles.header}>
           <View>
-            <Text className="text-3xl font-extrabold text-[#29293D]">Tasbeeh Counter</Text>
-            <Text className="mt-1 text-sm font-medium text-[#7E7D94]">Pick a dhikr, set a target, and tap to count.</Text>
+            <Text style={styles.headerTitle}>Tasbeeh Counter</Text>
+            <Text style={styles.headerSubtitle}>Pick a dhikr, set a target, and tap to count.</Text>
           </View>
           <Pressable onPress={onBackToHome}>
-            <Text className="text-base font-semibold text-[#5548EF]">Back</Text>
+            <Text style={styles.backButtonText}>Back</Text>
           </Pressable>
         </View>
 
-        <View className="mb-6 rounded-3xl bg-[#FFFFFF] px-5 py-4">
-          <Text className="mb-3 text-sm font-semibold text-[#7E7D94]">Choose Tasbeeh</Text>
-          <View className="flex-row flex-wrap gap-2">
+        <View style={styles.phraseCard}>
+          <Text style={styles.phraseLabel}>Choose Tasbeeh</Text>
+          <View style={styles.phraseContainer}>
             {tasbeehPhrases.map((phrase) => {
               const isSelected = selectedPhrase.id === phrase.id;
 
               return (
                 <Pressable
                   key={phrase.id}
-                  className={`rounded-full border px-4 py-2 ${
-                    isSelected ? 'bg-[#5548EF]' : 'border-[#E7E7F0] bg-white'
-                  }`}
+                  style={[
+                    styles.phraseButton,
+                    isSelected ? styles.phraseButtonActive : styles.phraseButtonInactive,
+                  ]}
                   onPress={() => {
                     setSelectedPhrase(phrase);
                     setCounter(0);
                   }}>
-                  <Text className={`text-sm font-semibold ${isSelected ? 'text-white' : 'text-[#29293D]'}`}>
+                  <Text style={isSelected ? styles.phraseButtonTextActive : styles.phraseButtonText}>
                     {phrase.name}
                   </Text>
                 </Pressable>
@@ -113,5 +114,80 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ECEBFA',
+  },
+  mainContainer: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+  },
+  header: {
+    marginBottom: 32,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  headerSubtitle: {
+    marginTop: 4,
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#7E7D94',
+  },
+  backButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#5548EF',
+  },
+  phraseCard: {
+    marginBottom: 24,
+    borderRadius: 24,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  phraseLabel: {
+    marginBottom: 12,
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#7E7D94',
+  },
+  phraseContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  phraseButton: {
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  phraseButtonActive: {
+    backgroundColor: '#5548EF',
+  },
+  phraseButtonInactive: {
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+  },
+  phraseButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#29293D',
+  },
+  phraseButtonTextActive: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+});
 
 export default TasbeehScreen;
