@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Pressable, StatusBar, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native';
 import { tasbeehPhrases, predefinedRanges } from '../data/tasbeehData';
 import RangeSelector from '../componenets/RangeSelector';
 import CounterDisplay from '../componenets/CounterDisplay';

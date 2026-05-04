@@ -84,6 +84,11 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_shared", "-DCMAKE_SHARED_LINKER_FLAGS=-lc++_shared"
+            }
+        }
     }
     signingConfigs {
         debug {
@@ -104,6 +109,13 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+    }
+}
+
+// Ensure libc++_shared is packaged to satisfy C++ runtime symbols for native modules
+android {
+    packagingOptions {
+        pickFirst 'lib/**/libc++_shared.so'
     }
 }
 
