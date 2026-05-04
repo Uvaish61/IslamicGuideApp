@@ -75,7 +75,7 @@ const QiblaScreen = ({ onBackToHome }: QiblaScreenProps) => {
             <Navigation size={20} color="#3D3AE0" />
             <Text className="text-2xl font-bold text-[#29293D]">Qibla</Text>
           </View>
-          <Pressable onPress={() => setDeviceHeading((prev) => (prev + 5) % 360))}>
+          <Pressable onPress={() => setDeviceHeading((prev) => (prev + 5) % 360)}>
             <RefreshCw size={24} color="#5548EF" />
           </Pressable>
         </View>
