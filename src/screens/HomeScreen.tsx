@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, ScrollView, StatusBar, Text, View } from 'react-native';
+import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import {
   Bell,
@@ -82,203 +82,178 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
   ] as const;
 
   return (
-    <SafeAreaView className="flex-1 bg-[#ECEBFA]">
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
 
-      <View className="absolute -left-14 top-20 h-36 w-36 rounded-full bg-[#DDEBC7] opacity-50" />
-      <View className="absolute -right-16 top-44 h-44 w-44 rounded-full bg-[#FFE7A7] opacity-25" />
-      <View className="absolute left-10 top-1/2 h-3 w-3 rounded-full bg-[#8DC47A] opacity-60" />
-      <View className="absolute bottom-8 right-10 h-24 w-24 rounded-full bg-[#F2D9A8] opacity-30" />
-      <View className="absolute bottom-0 left-0 right-0 h-28 bg-[#F6EFCF] opacity-60" />
+      <View style={styles.bgBubble1} />
+      <View style={styles.bgBubble2} />
+      <View style={styles.bgDot1} />
+      <View style={styles.bgDot2} />
+      <View style={styles.bgBottom} />
 
       <ScrollView
-        className="relative z-10 flex-1 px-5 pt-3"
-        contentContainerStyle={{ flexGrow: 1, paddingBottom: 28 }}
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}>
-        <View className="relative overflow-hidden rounded-[32px] bg-[#F8F6E8] px-5 py-5" style={cardShadow}>
-          <View className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#FFE7A7] opacity-80" />
-          <View className="absolute -bottom-8 right-8 h-24 w-24 rounded-full bg-[#DDEBC7]" />
-          <View className="absolute bottom-8 left-6 h-3 w-3 rounded-full bg-[#8DC47A]" />
+        <View style={[styles.headerCard, cardShadow]}>
+          <View style={styles.headerBubble1} />
+          <View style={styles.headerBubble2} />
+          <View style={styles.headerDot} />
 
-          <View className="flex-row items-start justify-between">
-            <View className="flex-1 pr-4">
-              <View className="flex-row items-center gap-2">
-                <MapPin {...iconProps} size={14} color="#7E7D94" strokeWidth={1.8} />
-                <Text className="text-[12px] font-medium tracking-[0.4px] text-[#7E7D94]">
-                  Mohammadpur, Dhaka, Bangladesh
-                </Text>
+          <View style={styles.headerRow}>
+            <View style={styles.headerLeft}>
+              <View style={styles.locationRow}>
+                <MapPin size={14} color="#7E7D94" strokeWidth={1.8} />
+                <Text style={styles.locationText}>Mohammadpur, Dhaka, Bangladesh</Text>
               </View>
-              <Text className="mt-2 text-[28px] font-extrabold leading-9 tracking-[-0.8px] text-[#29293D]">
-                Ramadan Kareem
-              </Text>
-              <Text className="mt-3 max-w-[260px] text-[14px] leading-6 text-[#7E7D94]">
-                A calm space for prayer, reflection, and small daily reminders.
-              </Text>
+              <Text style={styles.headerTitle}>Ramadan Kareem</Text>
+              <Text style={styles.headerSubtitle}>A calm space for prayer, reflection, and small daily reminders.</Text>
             </View>
 
-            <Pressable className="h-11 w-11 items-center justify-center rounded-full bg-white" onPress={onOpenSettings}>
+            <Pressable style={[styles.bellButton, cardShadow]} onPress={onOpenSettings}>
               <Bell {...iconProps} />
             </Pressable>
           </View>
 
-          <View className="mt-5 flex-row items-center gap-3">
-            <View className="rounded-full bg-[#EEF4DC] px-3 py-1.5">
-              <Text className="text-[11px] font-semibold tracking-[0.2px] text-[#6F8B42]">Today</Text>
+          <View style={styles.tagRow}>
+            <View style={styles.tagToday}>
+              <Text style={styles.tagText}>Today</Text>
             </View>
-            <View className="rounded-full bg-white/70 px-3 py-1.5">
-              <Text className="text-[11px] font-semibold tracking-[0.2px] text-[#8C7A42]">Peaceful focus</Text>
+            <View style={styles.tagFocus}>
+              <Text style={styles.tagText}>Peaceful focus</Text>
             </View>
           </View>
         </View>
 
-        <View className="mt-5 flex-1 items-center justify-center px-1">
-          <View className="w-full overflow-hidden rounded-[30px] bg-[#E9F0BF] px-5 py-5" style={cardShadow}>
-            <View className="flex-row items-start justify-between">
-              <View className="flex-1 pr-4">
-                <Text className="text-[12px] font-semibold uppercase tracking-[1px] text-[#56643F]">
-                  1 Ramadan 1446 Hijria
-                </Text>
-                <Text className="mt-3 text-[46px] font-extrabold leading-[50px] tracking-[-1.2px] text-[#1F2417]">
-                  17:21
-                </Text>
-                <View className="mt-3 flex-row items-center gap-2">
-                  <View className="h-8 w-8 items-center justify-center rounded-full border border-[#91A16A] bg-[#F3F7DD]">
-                    <Text className="text-[12px] font-bold text-[#56643F]">◔</Text>
+        <View style={styles.prayerCardContainer}>
+          <View style={[styles.prayerCard, cardShadow]}>
+            <View style={styles.prayerCardRow}>
+              <View style={styles.prayerCardLeft}>
+                <Text style={styles.prayerLabel}>1 Ramadan 1446 Hijria</Text>
+                <Text style={styles.prayerTime}>17:21</Text>
+                <View style={styles.nextPrayerRow}>
+                  <View style={styles.moonIcon}>
+                    <Text style={styles.moonText}>◔</Text>
                   </View>
                   <View>
-                    <Text className="text-[12px] font-semibold tracking-[0.2px] text-[#56643F]">Next Prayer</Text>
-                    <Text className="text-[11px] tracking-[0.2px] text-[#72814E]">4:30 PM</Text>
+                    <Text style={styles.nextPrayerLabel}>Next Prayer</Text>
+                    <Text style={styles.nextPrayerTime}>4:30 PM</Text>
                   </View>
                 </View>
               </View>
 
-              <View className="h-[150px] w-[132px] items-center justify-end overflow-hidden rounded-[26px] bg-[#F6E08C]">
-                <View className="absolute right-2 top-3 h-10 w-10 rounded-full bg-[#F4B800]" />
-                <View className="absolute left-4 top-14 h-16 w-16 rounded-t-full border-l-4 border-r-4 border-t-4 border-[#F4E7D0] bg-[#FBE8D0]" />
-                <View className="absolute bottom-0 left-0 right-0 h-10 rounded-t-[30px] bg-[#F2D1A8]" />
-                <View className="absolute bottom-0 left-4 h-20 w-4 rounded-t-full bg-[#E68B52]" />
-                <View className="absolute bottom-0 right-6 h-14 w-3 rounded-t-full bg-[#E68B52]" />
-                <View className="absolute right-7 top-1 h-4 w-6 rounded-full bg-[#FFF4D3]" />
+              <View style={styles.prayerArt}>
+                <View style={styles.artCircle} />
+                <View style={styles.artCup} />
+                <View style={styles.artBase} />
+                <View style={styles.artHandle1} />
+                <View style={styles.artHandle2} />
+                <View style={styles.artLight} />
               </View>
             </View>
 
-            <View className="mt-4 flex-row items-center justify-between rounded-[22px] bg-[#DDE8A1] px-4 py-3">
+            <View style={styles.focusWindow}>
               <View>
-                <Text className="text-[11px] font-semibold uppercase tracking-[1.4px] text-[#647246]">
-                  Focus window
-                </Text>
-                <Text className="mt-1 text-[16px] font-bold leading-6 text-[#1F2417]">
-                  Prepare for the next salah
-                </Text>
+                <Text style={styles.focusLabel}>Focus window</Text>
+                <Text style={styles.focusDescription}>Prepare for the next salah</Text>
               </View>
-              <View className="rounded-full bg-[#55643E] px-4 py-2">
-                <Text className="text-[12px] font-semibold tracking-[0.2px] text-white">View times</Text>
+              <View style={styles.viewTimesButton}>
+                <Text style={styles.viewTimesText}>View times</Text>
               </View>
             </View>
           </View>
 
-          <View className="mt-4 w-full">
-            <Text className="mb-3 text-[11px] font-semibold uppercase tracking-[1.6px] text-[#8C8AA0]">
-              Quick actions
-            </Text>
-            <View className="flex-row flex-wrap justify-between gap-y-3">
+          <View style={styles.quickActionsContainer}>
+            <Text style={styles.quickActionsLabel}>Quick actions</Text>
+            <View style={styles.quickActionsGrid}>
               {quickActions.map(({ id, label, Icon, tone }) => (
                 <View
                   key={id}
-                  className="basis-[18%] min-w-[58px] flex-1 items-center rounded-[20px] bg-white px-2 py-3"
-                  style={[{ backgroundColor: tone }, cardShadow]}>
-                  <View className="h-11 w-11 items-center justify-center rounded-full bg-white/80">
+                  style={[styles.quickActionCard, { backgroundColor: tone }, cardShadow]}>
+                  <View style={styles.quickActionIcon}>
                     <Icon {...iconProps} />
                   </View>
-                  <Text className="mt-2 text-[10px] font-semibold tracking-[0.2px] text-[#29293D]">{label}</Text>
+                  <Text style={styles.quickActionLabel}>{label}</Text>
                 </View>
               ))}
             </View>
           </View>
         </View>
 
-        <View className="mb-4 flex-row flex-wrap justify-center gap-3">
-          <Pressable className="min-w-[46%] flex-1 rounded-2xl bg-[#5548EF] px-5 py-3" onPress={onOpenProfile} style={cardShadow}>
-            <Text className="text-[15px] font-semibold text-white">Open Profile</Text>
+        <View style={styles.buttonGroup}>
+          <Pressable style={[styles.buttonPrimary, cardShadow]} onPress={onOpenProfile}>
+            <Text style={styles.buttonText}>Open Profile</Text>
           </Pressable>
 
           <Pressable
-            className="min-w-[46%] flex-1 rounded-2xl border border-[#E7E7F0] bg-white px-5 py-3"
-            onPress={onOpenSettings}
-            style={cardShadow}>
-            <Text className="text-[15px] font-semibold text-[#29293D]">Open Settings</Text>
+            style={[styles.buttonSecondary, cardShadow]}
+            onPress={onOpenSettings}>
+            <Text style={styles.buttonSecondaryText}>Open Settings</Text>
           </Pressable>
 
           <Pressable
-            className="min-w-[46%] flex-1 rounded-2xl border border-[#5548EF] bg-white px-5 py-3"
-            onPress={onOpenDailyQuote}
-            style={cardShadow}>
-            <Text className="text-[15px] font-semibold text-[#5548EF]">Daily Quote</Text>
+            style={[styles.buttonTertiary, cardShadow]}
+            onPress={onOpenDailyQuote}>
+            <Text style={styles.buttonTertiaryText}>Daily Quote</Text>
           </Pressable>
 
-          <Pressable className="min-w-[46%] flex-1 rounded-2xl bg-[#4ECDC4] px-5 py-3" onPress={onOpenTasbeeh} style={cardShadow}>
-            <Text className="text-[15px] font-semibold text-white">Tasbeeh Counter</Text>
+          <Pressable style={[styles.buttonAccent, cardShadow]} onPress={onOpenTasbeeh}>
+            <Text style={styles.buttonText}>Tasbeeh Counter</Text>
           </Pressable>
         </View>
 
-        <View className="mb-4">
-          <Text className="mb-3 text-[11px] font-semibold uppercase tracking-[1.6px] text-[#8F6A26]">Featured</Text>
-          <View className="flex-row flex-wrap justify-between gap-y-3">
+        <View style={styles.featuredContainer}>
+          <Text style={styles.featuredLabel}>Featured</Text>
+          <View style={styles.featuredGrid}>
             {featuredCards.map(({ id, title, subtitle, label, Icon, tone, accent }) => (
-              <View key={id} className="w-[48%] overflow-hidden rounded-[26px] px-4 py-4" style={[{ backgroundColor: tone }, cardShadow]}>
-                <View className="mb-10 flex-row items-start justify-between">
-                  <View className="h-10 w-10 items-center justify-center rounded-full bg-white/80">
+              <View key={id} style={[styles.featuredCard, { backgroundColor: tone }, cardShadow]}>
+                <View style={styles.featuredHeader}>
+                  <View style={styles.featuredIcon}>
                     <Icon size={18} strokeWidth={1.9} color={accent} />
                   </View>
-                  <View className="h-5 w-5 rounded-full bg-white/60" />
+                  <View style={styles.featuredDot} />
                 </View>
-                <Text className="text-[16px] font-extrabold text-[#29293D]">{title}</Text>
-                <Text className="mt-2 text-[12px] leading-4 text-[#6F6E84]">{subtitle}</Text>
-                <View className="mt-4 self-start rounded-full bg-[#29293D] px-4 py-2">
-                  <Text className="text-[11px] font-semibold text-white">{label}</Text>
+                <Text style={styles.featuredTitle}>{title}</Text>
+                <Text style={styles.featuredSubtitle}>{subtitle}</Text>
+                <View style={styles.featuredButton}>
+                  <Text style={styles.featuredButtonText}>{label}</Text>
                 </View>
               </View>
             ))}
           </View>
         </View>
 
-        <View className="mb-2 overflow-hidden rounded-[28px] bg-[#F8F2E2] px-5 py-5" style={cardShadow}>
-          <View className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-[#FFE7B8]" />
-          <View className="absolute bottom-4 right-5 h-2.5 w-2.5 rounded-full bg-[#D7A64D]" />
-          <Text className="text-[11px] font-semibold uppercase tracking-[1.6px] text-[#8F6A26]">Reflection</Text>
-          <Text className="mt-3 text-[19px] font-extrabold leading-8 tracking-[-0.4px] text-[#29293D]">
-            Keep your heart steady, and let the day unfold with quiet intention.
-          </Text>
-          <Text className="mt-3 max-w-[260px] text-[13px] leading-6 text-[#7E7D94]">
-            A minimal reminder card that gives the home screen a calmer, more personal feel.
-          </Text>
-          <View className="mt-4 flex-row items-center gap-2 self-start rounded-full bg-white px-4 py-2">
-            <View className="h-2 w-2 rounded-full bg-[#D7A64D]" />
-            <Text className="text-[12px] font-semibold tracking-[0.2px] text-[#29293D]">Open today&apos;s note</Text>
+        <View style={[styles.reflectionCard, cardShadow]}>
+          <View style={styles.reflectionBubble} />
+          <View style={styles.reflectionDot} />
+          <Text style={styles.reflectionLabel}>Reflection</Text>
+          <Text style={styles.reflectionText}>Keep your heart steady, and let the day unfold with quiet intention.</Text>
+          <Text style={styles.reflectionDescription}>A minimal reminder card that gives the home screen a calmer, more personal feel.</Text>
+          <View style={styles.reflectionButton}>
+            <View style={styles.reflectionButtonDot} />
+            <Text style={styles.reflectionButtonText}>Open today's note</Text>
           </View>
         </View>
 
-        <View className="mb-4 rounded-[28px] bg-white px-5 py-5" style={cardShadow}>
-          <View className="flex-row items-center justify-between">
+        <View style={[styles.prayerTimesCard, cardShadow]}>
+          <View style={styles.prayerTimesHeader}>
             <View>
-              <Text className="text-[11px] font-semibold uppercase tracking-[1.6px] text-[#8C8AA0]">Prayer timings</Text>
-              <Text className="mt-1 text-[17px] font-extrabold leading-6 text-[#29293D]">
-                Plan the rest of your day with clarity
-              </Text>
+              <Text style={styles.prayerTimesLabel}>Prayer timings</Text>
+              <Text style={styles.prayerTimesTitle}>Plan the rest of your day with clarity</Text>
             </View>
-            <View className="rounded-full bg-[#F1F0FA] px-3 py-1.5">
-              <Text className="text-[11px] font-semibold tracking-[0.2px] text-[#5548EF]">Updated today</Text>
+            <View style={styles.updatedBadge}>
+              <Text style={styles.updatedBadgeText}>Updated today</Text>
             </View>
           </View>
 
-          <View className="mt-4 flex-row items-end justify-between rounded-[22px] bg-[#F7F7FB] px-3 py-4">
+          <View style={styles.prayerTimesGrid}>
             {prayerTimes.map((item) => (
-              <View key={item.name} className="items-center">
-                <View className={`h-2.5 w-2.5 rounded-full ${item.active ? 'bg-[#F0A11A]' : 'bg-[#D7D7E3]'}`} />
-                <Text className={`mt-2 text-[11px] font-semibold ${item.active ? 'text-[#F0A11A]' : 'text-[#6F6E84]'}`}>
+              <View key={item.name} style={styles.prayerTimeItem}>
+                <View style={[styles.prayerTimeDot, item.active ? styles.prayerTimeDotActive : styles.prayerTimeDotInactive]} />
+                <Text style={[styles.prayerTimeName, item.active ? styles.prayerTimeNameActive : styles.prayerTimeNameInactive]}>
                   {item.name}
                 </Text>
-                <Text className={`mt-1 text-[10px] ${item.active ? 'font-bold text-[#29293D]' : 'text-[#9A98AF]'}`}>
+                <Text style={[styles.prayerTimeValue, item.active ? styles.prayerTimeValueActive : styles.prayerTimeValueInactive]}>
                   {item.time}
                 </Text>
               </View>
@@ -289,5 +264,670 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ECEBFA',
+  },
+  scrollView: {
+    position: 'relative',
+    zIndex: 10,
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 12,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 28,
+  },
+  bgBubble1: {
+    position: 'absolute',
+    left: -56,
+    top: 80,
+    height: 144,
+    width: 144,
+    borderRadius: 999,
+    backgroundColor: 'rgba(221, 235, 199, 0.5)',
+  },
+  bgBubble2: {
+    position: 'absolute',
+    right: -64,
+    top: 176,
+    height: 176,
+    width: 176,
+    borderRadius: 999,
+    backgroundColor: 'rgba(255, 231, 167, 0.25)',
+  },
+  bgDot1: {
+    position: 'absolute',
+    left: 40,
+    top: '50%',
+    height: 12,
+    width: 12,
+    borderRadius: 999,
+    backgroundColor: 'rgba(141, 196, 122, 0.6)',
+  },
+  bgDot2: {
+    position: 'absolute',
+    bottom: 32,
+    right: 40,
+    height: 96,
+    width: 96,
+    borderRadius: 999,
+    backgroundColor: 'rgba(242, 217, 168, 0.3)',
+  },
+  bgBottom: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 112,
+    backgroundColor: 'rgba(246, 239, 207, 0.6)',
+  },
+  headerCard: {
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: 32,
+    backgroundColor: '#F8F6E8',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  headerBubble1: {
+    position: 'absolute',
+    right: -40,
+    top: -40,
+    height: 112,
+    width: 112,
+    borderRadius: 999,
+    backgroundColor: 'rgba(255, 231, 167, 0.8)',
+  },
+  headerBubble2: {
+    position: 'absolute',
+    bottom: -32,
+    right: 32,
+    height: 96,
+    width: 96,
+    borderRadius: 999,
+    backgroundColor: '#DDEBC7',
+  },
+  headerDot: {
+    position: 'absolute',
+    bottom: 32,
+    left: 24,
+    height: 12,
+    width: 12,
+    borderRadius: 999,
+    backgroundColor: '#8DC47A',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
+  headerLeft: {
+    flex: 1,
+    paddingRight: 16,
+  },
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  locationText: {
+    fontSize: 12,
+    fontWeight: '600',
+    letterSpacing: 0.4,
+    color: '#7E7D94',
+  },
+  headerTitle: {
+    marginTop: 8,
+    fontSize: 28,
+    lineHeight: 36,
+    fontWeight: '800',
+    letterSpacing: -0.8,
+    color: '#29293D',
+  },
+  headerSubtitle: {
+    marginTop: 12,
+    maxWidth: 260,
+    fontSize: 14,
+    lineHeight: 24,
+    color: '#7E7D94',
+  },
+  bellButton: {
+    height: 44,
+    width: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 999,
+    backgroundColor: '#FFFFFF',
+  },
+  tagRow: {
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  tagToday: {
+    borderRadius: 999,
+    backgroundColor: '#EEF4DC',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  tagFocus: {
+    borderRadius: 999,
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  tagText: {
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+    color: '#6F8B42',
+  },
+  prayerCardContainer: {
+    marginTop: 20,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+  },
+  prayerCard: {
+    width: '100%',
+    overflow: 'hidden',
+    borderRadius: 30,
+    backgroundColor: '#E9F0BF',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  prayerCardRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
+  prayerCardLeft: {
+    flex: 1,
+    paddingRight: 16,
+  },
+  prayerLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    color: '#56643F',
+  },
+  prayerTime: {
+    marginTop: 12,
+    fontSize: 46,
+    lineHeight: 50,
+    fontWeight: '800',
+    letterSpacing: -1.2,
+    color: '#1F2417',
+  },
+  nextPrayerRow: {
+    marginTop: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  moonIcon: {
+    height: 32,
+    width: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: '#91A16A',
+    backgroundColor: '#F3F7DD',
+  },
+  moonText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#56643F',
+  },
+  nextPrayerLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+    color: '#56643F',
+  },
+  nextPrayerTime: {
+    fontSize: 11,
+    letterSpacing: 0.2,
+    color: '#72814E',
+  },
+  prayerArt: {
+    height: 150,
+    width: 132,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    overflow: 'hidden',
+    borderRadius: 26,
+    backgroundColor: '#F6E08C',
+  },
+  artCircle: {
+    position: 'absolute',
+    right: 8,
+    top: 12,
+    height: 40,
+    width: 40,
+    borderRadius: 999,
+    backgroundColor: '#F4B800',
+  },
+  artCup: {
+    position: 'absolute',
+    left: 16,
+    top: 56,
+    height: 64,
+    width: 64,
+    borderRadius: 16,
+    borderTopLeftRadius: 999,
+    borderTopRightRadius: 999,
+    borderLeftWidth: 4,
+    borderRightWidth: 4,
+    borderTopWidth: 4,
+    borderColor: '#F4E7D0',
+    backgroundColor: '#FBE8D0',
+  },
+  artBase: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 40,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    backgroundColor: '#F2D1A8',
+  },
+  artHandle1: {
+    position: 'absolute',
+    bottom: 0,
+    left: 16,
+    height: 80,
+    width: 4,
+    borderTopLeftRadius: 999,
+    borderTopRightRadius: 999,
+    backgroundColor: '#E68B52',
+  },
+  artHandle2: {
+    position: 'absolute',
+    bottom: 0,
+    right: 24,
+    height: 56,
+    width: 3,
+    borderTopLeftRadius: 999,
+    borderTopRightRadius: 999,
+    backgroundColor: '#E68B52',
+  },
+  artLight: {
+    position: 'absolute',
+    right: 28,
+    top: 4,
+    height: 16,
+    width: 24,
+    borderRadius: 999,
+    backgroundColor: '#FFF4D3',
+  },
+  focusWindow: {
+    marginTop: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 22,
+    backgroundColor: '#DDE8A1',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  focusLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1.4,
+    color: '#647246',
+  },
+  focusDescription: {
+    marginTop: 4,
+    fontSize: 16,
+    fontWeight: '800',
+    lineHeight: 24,
+    color: '#1F2417',
+  },
+  viewTimesButton: {
+    borderRadius: 999,
+    backgroundColor: '#55643E',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  viewTimesText: {
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+    color: '#FFFFFF',
+  },
+  quickActionsContainer: {
+    marginTop: 16,
+    width: '100%',
+  },
+  quickActionsLabel: {
+    marginBottom: 12,
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1.6,
+    color: '#8C8AA0',
+  },
+  quickActionsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  quickActionCard: {
+    flex: 1,
+    minWidth: 58,
+    alignItems: 'center',
+    borderRadius: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
+  },
+  quickActionIcon: {
+    height: 44,
+    width: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 999,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+  },
+  quickActionLabel: {
+    marginTop: 8,
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+    color: '#29293D',
+  },
+  buttonGroup: {
+    marginBottom: 16,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 12,
+  },
+  buttonPrimary: {
+    minWidth: '46%',
+    flex: 1,
+    borderRadius: 16,
+    backgroundColor: '#5548EF',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  buttonSecondary: {
+    minWidth: '46%',
+    flex: 1,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  buttonSecondaryText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#29293D',
+  },
+  buttonTertiary: {
+    minWidth: '46%',
+    flex: 1,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#5548EF',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  buttonTertiaryText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#5548EF',
+  },
+  buttonAccent: {
+    minWidth: '46%',
+    flex: 1,
+    borderRadius: 16,
+    backgroundColor: '#4ECDC4',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  buttonText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  featuredContainer: {
+    marginBottom: 16,
+  },
+  featuredLabel: {
+    marginBottom: 12,
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1.6,
+    color: '#8F6A26',
+  },
+  featuredGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  featuredCard: {
+    width: '48%',
+    overflow: 'hidden',
+    borderRadius: 26,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  featuredHeader: {
+    marginBottom: 40,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
+  featuredIcon: {
+    height: 40,
+    width: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 999,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+  },
+  featuredDot: {
+    height: 20,
+    width: 20,
+    borderRadius: 999,
+    backgroundColor: 'rgba(255,255,255,0.6)',
+  },
+  featuredTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  featuredSubtitle: {
+    marginTop: 8,
+    fontSize: 12,
+    lineHeight: 16,
+    color: '#6F6E84',
+  },
+  featuredButton: {
+    marginTop: 16,
+    alignSelf: 'flex-start',
+    borderRadius: 999,
+    backgroundColor: '#29293D',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  featuredButtonText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  reflectionCard: {
+    marginBottom: 8,
+    overflow: 'hidden',
+    borderRadius: 28,
+    backgroundColor: '#F8F2E2',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  reflectionBubble: {
+    position: 'absolute',
+    right: -24,
+    top: -24,
+    height: 80,
+    width: 80,
+    borderRadius: 999,
+    backgroundColor: '#FFE7B8',
+  },
+  reflectionDot: {
+    position: 'absolute',
+    bottom: 16,
+    right: 20,
+    height: 10,
+    width: 10,
+    borderRadius: 999,
+    backgroundColor: '#D7A64D',
+  },
+  reflectionLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1.6,
+    color: '#8F6A26',
+  },
+  reflectionText: {
+    marginTop: 12,
+    fontSize: 19,
+    lineHeight: 32,
+    fontWeight: '800',
+    letterSpacing: -0.4,
+    color: '#29293D',
+  },
+  reflectionDescription: {
+    marginTop: 12,
+    maxWidth: 260,
+    fontSize: 13,
+    lineHeight: 24,
+    color: '#7E7D94',
+  },
+  reflectionButton: {
+    marginTop: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    alignSelf: 'flex-start',
+    borderRadius: 999,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  reflectionButtonDot: {
+    height: 8,
+    width: 8,
+    borderRadius: 999,
+    backgroundColor: '#D7A64D',
+  },
+  reflectionButtonText: {
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+    color: '#29293D',
+  },
+  prayerTimesCard: {
+    marginBottom: 16,
+    borderRadius: 28,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  prayerTimesHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  prayerTimesLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1.6,
+    color: '#8C8AA0',
+  },
+  prayerTimesTitle: {
+    marginTop: 4,
+    fontSize: 17,
+    fontWeight: '800',
+    lineHeight: 24,
+    color: '#29293D',
+  },
+  updatedBadge: {
+    borderRadius: 999,
+    backgroundColor: '#F1F0FA',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  updatedBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+    color: '#5548EF',
+  },
+  prayerTimesGrid: {
+    marginTop: 16,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    borderRadius: 22,
+    backgroundColor: '#F7F7FB',
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+  },
+  prayerTimeItem: {
+    alignItems: 'center',
+  },
+  prayerTimeDot: {
+    height: 10,
+    width: 10,
+    borderRadius: 999,
+  },
+  prayerTimeDotActive: {
+    backgroundColor: '#F0A11A',
+  },
+  prayerTimeDotInactive: {
+    backgroundColor: '#D7D7E3',
+  },
+  prayerTimeName: {
+    marginTop: 8,
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  prayerTimeNameActive: {
+    color: '#F0A11A',
+  },
+  prayerTimeNameInactive: {
+    color: '#6F6E84',
+  },
+  prayerTimeValue: {
+    marginTop: 4,
+    fontSize: 10,
+  },
+  prayerTimeValueActive: {
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  prayerTimeValueInactive: {
+    color: '#9A98AF',
+  },
+});
 
 export default HomeScreen;
