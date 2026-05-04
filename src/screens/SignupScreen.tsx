@@ -6,6 +6,7 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  StyleSheet,
   StatusBar,
   Text,
   TextInput,
@@ -13,7 +14,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native';
-import { Chrome, ChevronLeft, Eye, Facebook, Lock, Mail, User } from 'lucide-react-native';
+import { Globe, ChevronLeft, Eye, Users, Lock, Mail, User } from 'lucide-react-native';
 
 type SignupScreenProps = {
   onSwitchToLogin: () => void;
@@ -73,50 +74,46 @@ const SignupScreen = ({ onSwitchToLogin, onSignupSuccess }: SignupScreenProps) =
   const strengthLevel = password.length >= 8 ? 2 : password.length >= 6 ? 1 : 0;
 
   return (
-    <SafeAreaView className="flex-1 bg-[#ECEBFA]">
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor="#3D3AE0" />
 
       <KeyboardAvoidingView
-        className="flex-1"
+        style={styles.flex1}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView
-          className="flex-1"
+          style={styles.flex1}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1 }}>
-          <View className="min-h-full bg-[#ECEBFA]">
-            <View className="h-72 overflow-hidden rounded-b-[34px] bg-[#3D3AE0] px-6 pt-5">
-              <View className="absolute -right-16 -top-8 h-56 w-56 rounded-full bg-[#7580FF]/45" />
-              <View className="absolute -left-20 top-20 h-64 w-64 rounded-full bg-[#2F2CD0]/60" />
+          contentContainerStyle={styles.scrollContent}>
+          <View style={styles.screenBg}>
+            <View style={styles.topSection}>
+              <View style={styles.topBubbleRight} />
+              <View style={styles.topBubbleLeft} />
 
-              <View className="flex-row items-center justify-between">
-                <Pressable className="h-8 w-8 items-center justify-center rounded-full bg-white/10">
+              <View style={styles.topRow}>
+                <Pressable style={styles.backButton}>
                   <ChevronLeft size={18} color="#FFFFFF" />
                 </Pressable>
 
-                <View className="flex-row items-center gap-2">
-                  <Text className="text-[13px] text-white/80">Already have an account?</Text>
-                  <Pressable className="rounded-lg bg-white/20 px-3 py-1.5" onPress={onSwitchToLogin}>
-                    <Text className="text-[12px] font-semibold text-white">Sign in</Text>
+                <View style={styles.switchRow}>
+                  <Text style={styles.switchHint}>Already have an account?</Text>
+                  <Pressable style={styles.switchButton} onPress={onSwitchToLogin}>
+                    <Text style={styles.switchButtonText}>Sign in</Text>
                   </Pressable>
                 </View>
               </View>
 
-              <Text className="mt-10 text-center text-[44px] font-extrabold tracking-tight text-white">
-                Jobsly
-              </Text>
+              <Text style={styles.brand}>Jobsly</Text>
             </View>
 
-            <View className="-mt-10 flex-1 rounded-t-[34px] bg-white px-6 pt-10 pb-8">
-              <Text className="text-center text-[44px] font-extrabold tracking-tight text-[#29293D]">
-                Get started free.
-              </Text>
-              <Text className="mt-2 text-center text-[15px] text-[#8D8CA3]">Free forever. No credit card needed.</Text>
+            <View style={styles.card}>
+              <Text style={styles.title}>Get started free.</Text>
+              <Text style={styles.subtitle}>Free forever. No credit card needed.</Text>
 
-              <View className="mt-8 gap-4">
-                <View className="flex-row items-center rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
+              <View style={styles.formWrap}>
+                <View style={styles.inputRow}>
                   <Mail size={18} color="#9E9EB0" />
                   <TextInput
-                    className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
+                    style={styles.input}
                     placeholder="Email Address"
                     placeholderTextColor="#B0B0C2"
                     keyboardType="email-address"
@@ -126,10 +123,10 @@ const SignupScreen = ({ onSwitchToLogin, onSignupSuccess }: SignupScreenProps) =
                   />
                 </View>
 
-                <View className="flex-row items-center rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
+                <View style={styles.inputRow}>
                   <User size={18} color="#9E9EB0" />
                   <TextInput
-                    className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
+                    style={styles.input}
                     placeholder="Your name"
                     placeholderTextColor="#B0B0C2"
                     value={name}
@@ -137,11 +134,11 @@ const SignupScreen = ({ onSwitchToLogin, onSignupSuccess }: SignupScreenProps) =
                   />
                 </View>
 
-                <View className="rounded-2xl border border-[#E8E8F0] bg-white px-4 py-3">
-                  <View className="flex-row items-center">
+                <View style={styles.passwordShell}>
+                  <View style={styles.inputRowNoBorder}>
                     <Lock size={18} color="#9E9EB0" />
                     <TextInput
-                      className="ml-3 flex-1 text-[15px] text-[#2C2C3E]"
+                      style={styles.input}
                       placeholder="Password"
                       placeholderTextColor="#B0B0C2"
                       secureTextEntry={!showPassword}
@@ -149,46 +146,46 @@ const SignupScreen = ({ onSwitchToLogin, onSignupSuccess }: SignupScreenProps) =
                       onChangeText={setPassword}
                     />
                     <Pressable
-                      className="ml-2 h-8 w-8 items-center justify-center rounded-full bg-[#F5F5FA]"
+                      style={styles.eyeButton}
                       onPress={() => setShowPassword(prev => !prev)}>
                       <Eye size={16} color="#9E9EB0" />
                     </Pressable>
                   </View>
 
-                  <View className="mt-2 flex-row items-center justify-end gap-2">
-                    <View className={`h-1.5 w-5 rounded-full ${strengthLevel >= 1 ? 'bg-[#7BD97F]' : 'bg-[#E7E7F0]'}`} />
-                    <View className={`h-1.5 w-5 rounded-full ${strengthLevel >= 2 ? 'bg-[#7BD97F]' : 'bg-[#E7E7F0]'}`} />
-                    <Text className="text-[12px] font-semibold text-[#64BE67]">Strong</Text>
+                  <View style={styles.strengthRow}>
+                    <View style={[styles.strengthDot, strengthLevel >= 1 ? styles.strengthDotActive : styles.strengthDotInactive]} />
+                    <View style={[styles.strengthDot, strengthLevel >= 2 ? styles.strengthDotActive : styles.strengthDotInactive]} />
+                    <Text style={styles.strengthText}>Strong</Text>
                   </View>
                 </View>
               </View>
 
               <Pressable
-                className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4"
+                style={[styles.signUpButton, isSaving && styles.signUpButtonDisabled]}
                 onPress={handleSignup}
                 disabled={isSaving}>
                 {isSaving ? (
                   <ActivityIndicator color="#FFFFFF" />
                 ) : (
-                  <Text className="text-[16px] font-semibold text-white">Sign up</Text>
+                  <Text style={styles.signUpText}>Sign up</Text>
                 )}
               </Pressable>
 
-              <View className="mt-8 flex-row items-center">
-                <View className="h-[1px] flex-1 bg-[#E7E7F0]" />
-                <Text className="mx-3 text-[13px] text-[#A6A6BA]">Or sign up with</Text>
-                <View className="h-[1px] flex-1 bg-[#E7E7F0]" />
+              <View style={styles.dividerRow}>
+                <View style={styles.dividerLine} />
+                <Text style={styles.dividerText}>Or sign up with</Text>
+                <View style={styles.dividerLine} />
               </View>
 
-              <View className="mt-6 flex-row gap-3">
-                <Pressable className="h-14 flex-1 flex-row items-center justify-center rounded-2xl border border-[#E7E7F0]">
-                  <Chrome size={18} color="#4B4B60" />
-                  <Text className="ml-2 text-[15px] font-semibold text-[#3A3A50]">Google</Text>
+              <View style={styles.socialRow}>
+                <Pressable style={styles.socialButton}>
+                  <Globe size={18} color="#4B4B60" />
+                  <Text style={styles.socialText}>Google</Text>
                 </Pressable>
 
-                <Pressable className="h-14 flex-1 flex-row items-center justify-center rounded-2xl border border-[#E7E7F0]">
-                  <Facebook size={18} color="#3B82F6" />
-                  <Text className="ml-2 text-[15px] font-semibold text-[#3A3A50]">Facebook</Text>
+                <Pressable style={styles.socialButton}>
+                  <Users size={18} color="#3B82F6" />
+                  <Text style={styles.socialText}>Facebook</Text>
                 </Pressable>
               </View>
             </View>
@@ -198,5 +195,230 @@ const SignupScreen = ({ onSwitchToLogin, onSignupSuccess }: SignupScreenProps) =
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ECEBFA',
+  },
+  flex1: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  screenBg: {
+    minHeight: '100%',
+    backgroundColor: '#ECEBFA',
+  },
+  topSection: {
+    height: 288,
+    overflow: 'hidden',
+    borderBottomLeftRadius: 34,
+    borderBottomRightRadius: 34,
+    backgroundColor: '#3D3AE0',
+    paddingHorizontal: 24,
+    paddingTop: 20,
+  },
+  topBubbleRight: {
+    position: 'absolute',
+    right: -68,
+    top: -28,
+    height: 224,
+    width: 224,
+    borderRadius: 999,
+    backgroundColor: 'rgba(117, 128, 255, 0.45)',
+  },
+  topBubbleLeft: {
+    position: 'absolute',
+    left: -82,
+    top: 82,
+    height: 256,
+    width: 256,
+    borderRadius: 999,
+    backgroundColor: 'rgba(47, 44, 208, 0.6)',
+  },
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  backButton: {
+    height: 32,
+    width: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 999,
+    backgroundColor: 'rgba(255,255,255,0.12)',
+  },
+  switchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  switchHint: {
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.82)',
+  },
+  switchButton: {
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.18)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  switchButtonText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  brand: {
+    marginTop: 40,
+    textAlign: 'center',
+    fontSize: 44,
+    lineHeight: 50,
+    fontWeight: '800',
+    letterSpacing: -0.8,
+    color: '#FFFFFF',
+  },
+  card: {
+    marginTop: -32,
+    flex: 1,
+    borderTopLeftRadius: 34,
+    borderTopRightRadius: 34,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 24,
+    paddingTop: 40,
+    paddingBottom: 28,
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 41,
+    lineHeight: 46,
+    fontWeight: '800',
+    letterSpacing: -1,
+    color: '#29293D',
+  },
+  subtitle: {
+    marginTop: 8,
+    textAlign: 'center',
+    fontSize: 15,
+    color: '#8D8CA3',
+  },
+  formWrap: {
+    marginTop: 32,
+    gap: 14,
+  },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E8E8F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  passwordShell: {
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E8E8F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  inputRowNoBorder: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  input: {
+    marginLeft: 12,
+    flex: 1,
+    fontSize: 15,
+    color: '#2C2C3E',
+  },
+  eyeButton: {
+    marginLeft: 8,
+    height: 32,
+    width: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 999,
+    backgroundColor: '#F5F5FA',
+  },
+  strengthRow: {
+    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: 8,
+  },
+  strengthDot: {
+    height: 6,
+    width: 20,
+    borderRadius: 999,
+  },
+  strengthDotActive: {
+    backgroundColor: '#7BD97F',
+  },
+  strengthDotInactive: {
+    backgroundColor: '#E7E7F0',
+  },
+  strengthText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#64BE67',
+  },
+  signUpButton: {
+    marginTop: 24,
+    alignItems: 'center',
+    borderRadius: 16,
+    backgroundColor: '#5548EF',
+    paddingVertical: 16,
+  },
+  signUpButtonDisabled: {
+    opacity: 0.7,
+  },
+  signUpText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  dividerRow: {
+    marginTop: 28,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dividerLine: {
+    height: StyleSheet.hairlineWidth,
+    flex: 1,
+    backgroundColor: '#E7E7F0',
+  },
+  dividerText: {
+    marginHorizontal: 12,
+    fontSize: 13,
+    color: '#A6A6BA',
+  },
+  socialRow: {
+    marginTop: 20,
+    flexDirection: 'row',
+    gap: 12,
+  },
+  socialButton: {
+    height: 56,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+  },
+  socialText: {
+    marginLeft: 8,
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#3A3A50',
+  },
+});
 
 export default SignupScreen;
