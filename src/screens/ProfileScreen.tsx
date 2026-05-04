@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Modal, Pressable, StatusBar, Text, TextInput, View } from 'react-native';
+import { Alert, Modal, Pressable, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { profileData } from '../data/profileData';
 

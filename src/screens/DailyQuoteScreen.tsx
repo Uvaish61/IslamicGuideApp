@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, StatusBar, Text, View } from 'react-native';
+import { Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { ChevronLeft, ChevronRight, Heart } from 'lucide-react-native';
 import { dailyQuotes } from '../data/quoteData';
@@ -21,35 +21,31 @@ const DailyQuoteScreen = ({ onBackToHome }: DailyQuoteScreenProps) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#ECEBFA]">
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
-      <View className="flex-1 items-center justify-center px-6">
-        <Text className="text-3xl font-extrabold text-[#29293D]">Daily Quote</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Daily Quote</Text>
 
-        <View className="mt-10 w-full rounded-3xl border-2 border-[#3D3AE0] bg-white px-6 py-8">
-          <Text className="text-center text-[18px] font-bold italic text-[#3D3AE0]">
-            "{quote.text}"
-          </Text>
-          <Text className="mt-6 text-center text-[14px] font-semibold text-[#7E7D94]">
-            — {quote.source}
-          </Text>
+        <View style={styles.quoteCard}>
+          <Text style={styles.quoteText}>"{quote.text}"</Text>
+          <Text style={styles.quoteSource}>— {quote.source}</Text>
         </View>
 
-        <View className="mt-8 flex-row items-center justify-center gap-4">
+        <View style={styles.navRow}>
           <Pressable
-            className="rounded-full bg-[#E7E7F0] p-3"
+            style={styles.navButton}
             onPress={() =>
               setCurrentQuoteIndex((prev) => (prev === 0 ? dailyQuotes.length - 1 : prev - 1))
             }>
             <ChevronLeft size={20} color="#3D3AE0" />
           </Pressable>
 
-          <Text className="text-[14px] font-semibold text-[#7E7D94]">
+          <Text style={styles.pageIndicator}>
             {currentQuoteIndex + 1} / {dailyQuotes.length}
           </Text>
 
           <Pressable
-            className="rounded-full bg-[#E7E7F0] p-3"
+            style={styles.navButton}
             onPress={() =>
               setCurrentQuoteIndex((prev) => (prev === dailyQuotes.length - 1 ? 0 : prev + 1))
             }>
@@ -57,21 +53,177 @@ const DailyQuoteScreen = ({ onBackToHome }: DailyQuoteScreenProps) => {
           </Pressable>
         </View>
 
-        <Pressable
-          className="mt-8 flex-row items-center justify-center gap-2 rounded-2xl bg-[#5548EF] px-6 py-3"
-          onPress={toggleSaveQuote}>
+        <Pressable style={styles.saveButton} onPress={toggleSaveQuote}>
           <Heart size={18} color={isSaved ? '#FF6B6B' : '#FFFFFF'} fill={isSaved ? '#FF6B6B' : 'none'} />
-          <Text className="text-[14px] font-semibold text-white">
-            {isSaved ? 'Saved' : 'Save Quote'}
-          </Text>
+          <Text style={styles.saveButtonText}>{isSaved ? 'Saved' : 'Save Quote'}</Text>
         </Pressable>
 
-        <Pressable className="mt-4 items-center" onPress={onBackToHome}>
-          <Text className="text-[14px] font-semibold text-[#7E7D94]">Back to Home</Text>
+        <Pressable style={styles.backButton} onPress={onBackToHome}>
+          <Text style={styles.backButtonText}>Back to Home</Text>
         </Pressable>
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ECEBFA',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  quoteCard: {
+    marginTop: 40,
+    width: '100%',
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: '#3D3AE0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  quoteText: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '700',
+    fontStyle: 'italic',
+    color: '#3D3AE0',
+  },
+  quoteSource: {
+    marginTop: 24,
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#7E7D94',
+  },
+  navRow: {
+    marginTop: 32,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+  },
+  navButton: {
+    borderRadius: 999,
+    backgroundColor: '#E7E7F0',
+    padding: 12,
+  },
+  pageIndicator: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#7E7D94',
+  },
+  saveButton: {
+    marginTop: 32,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    borderRadius: 16,
+    backgroundColor: '#5548EF',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+  },
+  saveButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  backButton: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  backButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#7E7D94',
+  },
+})   flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  quoteCard: {
+    marginTop: 40,
+    width: '100%',
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: '#3D3AE0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  quoteText: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '700',
+    fontStyle: 'italic',
+    color: '#3D3AE0',
+  },
+  quoteSource: {
+    marginTop: 24,
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#7E7D94',
+  },
+  navRow: {
+    marginTop: 32,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+  },
+  navButton: {
+    borderRadius: 999,
+    backgroundColor: '#E7E7F0',
+    padding: 12,
+  },
+  pageIndicator: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#7E7D94',
+  },
+  saveButton: {
+    marginTop: 32,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    borderRadius: 16,
+    backgroundColor: '#5548EF',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+  },
+  saveButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  backButton: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  backButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#7E7D94',
+  },
+});
 
 export default DailyQuoteScreen;

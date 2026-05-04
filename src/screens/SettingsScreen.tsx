@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Pressable, StatusBar, Text, View } from 'react-native';
+import { Alert, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { settingsOptions } from '../data/settingsData';
 
@@ -9,50 +9,134 @@ type SettingsScreenProps = {
 
 const SettingsScreen = ({ onBackToHome }: SettingsScreenProps) => {
   return (
-    <SafeAreaView className="flex-1 bg-[#ECEBFA]">
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
-      <View className="flex-1 px-6 pt-12">
-        <View className="items-center">
-          <Text className="text-3xl font-extrabold text-[#29293D]">Settings</Text>
-          <Text className="mt-3 text-center text-base text-[#7E7D94]">
-            Manage app preferences in one place.
-          </Text>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Settings</Text>
+          <Text style={styles.subtitle}>Manage app preferences in one place.</Text>
         </View>
 
-        <View className="mt-10 rounded-2xl border border-[#E7E7F0] bg-white px-4 py-4">
-          <Text className="text-[13px] font-semibold uppercase tracking-[1px] text-[#8D8CA3]">
-            Quick Overview
-          </Text>
-          <Text className="mt-2 text-[17px] font-semibold text-[#29293D]">
-            {settingsOptions.length} options available
-          </Text>
+        <View style={styles.overviewCard}>
+          <Text style={styles.overviewLabel}>Quick Overview</Text>
+          <Text style={styles.overviewValue}>{settingsOptions.length} options available</Text>
         </View>
 
-        <View className="mt-4 gap-3">
+        <View style={styles.optionsList}>
           {settingsOptions.map(option => (
-            <View key={option.id} className="rounded-2xl border border-[#E7E7F0] bg-white px-4 py-4">
-              <Text className="text-[13px] font-semibold uppercase tracking-[1px] text-[#8D8CA3]">
-                {option.label}
-              </Text>
-              <Text className="mt-2 text-[17px] font-semibold text-[#29293D]">
-                {option.value}
-              </Text>
+            <View key={option.id} style={styles.optionCard}>
+              <Text style={styles.optionLabel}>{option.label}</Text>
+              <Text style={styles.optionValue}>{option.value}</Text>
             </View>
           ))}
         </View>
 
         <Pressable
-          className="mt-6 items-center rounded-2xl bg-[#5548EF] py-4"
+          style={styles.updateButton}
           onPress={() => Alert.alert('Settings', 'Settings action will be expanded later.')}>
-          <Text className="text-[16px] font-semibold text-white">Update Settings</Text>
+          <Text style={styles.updateButtonText}>Update Settings</Text>
         </Pressable>
 
-        <Pressable className="mt-4 items-center" onPress={onBackToHome}>
-          <Text className="text-[14px] font-semibold text-[#7E7D94]">Back to Home</Text>
+        <Pressable style={styles.backButton} onPress={onBackToHome}>
+          <Text style={styles.backButtonText}>Back to Home</Text>
         </Pressable>
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ECEBFA',
+  },
+  container: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 48,
+  },
+  header: {
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  subtitle: {
+    marginTop: 12,
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#7E7D94',
+  },
+  overviewCard: {
+    marginTop: 40,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  overviewLabel: {
+    fontSize: 13,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    color: '#8D8CA3',
+  },
+  overviewValue: {
+    marginTop: 8,
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#29293D',
+  },
+  optionsList: {
+    marginTop: 16,
+    gap: 12,
+  },
+  optionCard: {
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  optionLabel: {
+    fontSize: 13,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    color: '#8D8CA3',
+  },
+  optionValue: {
+    marginTop: 8,
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#29293D',
+  },
+  updateButton: {
+    marginTop: 24,
+    alignItems: 'center',
+    borderRadius: 16,
+    backgroundColor: '#5548EF',
+    paddingVertical: 16,
+  },
+  updateButtonText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  backButton: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  backButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#7E7D94',
+  },
+});
 
 export default SettingsScreen;
