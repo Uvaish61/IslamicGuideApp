@@ -66,12 +66,13 @@ const CounterDisplay = ({
       )}
 
       <Pressable
-        style={styles.incrementButton}
+        style={[styles.incrementButton, isCompleted && styles.incrementButtonComplete]}
         onPress={onIncrement}
         disabled={isCompleted}>
         <Text style={styles.incrementButtonText}>
           {isCompleted ? 'Range Complete' : 'Tap to Count'}
         </Text>
+        {!isCompleted && <Text style={styles.incrementHint}>One tap adds a count</Text>}
       </Pressable>
 
       <Pressable style={styles.resetButton} onPress={onReset}>
@@ -194,9 +195,15 @@ const styles = StyleSheet.create({
   },
   incrementButton: {
     marginTop: 24,
-    borderRadius: 16,
+    alignItems: 'center',
+    borderRadius: 22,
     backgroundColor: '#5548EF',
-    paddingVertical: 16,
+    paddingVertical: 18,
+    shadowColor: '#5548EF',
+    shadowOpacity: 0.16,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 5,
   },
   incrementButtonText: {
     textAlign: 'center',
@@ -204,9 +211,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFFFFF',
   },
+  incrementButtonComplete: {
+    backgroundColor: '#4ECDC4',
+  },
+  incrementHint: {
+    marginTop: 4,
+    fontSize: 12,
+    fontWeight: '600',
+    color: 'rgba(255,255,255,0.9)',
+  },
   resetButton: {
     marginTop: 12,
-    borderRadius: 16,
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: '#E7E7F0',
     paddingVertical: 16,
