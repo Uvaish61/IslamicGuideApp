@@ -42,15 +42,20 @@ const SettingsScreen = ({ onBackToHome }: SettingsScreenProps) => {
           </View>
         </View>
 
-        <Pressable
-          style={styles.updateButton}
-          onPress={() => Alert.alert('Settings', 'Settings action will be expanded later.')}>
-          <Text style={styles.updateButtonText}>Update Settings</Text>
-        </Pressable>
+        <View style={styles.footerCard}>
+          <Text style={styles.footerTitle}>Ready to adjust preferences?</Text>
+          <Text style={styles.footerText}>Your current settings are saved locally and can be updated anytime.</Text>
 
-        <Pressable style={styles.backButton} onPress={onBackToHome}>
-          <Text style={styles.backButtonText}>Back to Home</Text>
-        </Pressable>
+          <Pressable
+            style={styles.updateButton}
+            onPress={() => Alert.alert('Settings', 'Settings action will be expanded later.')}>
+            <Text style={styles.updateButtonText}>Update Settings</Text>
+          </Pressable>
+
+          <Pressable style={styles.backButton} onPress={onBackToHome}>
+            <Text style={styles.backButtonText}>Back to Home</Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -169,11 +174,31 @@ const styles = StyleSheet.create({
     color: '#29293D',
   },
   updateButton: {
-    marginTop: 24,
+    marginTop: 18,
     alignItems: 'center',
     borderRadius: 16,
     backgroundColor: '#5548EF',
     paddingVertical: 16,
+  },
+  footerCard: {
+    marginTop: 18,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  footerTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  footerText: {
+    marginTop: 6,
+    fontSize: 13,
+    lineHeight: 20,
+    color: '#7E7D94',
   },
   updateButtonText: {
     fontSize: 16,
@@ -181,7 +206,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   backButton: {
-    marginTop: 16,
+    marginTop: 12,
     alignItems: 'center',
   },
   backButtonText: {
