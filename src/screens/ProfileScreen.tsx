@@ -112,6 +112,7 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
           <View style={styles.statisticsRow}>
             {/* Quotes Read */}
             <View style={styles.statCard}>
+              <View style={styles.statAccent} />
               <Text style={styles.statLabel}>Quotes Read</Text>
               <Text style={styles.statNumber}>42</Text>
               <Text style={styles.statSubtext}>this month</Text>
@@ -119,6 +120,7 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
 
             {/* Favorites */}
             <View style={styles.statCard}>
+              <View style={[styles.statAccent, styles.statAccentFavorites]} />
               <Text style={styles.statLabel}>Favorites</Text>
               <Text style={styles.statNumber}>18</Text>
               <Text style={styles.statSubtext}>saved</Text>
@@ -361,6 +363,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   statCard: {
+    position: 'relative',
     flex: 1,
     borderRadius: 16,
     borderWidth: 1,
@@ -369,6 +372,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
     elevation: 2,
+  },
+  statAccent: {
+    position: 'absolute',
+    right: 16,
+    top: 16,
+    height: 10,
+    width: 10,
+    borderRadius: 999,
+    backgroundColor: '#5548EF',
+  },
+  statAccentFavorites: {
+    backgroundColor: '#FF7A7A',
   },
   statLabel: {
     fontSize: 12,
