@@ -179,6 +179,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: '#5548EF',
     paddingVertical: 16,
+    shadowColor: '#5548EF',
+    shadowOpacity: 0.12,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 4,
   },
   footerCard: {
     marginTop: 18,
@@ -208,6 +213,9 @@ const styles = StyleSheet.create({
   backButton: {
     marginTop: 12,
     alignItems: 'center',
+    borderRadius: 16,
+    backgroundColor: '#F5F4FF',
+    paddingVertical: 14,
   },
   backButtonText: {
     fontSize: 14,
