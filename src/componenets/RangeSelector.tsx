@@ -25,6 +25,11 @@ const RangeSelector = ({
 }: RangeSelectorProps) => {
   return (
     <View style={styles.container}>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>Target range</Text>
+        <Text style={styles.sectionSubtitle}>Choose a preset or set your own count.</Text>
+      </View>
+
       {/* Range Mode Toggle */}
       <View style={styles.modeToggle}>
         <Pressable
@@ -53,7 +58,7 @@ const RangeSelector = ({
       {/* Predefined Range Buttons */}
       {!isCustomRange && (
         <View>
-          <Text style={styles.rangeLabel}>Select Range:</Text>
+          <Text style={styles.rangeLabel}>Select a preset</Text>
           <View style={styles.rangeButtonContainer}>
             {predefinedRanges.map((range) => (
               <Pressable
@@ -63,19 +68,21 @@ const RangeSelector = ({
                   selectedRange === range.value ? styles.rangeButtonActive : styles.rangeButtonInactive,
                 ]}
                 onPress={() => onRangeSelect(range.value)}>
+                <View style={styles.rangeBadge}>
+                  <Text
+                    style={
+                      selectedRange === range.value
+                        ? styles.rangeBadgeTextActive
+                        : styles.rangeBadgeText
+                    }>
+                    {range.label}
+                  </Text>
+                </View>
                 <Text
                   style={
                     selectedRange === range.value
                       ? styles.rangeButtonTextActive
                       : styles.rangeButtonText
-                  }>
-                  {range.label}
-                </Text>
-                <Text
-                  style={
-                    selectedRange === range.value
-                      ? styles.rangeDescriptionActive
-                      : styles.rangeDescription
                   }>
                   {range.description}
                 </Text>
@@ -88,7 +95,7 @@ const RangeSelector = ({
       {/* Custom Range Input */}
       {isCustomRange && (
         <View>
-          <Text style={styles.customLabel}>Enter Custom Range:</Text>
+          <Text style={styles.customLabel}>Enter a custom count</Text>
           <TextInput
             style={styles.customInput}
             placeholder="Enter number (e.g., 50, 150)"
@@ -120,20 +127,33 @@ const RangeSelector = ({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 32,
-    borderRadius: 16,
+    borderRadius: 24,
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingHorizontal: 18,
+    paddingVertical: 18,
+  },
+  sectionHeader: {
+    marginBottom: 14,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  sectionSubtitle: {
+    marginTop: 4,
+    fontSize: 13,
+    color: '#7E7D94',
   },
   modeToggle: {
     marginBottom: 16,
     flexDirection: 'row',
-    gap: 12,
+    gap: 10,
   },
   modeButton: {
     flex: 1,
-    borderRadius: 12,
-    paddingVertical: 8,
+    borderRadius: 16,
+    paddingVertical: 12,
   },
   modeButtonActive: {
     backgroundColor: '#5548EF',
@@ -153,19 +173,19 @@ const styles = StyleSheet.create({
   },
   rangeLabel: {
     marginBottom: 12,
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#7E7D94',
+    fontSize: 13,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    color: '#8D8CA3',
   },
   rangeButtonContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
+    gap: 10,
   },
   rangeButton: {
-    borderRadius: 8,
+    borderRadius: 18,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 14,
   },
   rangeButtonActive: {
     backgroundColor: '#5548EF',
@@ -176,34 +196,47 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   rangeButtonText: {
+    marginTop: 8,
     fontWeight: '600',
     color: '#29293D',
   },
   rangeButtonTextActive: {
+    marginTop: 8,
     fontWeight: '600',
     color: '#FFFFFF',
   },
-  rangeDescription: {
-    fontSize: 12,
-    color: '#7E7D94',
+  rangeBadge: {
+    alignSelf: 'flex-start',
+    borderRadius: 999,
+    backgroundColor: 'rgba(255,255,255,0.4)',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
   },
-  rangeDescriptionActive: {
-    fontSize: 12,
-    color: '#E0D7FF',
+  rangeBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#5548EF',
+  },
+  rangeBadgeTextActive: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
   customLabel: {
     marginBottom: 12,
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#7E7D94',
+    fontSize: 13,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    color: '#8D8CA3',
   },
   customInput: {
-    borderRadius: 8,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: '#E7E7F0',
     backgroundColor: '#FFFFFF',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 14,
     fontSize: 16,
     color: '#29293D',
   },
@@ -216,7 +249,7 @@ const styles = StyleSheet.create({
   },
   adjustButton: {
     flex: 1,
-    borderRadius: 12,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: '#E7E7F0',
     paddingVertical: 12,
@@ -229,7 +262,7 @@ const styles = StyleSheet.create({
   },
   adjustLabel: {
     flex: 1,
-    borderRadius: 12,
+    borderRadius: 16,
     backgroundColor: '#F5F4FF',
     paddingVertical: 12,
   },
