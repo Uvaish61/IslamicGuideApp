@@ -25,13 +25,21 @@ const SettingsScreen = ({ onBackToHome }: SettingsScreenProps) => {
           </View>
         </View>
 
-        <View style={styles.optionsList}>
+        <View style={styles.optionsSection}>
+          <Text style={styles.optionsSectionLabel}>Preferences</Text>
+          <View style={styles.optionsList}>
           {settingsOptions.map(option => (
             <View key={option.id} style={styles.optionCard}>
-              <Text style={styles.optionLabel}>{option.label}</Text>
-              <Text style={styles.optionValue}>{option.value}</Text>
+              <View style={styles.optionRow}>
+                <View style={styles.optionDot} />
+                <View style={styles.optionTextBlock}>
+                  <Text style={styles.optionLabel}>{option.label}</Text>
+                  <Text style={styles.optionValue}>{option.value}</Text>
+                </View>
+              </View>
             </View>
           ))}
+          </View>
         </View>
 
         <Pressable
@@ -111,8 +119,18 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#29293D',
   },
-  optionsList: {
+  optionsSection: {
     marginTop: 16,
+  },
+  optionsSectionLabel: {
+    marginBottom: 12,
+    fontSize: 13,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    color: '#8D8CA3',
+  },
+  optionsList: {
     gap: 12,
   },
   optionCard: {
@@ -122,6 +140,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingHorizontal: 16,
     paddingVertical: 16,
+  },
+  optionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  optionDot: {
+    height: 12,
+    width: 12,
+    borderRadius: 999,
+    backgroundColor: '#5548EF',
+  },
+  optionTextBlock: {
+    flex: 1,
   },
   optionLabel: {
     fontSize: 13,
