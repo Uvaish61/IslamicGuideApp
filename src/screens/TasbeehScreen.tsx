@@ -47,20 +47,37 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
     return (counter / range) * 100;
   };
 
+  const heroStats = [
+    { id: 'phrase', label: 'Dhikr', value: selectedPhrase.name },
+    { id: 'target', label: 'Target', value: String(getActiveRange()) },
+    { id: 'progress', label: 'Progress', value: `${Math.round(getProgressPercentage())}%` },
+  ] as const;
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
       
       <View style={styles.mainContainer}>
-        {/* Header with back button */}
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.headerTitle}>Tasbeeh Counter</Text>
-            <Text style={styles.headerSubtitle}>Pick a dhikr, set a target, and tap to count.</Text>
+        <View style={styles.heroCard}>
+          <View style={styles.heroAccent} />
+          <View style={styles.heroHeader}>
+            <View>
+              <Text style={styles.headerTitle}>Tasbeeh Counter</Text>
+              <Text style={styles.headerSubtitle}>Pick a dhikr, set a target, and tap to count.</Text>
+            </View>
+            <Pressable onPress={onBackToHome} style={styles.backPill}>
+              <Text style={styles.backButtonText}>Back</Text>
+            </Pressable>
           </View>
-          <Pressable onPress={onBackToHome}>
-            <Text style={styles.backButtonText}>Back</Text>
-          </Pressable>
+
+          <View style={styles.heroStatsRow}>
+            {heroStats.map((item) => (
+              <View key={item.id} style={styles.heroStatCard}>
+                <Text style={styles.heroStatLabel}>{item.label}</Text>
+                <Text style={styles.heroStatValue}>{item.value}</Text>
+              </View>
+            ))}
+          </View>
         </View>
 
         <View style={styles.phraseCard}>
@@ -125,14 +142,31 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 24,
   },
-  header: {
-    marginBottom: 32,
+  heroCard: {
+    marginBottom: 22,
+    borderRadius: 28,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 18,
+    paddingVertical: 18,
+    overflow: 'hidden',
+  },
+  heroAccent: {
+    position: 'absolute',
+    right: -24,
+    top: -24,
+    height: 120,
+    width: 120,
+    borderRadius: 999,
+    backgroundColor: '#F4F1FF',
+  },
+  heroHeader: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
+    gap: 12,
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: '800',
     color: '#29293D',
   },
@@ -142,10 +176,41 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#7E7D94',
   },
+  backPill: {
+    borderRadius: 999,
+    backgroundColor: '#F5F4FF',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+  },
   backButtonText: {
     fontSize: 16,
     fontWeight: '600',
     color: '#5548EF',
+  },
+  heroStatsRow: {
+    marginTop: 18,
+    flexDirection: 'row',
+    gap: 10,
+  },
+  heroStatCard: {
+    flex: 1,
+    borderRadius: 18,
+    backgroundColor: '#F8F8FC',
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+  },
+  heroStatLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    color: '#8D8CA3',
+  },
+  heroStatValue: {
+    marginTop: 8,
+    fontSize: 15,
+    fontWeight: '800',
+    color: '#29293D',
   },
   phraseCard: {
     marginBottom: 24,
