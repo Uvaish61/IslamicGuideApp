@@ -167,13 +167,13 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
           <Pressable
             style={styles.editButton}
             onPress={() => setEditMode(true)}>
-            <Text style={styles.editButtonText}>✏️ Edit Profile</Text>
+            <Text style={styles.editButtonText}>Edit Profile</Text>
           </Pressable>
 
           <Pressable 
             style={styles.logoutButton}
             onPress={handleLogout}>
-            <Text style={styles.logoutButtonText}>🚪 Logout</Text>
+            <Text style={styles.logoutButtonText}>Logout</Text>
           </Pressable>
 
           <Pressable style={styles.backButton} onPress={onBackToHome}>
@@ -186,7 +186,21 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
       <Modal visible={editMode} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Edit Profile</Text>
+            <View style={styles.modalHeaderRow}>
+              <View>
+                <Text style={styles.modalTitle}>Edit Profile</Text>
+                <Text style={styles.modalSubtitle}>Keep your account details up to date.</Text>
+              </View>
+              <Pressable
+                style={styles.modalClosePill}
+                onPress={() => {
+                  setEditMode(false);
+                  setEditName(profileData.name);
+                  setEditEmail(profileData.email);
+                }}>
+                <Text style={styles.modalCloseText}>Close</Text>
+              </Pressable>
+            </View>
 
             <View style={styles.inputSection}>
               {/* Name Input */}
@@ -521,6 +535,28 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '800',
     color: '#29293D',
+  },
+  modalSubtitle: {
+    marginTop: 6,
+    fontSize: 13,
+    color: '#7E7D94',
+  },
+  modalHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  modalClosePill: {
+    borderRadius: 999,
+    backgroundColor: '#F5F4FF',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  modalCloseText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#5548EF',
   },
   inputSection: {
     marginTop: 24,
