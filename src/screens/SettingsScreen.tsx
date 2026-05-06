@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 48,
+    paddingTop: 36,
   },
   headerCard: {
     position: 'relative',
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     color: '#29293D',
   },
   optionsSection: {
-    marginTop: 16,
+    marginTop: 18,
   },
   optionsSectionLabel: {
     marginBottom: 12,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     color: '#8D8CA3',
   },
   optionsList: {
-    gap: 12,
+    gap: 10,
   },
   optionCard: {
     borderRadius: 16,
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   footerCard: {
-    marginTop: 18,
+    marginTop: 20,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#E7E7F0',
