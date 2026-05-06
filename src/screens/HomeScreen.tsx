@@ -114,6 +114,12 @@ const HomeScreen = ({
       return currentMinutes >= item.minutes && (!nextItem || currentMinutes < nextItem.minutes);
     }) ?? prayerTimes[0];
 
+  const dashboardStats = [
+    { id: 'now', label: 'Now', value: currentTime, hint: hijriDate },
+    { id: 'next', label: 'Next', value: nextPrayer.name, hint: nextPrayer.time },
+    { id: 'focus', label: 'Focus', value: activePrayer.name, hint: 'Prayer window' },
+  ] as const;
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
@@ -156,6 +162,16 @@ const HomeScreen = ({
               <Text style={styles.tagText}>Peaceful focus</Text>
             </View>
           </View>
+        </View>
+
+        <View style={styles.dashboardStrip}>
+          {dashboardStats.map((item) => (
+            <View key={item.id} style={[styles.dashboardCard, cardShadow]}>
+              <Text style={styles.dashboardLabel}>{item.label}</Text>
+              <Text style={styles.dashboardValue}>{item.value}</Text>
+              <Text style={styles.dashboardHint}>{item.hint}</Text>
+            </View>
+          ))}
         </View>
 
         <View style={styles.prayerCardContainer}>
@@ -463,6 +479,36 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 0.2,
     color: '#6F8B42',
+  },
+  dashboardStrip: {
+    marginTop: 16,
+    flexDirection: 'row',
+    gap: 10,
+  },
+  dashboardCard: {
+    flex: 1,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 12,
+    paddingVertical: 14,
+  },
+  dashboardLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    color: '#8D8CA3',
+  },
+  dashboardValue: {
+    marginTop: 10,
+    fontSize: 15,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  dashboardHint: {
+    marginTop: 4,
+    fontSize: 12,
+    color: '#7E7D94',
   },
   prayerCardContainer: {
     marginTop: 20,
