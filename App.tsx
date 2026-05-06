@@ -85,6 +85,7 @@ const App = () => {
           <HomeScreen
             onOpenProfile={() => setScreen('profile')}
             onOpenDailyQuote={() => setScreen('daily-quote')}
+            onOpenFavorites={() => setScreen('favorites')}
             onOpenSettings={() => setScreen('settings')}
             onOpenTasbeeh={() => setScreen('tasbeeh')}
           />
@@ -97,7 +98,7 @@ const App = () => {
         {screen === 'qibla' && <QiblaScreen onBackToHome={() => setScreen('home')} />}
       </View>
 
-      {screen !== 'tasbeeh' && screen !== 'login' && screen !== 'signup' && <BottomNav active={getActiveTab()} onTabPress={handleTabPress} />}
+      {screen !== 'tasbeeh' && <BottomNav active={getActiveTab()} onTabPress={handleTabPress} />}
     </SafeAreaView>
   );
 };

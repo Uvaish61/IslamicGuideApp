@@ -23,10 +23,17 @@ type HomeScreenProps = {
   onOpenProfile: () => void;
   onOpenSettings: () => void;
   onOpenDailyQuote: () => void;
+  onOpenFavorites: () => void;
   onOpenTasbeeh: () => void;
 };
 
-const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTasbeeh }: HomeScreenProps) => {
+const HomeScreen = ({
+  onOpenProfile,
+  onOpenSettings,
+  onOpenDailyQuote,
+  onOpenFavorites,
+  onOpenTasbeeh,
+}: HomeScreenProps) => {
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -54,11 +61,11 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
   } as const;
 
   const quickActions = [
-    { id: 'quran', label: 'Quran', Icon: BookOpen, tone: '#F4F1FF' },
-    { id: 'duas', label: 'Duas', Icon: MoonStar, tone: '#FFF4E8' },
-    { id: 'favorites', label: 'Saved', Icon: Heart, tone: '#FDECEF' },
-    { id: 'profile', label: 'Profile', Icon: UserRound, tone: '#E9E7FF' },
-    { id: 'settings', label: 'Tools', Icon: Settings, tone: '#EAF6F4' },
+    { id: 'quran', label: 'Quran', Icon: BookOpen, tone: '#F4F1FF', onPress: onOpenDailyQuote },
+    { id: 'duas', label: 'Duas', Icon: MoonStar, tone: '#FFF4E8', onPress: onOpenTasbeeh },
+    { id: 'favorites', label: 'Saved', Icon: Heart, tone: '#FDECEF', onPress: onOpenFavorites },
+    { id: 'profile', label: 'Profile', Icon: UserRound, tone: '#E9E7FF', onPress: onOpenProfile },
+    { id: 'settings', label: 'Tools', Icon: Settings, tone: '#EAF6F4', onPress: onOpenSettings },
   ] as const;
 
   const featuredCards = [
@@ -195,15 +202,16 @@ const HomeScreen = ({ onOpenProfile, onOpenSettings, onOpenDailyQuote, onOpenTas
           <View style={styles.quickActionsContainer}>
             <Text style={styles.quickActionsLabel}>Quick actions</Text>
             <View style={styles.quickActionsGrid}>
-              {quickActions.map(({ id, label, Icon, tone }) => (
-                <View
+              {quickActions.map(({ id, label, Icon, tone, onPress }) => (
+                <Pressable
                   key={id}
-                  style={[styles.quickActionCard, { backgroundColor: tone }, cardShadow]}>
+                  style={[styles.quickActionCard, { backgroundColor: tone }, cardShadow]}
+                  onPress={onPress}>
                   <View style={styles.quickActionIcon}>
                     <Icon {...iconProps} />
                   </View>
                   <Text style={styles.quickActionLabel}>{label}</Text>
-                </View>
+                </Pressable>
               ))}
             </View>
           </View>
