@@ -20,6 +20,7 @@ const CounterDisplay = ({
   onReset,
 }: CounterDisplayProps) => {
   const isCompleted = counter >= targetRange;
+  const remainingCount = Math.max(targetRange - counter, 0);
 
   return (
     <View style={styles.container}>
@@ -30,31 +31,31 @@ const CounterDisplay = ({
         <Text style={styles.phraseMeaning}>{phrase.meaning}</Text>
       </View>
 
-      {/* Progress Bar */}
+      {/* Circular Meter */}
       <View style={styles.progressSection}>
         <View style={styles.progressHeader}>
-          <Text style={styles.progressLabel}>Progress</Text>
+          <Text style={styles.progressLabel}>Ring progress</Text>
           <Text style={[styles.progressPercentage, isCompleted && styles.progressPercentageComplete]}>
             {Math.round(progressPercentage)}%
           </Text>
         </View>
-        <View style={styles.progressBarContainer}>
+
+        <View style={styles.ringWrap}>
           <View
             style={[
-              styles.progressBar,
-              isCompleted && styles.progressBarComplete,
-              { width: `${Math.min(progressPercentage, 100)}%` },
-            ]}
-          />
+              styles.progressRing,
+              isCompleted && styles.progressRingComplete,
+              { borderColor: isCompleted ? '#4ECDC4' : '#5548EF' },
+            ]}>
+            <View style={styles.progressRingInner}>
+              <Text style={styles.counter}>{counter}</Text>
+              <Text style={styles.counterLabel}>
+                out of <Text style={styles.targetRange}>{targetRange}</Text>
+              </Text>
+              <Text style={styles.remainingText}>{remainingCount} left</Text>
+            </View>
+          </View>
         </View>
-      </View>
-
-      {/* Counter Display */}
-      <View style={styles.counterDisplay}>
-        <Text style={styles.counter}>{counter}</Text>
-        <Text style={styles.counterLabel}>
-          out of <Text style={styles.targetRange}>{targetRange}</Text>
-        </Text>
       </View>
 
       {/* Completion Message */}
@@ -131,36 +132,53 @@ const styles = StyleSheet.create({
   progressPercentageComplete: {
     color: '#4ECDC4',
   },
-  progressBarContainer: {
-    height: 12,
-    overflow: 'hidden',
-    borderRadius: 6,
-    backgroundColor: '#E7E7F0',
-  },
-  progressBar: {
-    height: '100%',
-    backgroundColor: '#5548EF',
-  },
-  progressBarComplete: {
-    backgroundColor: '#4ECDC4',
-  },
-  counterDisplay: {
+  ringWrap: {
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+  },
+  progressRing: {
+    height: 240,
+    width: 240,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 999,
+    borderWidth: 14,
+    backgroundColor: '#F5F4FF',
+  },
+  progressRingComplete: {
+    backgroundColor: '#ECFAF8',
+  },
+  progressRingInner: {
+    height: 184,
+    width: 184,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 999,
+    backgroundColor: '#FFFFFF',
   },
   counter: {
-    fontSize: 56,
+    fontSize: 60,
     fontWeight: '800',
     color: '#5548EF',
   },
   counterLabel: {
     marginTop: 8,
-    fontSize: 16,
+    textAlign: 'center',
+    fontSize: 15,
     fontWeight: '600',
     color: '#7E7D94',
   },
   targetRange: {
     fontWeight: 'bold',
     color: '#29293D',
+  },
+  remainingText: {
+    marginTop: 10,
+    fontSize: 13,
+    fontWeight: '700',
+    letterSpacing: 0.4,
+    color: '#5548EF',
   },
   completionMessage: {
     marginTop: 24,
