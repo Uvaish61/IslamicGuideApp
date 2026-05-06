@@ -12,14 +12,17 @@ const SettingsScreen = ({ onBackToHome }: SettingsScreenProps) => {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Settings</Text>
-          <Text style={styles.subtitle}>Manage app preferences in one place.</Text>
-        </View>
+        <View style={styles.headerCard}>
+          <View style={styles.headerAccent} />
+          <View style={styles.header}>
+            <Text style={styles.title}>Settings</Text>
+            <Text style={styles.subtitle}>Manage app preferences in one place.</Text>
+          </View>
 
-        <View style={styles.overviewCard}>
-          <Text style={styles.overviewLabel}>Quick Overview</Text>
-          <Text style={styles.overviewValue}>{settingsOptions.length} options available</Text>
+          <View style={styles.overviewCard}>
+            <Text style={styles.overviewLabel}>Quick Overview</Text>
+            <Text style={styles.overviewValue}>{settingsOptions.length} options available</Text>
+          </View>
         </View>
 
         <View style={styles.optionsList}>
@@ -55,11 +58,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingTop: 48,
   },
+  headerCard: {
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: 28,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 18,
+    paddingVertical: 18,
+  },
+  headerAccent: {
+    position: 'absolute',
+    right: -24,
+    top: -24,
+    height: 120,
+    width: 120,
+    borderRadius: 999,
+    backgroundColor: 'rgba(84, 72, 239, 0.08)',
+  },
   header: {
     alignItems: 'center',
   },
   title: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: '800',
     color: '#29293D',
   },
@@ -70,7 +90,7 @@ const styles = StyleSheet.create({
     color: '#7E7D94',
   },
   overviewCard: {
-    marginTop: 40,
+    marginTop: 18,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: '#E7E7F0',
