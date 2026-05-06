@@ -68,6 +68,17 @@ const ProfileScreen = ({ onBackToHome }: ProfileScreenProps) => {
 
         {/* User Info Card with Shadow */}
         <View style={styles.profileCard}>
+          <View style={styles.profileAccent} />
+          <View style={styles.profileHeaderRow}>
+            <View>
+              <Text style={styles.sectionLabel}>PROFILE</Text>
+              <Text style={styles.profileTitle}>Member details</Text>
+            </View>
+            <View style={styles.memberBadge}>
+              <Text style={styles.memberBadgeText}>Since {profileData.memberSince}</Text>
+            </View>
+          </View>
+
           {/* Avatar */}
           <View style={styles.avatarContainer}>
             <View style={styles.avatar}>
@@ -244,6 +255,7 @@ const styles = StyleSheet.create({
     color: '#29293D',
   },
   profileCard: {
+    position: 'relative',
     borderRadius: 24,
     borderWidth: 1,
     borderColor: '#E7E7F0',
@@ -251,6 +263,39 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 24,
     elevation: 4,
+  },
+  profileAccent: {
+    position: 'absolute',
+    right: -30,
+    top: -30,
+    height: 120,
+    width: 120,
+    borderRadius: 999,
+    backgroundColor: 'rgba(84, 72, 239, 0.08)',
+  },
+  profileHeaderRow: {
+    marginBottom: 20,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  profileTitle: {
+    marginTop: 6,
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  memberBadge: {
+    borderRadius: 999,
+    backgroundColor: '#F5F4FF',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  memberBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#5548EF',
   },
   avatarContainer: {
     alignItems: 'center',
