@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { tasbeehPhrases, predefinedRanges } from '../data/tasbeehData';
 import RangeSelector from '../componenets/RangeSelector';
@@ -15,17 +15,52 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
   const [counter, setCounter] = useState(0);
   const [isCustomRange, setIsCustomRange] = useState(false);
   const [customRange, setCustomRange] = useState('33');
+  const [tapHistory, setTapHistory] = useState<number[]>([]);
+  const [completedRounds, setCompletedRounds] = useState(0);
+  const [lastCompletionTime, setLastCompletionTime] = useState<string | null>(null);
 
   // Helper functions
   const getActiveRange = () => (isCustomRange ? parseInt(customRange) || 33 : selectedRange);
 
   const incrementCounter = () => {
     const range = getActiveRange();
-    setCounter((currentCounter) => (currentCounter < range ? currentCounter + 1 : currentCounter));
+    setCounter((currentCounter) => {
+      if (currentCounter >= range) {
+        return currentCounter;
+      }
+
+      setTapHistory((history) => [...history, currentCounter]);
+
+      const nextCounter = currentCounter + 1;
+
+      if (nextCounter === range) {
+        setCompletedRounds((currentCompletedRounds) => currentCompletedRounds + 1);
+        setLastCompletionTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+      }
+
+      return nextCounter;
+    });
   };
 
   const resetCounter = () => {
     setCounter(0);
+    setTapHistory([]);
+  };
+
+  const undoLastTap = () => {
+    if (counter === 0) {
+      return;
+    }
+
+    const previousCounter = tapHistory[tapHistory.length - 1] ?? 0;
+    setTapHistory((history) => history.slice(0, -1));
+
+    if (counter === getActiveRange()) {
+      setCompletedRounds((currentCompletedRounds) => Math.max(currentCompletedRounds - 1, 0));
+      setLastCompletionTime(null);
+    }
+
+    setCounter(previousCounter);
   };
 
   const decreaseRange = () => {
@@ -44,7 +79,13 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
 
   const getProgressPercentage = () => {
     const range = getActiveRange();
-    return (counter / range) * 100;
+    return Math.min((counter / range) * 100, 100);
+  };
+
+  const sessionSummary = {
+    totalTaps: tapHistory.length,
+    completedRounds,
+    lastCompletionTime,
   };
 
   const heroStats = [
@@ -56,8 +97,8 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
-      
-      <View style={styles.mainContainer}>
+
+      <ScrollView contentContainerStyle={styles.mainContainer} showsVerticalScrollIndicator={false}>
         <View style={styles.heroCard}>
           <View style={styles.heroAccent} />
           <View style={styles.heroHeader}>
@@ -96,6 +137,9 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
                   onPress={() => {
                     setSelectedPhrase(phrase);
                     setCounter(0);
+                    setTapHistory([]);
+                    setCompletedRounds(0);
+                    setLastCompletionTime(null);
                   }}>
                   <Text style={isSelected ? styles.phraseButtonTextActive : styles.phraseButtonText}>
                     {phrase.name}
@@ -106,7 +150,6 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
           </View>
         </View>
 
-        {/* Main content will go here */}
         <RangeSelector
           selectedRange={selectedRange}
           onRangeSelect={setSelectedRange}
@@ -118,16 +161,18 @@ const TasbeehScreen = ({ onBackToHome }: TasbeehScreenProps) => {
           onIncreaseRange={increaseRange}
         />
 
-        {/* Counter section will be added next */}
         <CounterDisplay
           phrase={selectedPhrase}
           counter={counter}
           targetRange={getActiveRange()}
           progressPercentage={getProgressPercentage()}
+          sessionSummary={sessionSummary}
+          canUndo={tapHistory.length > 0}
           onIncrement={incrementCounter}
+          onUndo={undoLastTap}
           onReset={resetCounter}
         />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -138,9 +183,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECEBFA',
   },
   mainContainer: {
-    flex: 1,
+    flexGrow: 1,
     paddingHorizontal: 24,
     paddingVertical: 24,
+    paddingBottom: 36,
   },
   heroCard: {
     marginBottom: 22,

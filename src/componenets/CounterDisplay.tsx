@@ -65,12 +65,21 @@ const CounterDisplay = ({
         </View>
       )}
 
+          type SessionSummary = {
+            totalTaps: number;
+            completedRounds: number;
+            lastCompletionTime: string | null;
+          };
+
       <Pressable
         style={[styles.incrementButton, isCompleted && styles.incrementButtonComplete]}
         onPress={onIncrement}
         disabled={isCompleted}>
         <Text style={styles.incrementButtonText}>
+            sessionSummary: SessionSummary;
+            canUndo: boolean;
           {isCompleted ? 'Range Complete' : 'Tap to Count'}
+            onUndo: () => void;
         </Text>
         {!isCompleted && <Text style={styles.incrementHint}>One tap adds a count</Text>}
       </Pressable>
@@ -79,13 +88,32 @@ const CounterDisplay = ({
         <Text style={styles.resetButtonText}>Reset Counter</Text>
       </Pressable>
     </View>
+            sessionSummary,
+            canUndo,
   );
+            onReset,
+            onUndo,
 };
 
 const styles = StyleSheet.create({
   container: {
     marginBottom: 32,
     borderRadius: 24,
+                <View style={styles.sessionCard}>
+                  <View style={styles.sessionStat}>
+                    <Text style={styles.sessionValue}>{sessionSummary.totalTaps}</Text>
+                    <Text style={styles.sessionLabel}>Taps today</Text>
+                  </View>
+                  <View style={styles.sessionStat}>
+                    <Text style={styles.sessionValue}>{sessionSummary.completedRounds}</Text>
+                    <Text style={styles.sessionLabel}>Rounds completed</Text>
+                  </View>
+                  <View style={styles.sessionStat}>
+                    <Text style={styles.sessionValue}>{sessionSummary.lastCompletionTime ?? '--'}</Text>
+                    <Text style={styles.sessionLabel}>Last finish</Text>
+                  </View>
+                </View>
+
     backgroundColor: '#FFFFFF',
     paddingHorizontal: 32,
     paddingVertical: 32,
@@ -123,19 +151,30 @@ const styles = StyleSheet.create({
   progressLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#7E7D94',
+                    <Text style={styles.completionText}>MashaAllah, you completed this set.</Text>
   },
   progressPercentage: {
     fontSize: 12,
-    fontWeight: 'bold',
-    color: '#5548EF',
-  },
-  progressPercentageComplete: {
-    color: '#4ECDC4',
-  },
-  ringWrap: {
-    alignItems: 'center',
-    justifyContent: 'center',
+                <View style={styles.actionRow}>
+                  <Pressable
+                    style={[styles.ghostButton, !canUndo && styles.ghostButtonDisabled]}
+                    onPress={onUndo}
+                    disabled={!canUndo}>
+                    <Text style={[styles.ghostButtonText, !canUndo && styles.ghostButtonTextDisabled]}>
+                      Undo Last Tap
+                    </Text>
+                  </Pressable>
+
+                  <Pressable
+                    style={[styles.incrementButton, isCompleted && styles.incrementButtonComplete]}
+                    onPress={onIncrement}
+                    disabled={isCompleted}>
+                    <Text style={styles.incrementButtonText}>
+                      {isCompleted ? 'Range Complete' : 'Tap to Count'}
+                    </Text>
+                    {!isCompleted && <Text style={styles.incrementHint}>One tap adds a count</Text>}
+                  </Pressable>
+                </View>
     paddingVertical: 8,
   },
   progressRing: {
@@ -152,6 +191,32 @@ const styles = StyleSheet.create({
   },
   progressRingInner: {
     height: 184,
+            sessionCard: {
+              marginBottom: 24,
+              flexDirection: 'row',
+              gap: 10,
+            },
+            sessionStat: {
+              flex: 1,
+              borderRadius: 18,
+              backgroundColor: '#F8F8FC',
+              paddingHorizontal: 12,
+              paddingVertical: 12,
+            },
+            sessionValue: {
+              minHeight: 24,
+              fontSize: 16,
+              fontWeight: '800',
+              color: '#29293D',
+            },
+            sessionLabel: {
+              marginTop: 6,
+              fontSize: 11,
+              fontWeight: '700',
+              textTransform: 'uppercase',
+              letterSpacing: 0.6,
+              color: '#8D8CA3',
+            },
     width: 184,
     alignItems: 'center',
     justifyContent: 'center',
@@ -168,8 +233,35 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     fontWeight: '600',
+            actionRow: {
+              marginTop: 24,
+              flexDirection: 'row',
+              gap: 12,
+            },
+            ghostButton: {
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 22,
+              borderWidth: 1,
+              borderColor: '#E7E7F0',
+              paddingVertical: 18,
+              backgroundColor: '#FFFFFF',
+            },
+            ghostButtonDisabled: {
+              opacity: 0.45,
+            },
+            ghostButtonText: {
+              textAlign: 'center',
+              fontSize: 15,
+              fontWeight: '700',
+              color: '#29293D',
+            },
+            ghostButtonTextDisabled: {
+              color: '#8D8CA3',
+            },
     color: '#7E7D94',
-  },
+              flex: 1,
   targetRange: {
     fontWeight: 'bold',
     color: '#29293D',

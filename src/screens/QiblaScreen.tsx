@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Pressable, StatusBar, StyleSheet, Text, View, Animated } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { ChevronLeft, MapPin, Navigation, RefreshCw } from 'lucide-react-native';
-import { getCardinalDirection, getDetailedDirection, calculateQiblaBearing } from '../utils/qiblaCalculations';
+import {
+  getCardinalDirection,
+  getDetailedDirection,
+  calculateQiblaBearing,
+} from '../utils/qiblaCalculations';
 import Compass from '../componenets/Compass';
+import { majorCities, prayerInfo } from '../data/qiblaData';
 
 type QiblaScreenProps = {
   onBackToHome: () => void;
 };
 
 const QiblaScreen = ({ onBackToHome }: QiblaScreenProps) => {
-  // State for Qibla bearing and compass
-  const [qiblaBearing, setQiblaBearing] = useState<number>(0); // Qibla direction (0-360)
-  const [deviceHeading, setDeviceHeading] = useState<number>(0); // Device compass heading
-  const [relativeQiblaAngle, setRelativeQiblaAngle] = useState<number>(0); // Angle to rotate
+  const [selectedCity, setSelectedCity] = useState(majorCities[0]);
+  const [qiblaBearing, setQiblaBearing] = useState<number>(0);
+  const [deviceHeading, setDeviceHeading] = useState<number>(0);
+  const [relativeQiblaAngle, setRelativeQiblaAngle] = useState<number>(0);
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [isCompassAvailable, setIsCompassAvailable] = useState(false);
   const [locationPermission, setLocationPermission] = useState(false);
@@ -22,27 +27,26 @@ const QiblaScreen = ({ onBackToHome }: QiblaScreenProps) => {
   const MECCA_LAT = 21.4225;
   const MECCA_LNG = 39.8262;
 
+  const directionConfidence = locationPermission
+    ? Math.max(55, 100 - Math.round(Math.min(Math.abs(relativeQiblaAngle), 180) / 2))
+    : 0;
+  const confidenceLabel = directionConfidence >= 80 ? 'Strong' : directionConfidence >= 65 ? 'Stable' : 'Needs calibration';
+
   // Calculate relative angle for compass rotation
   useEffect(() => {
-    const angle = qiblaBearing - deviceHeading;
+    const angle = ((qiblaBearing - deviceHeading) % 360 + 360) % 360;
     setRelativeQiblaAngle(angle);
   }, [qiblaBearing, deviceHeading]);
 
   // Initialize with mock location (default to user's approximate location)
   useEffect(() => {
-    // Set mock location (can be replaced with real geolocation)
-    const mockLocation = { latitude: 24.8607, longitude: 67.0011 }; // Karachi, Pakistan
-    setUserLocation(mockLocation);
+    const defaultCity = majorCities[0];
+    setSelectedCity(defaultCity);
+    setUserLocation({ latitude: defaultCity.latitude, longitude: defaultCity.longitude });
     setLocationPermission(true);
     setIsCompassAvailable(true);
-    
-    // Calculate initial Qibla bearing
-    const bearing = calculateQiblaBearing(
-      mockLocation.latitude,
-      mockLocation.longitude,
-      MECCA_LAT,
-      MECCA_LNG
-    );
+
+    const bearing = calculateQiblaBearing(defaultCity.latitude, defaultCity.longitude, MECCA_LAT, MECCA_LNG);
     setQiblaBearing(bearing);
     
     // Simulate device heading changes
@@ -53,20 +57,30 @@ const QiblaScreen = ({ onBackToHome }: QiblaScreenProps) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Handle request location permission
-  const handleRequestLocation = () => {
-    // Mock function - in production, use react-native-geolocation-service
-    const randomLat = 24 + Math.random() * 10;
-    const randomLng = 67 + Math.random() * 10;
-    setUserLocation({ latitude: randomLat, longitude: randomLng });
+  const syncCity = (city: (typeof majorCities)[number]) => {
+    setSelectedCity(city);
+    setUserLocation({ latitude: city.latitude, longitude: city.longitude });
     setLocationPermission(true);
+    setIsCompassAvailable(true);
+
+    const bearing = calculateQiblaBearing(city.latitude, city.longitude, MECCA_LAT, MECCA_LNG);
+    setQiblaBearing(bearing);
+  };
+
+  const handleRequestLocation = () => {
+    const randomCity = majorCities[Math.floor(Math.random() * majorCities.length)];
+    syncCity(randomCity);
+  };
+
+  const handleRefresh = () => {
+    syncCity(selectedCity);
+    setDeviceHeading((prev) => (prev + 5) % 360);
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
-      <View style={styles.container}>
-        {/* Header */}
+      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Pressable onPress={onBackToHome}>
             <ChevronLeft size={24} color="#29293D" />
@@ -75,25 +89,54 @@ const QiblaScreen = ({ onBackToHome }: QiblaScreenProps) => {
             <Navigation size={20} color="#3D3AE0" />
             <Text style={styles.headerTitle}>Qibla</Text>
           </View>
-          <Pressable onPress={() => setDeviceHeading((prev) => (prev + 5) % 360)}>
+          <Pressable onPress={handleRefresh}>
             <RefreshCw size={24} color="#5548EF" />
           </Pressable>
         </View>
 
-        {/* Direction Display */}
+        <View style={styles.cityCard}>
+          <Text style={styles.cardTitle}>City presets</Text>
+          <Text style={styles.cardSubtitle}>Choose a city to recalculate the direction and compare bearings quickly.</Text>
+          <View style={styles.cityList}>
+            {majorCities.map((city) => {
+              const isSelected = selectedCity.id === city.id;
+
+              return (
+                <Pressable
+                  key={city.id}
+                  style={[styles.cityChip, isSelected ? styles.cityChipActive : styles.cityChipInactive]}
+                  onPress={() => syncCity(city)}>
+                  <Text style={isSelected ? styles.cityNameActive : styles.cityName}>{city.name}</Text>
+                  <Text style={isSelected ? styles.cityBearingActive : styles.cityBearing}>
+                    {Math.round(city.qiblaBearing)}°
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
+
+        <View style={styles.statusRow}>
+          <View style={styles.statusCard}>
+            <Text style={styles.statusLabel}>Direction confidence</Text>
+            <Text style={styles.statusValue}>{directionConfidence}%</Text>
+            <Text style={styles.statusCaption}>{confidenceLabel}</Text>
+          </View>
+          <View style={styles.statusCard}>
+            <Text style={styles.statusLabel}>Compass state</Text>
+            <Text style={styles.statusValue}>{isCompassAvailable ? 'Active' : 'Waiting'}</Text>
+            <Text style={styles.statusCaption}>{locationPermission ? 'Location fixed' : 'Need location'}</Text>
+          </View>
+        </View>
+
         <View style={styles.directionsContainer}>
-          {/* Cardinal Direction Box */}
           <View style={styles.cardinalBox}>
             <Text style={styles.cardinalLabel}>Direction</Text>
-            <Text style={styles.cardinalValue}>
-              {getCardinalDirection(qiblaBearing)}
-            </Text>
+            <Text style={styles.cardinalValue}>{getCardinalDirection(qiblaBearing)}</Text>
           </View>
 
-          {/* Compass Component */}
           <Compass rotation={deviceHeading} relativeQiblaAngle={relativeQiblaAngle} />
 
-          {/* Degree Display Card */}
           <View style={styles.degreeCard}>
             <View style={styles.degreeRow}>
               <View style={styles.degreeFlex}>
@@ -107,31 +150,38 @@ const QiblaScreen = ({ onBackToHome }: QiblaScreenProps) => {
             </View>
           </View>
 
-          {/* Detailed Instruction */}
           <View style={styles.instructionBox}>
-            <Text style={styles.instructionText}>
-              {getDetailedDirection(qiblaBearing)}
-            </Text>
+            <Text style={styles.instructionText}>{getDetailedDirection(qiblaBearing)}</Text>
             <Text style={styles.instructionSubText}>Towards the Holy Kaaba</Text>
           </View>
 
-          {/* Location Info */}
-          {userLocation ? (
-            <View style={styles.locationInfo}>
-              <MapPin size={16} color="#5548EF" />
-              <Text style={styles.locationText}>
-                {userLocation.latitude.toFixed(2)}°, {userLocation.longitude.toFixed(2)}°
+          <View style={styles.locationCard}>
+            <Text style={styles.cardTitle}>Current location</Text>
+            <Text style={styles.cardSubtitle}>{selectedCity.name}</Text>
+            {userLocation ? (
+              <View style={styles.locationInfo}>
+                <MapPin size={16} color="#5548EF" />
+                <Text style={styles.locationText}>
+                  {userLocation.latitude.toFixed(2)}°, {userLocation.longitude.toFixed(2)}°
+                </Text>
+              </View>
+            ) : (
+              <Pressable style={styles.enableButton} onPress={handleRequestLocation}>
+                <Text style={styles.enableButtonText}>Enable Location</Text>
+              </Pressable>
+            )}
+          </View>
+
+          <View style={styles.tipsCard}>
+            <Text style={styles.cardTitle}>Calibration tips</Text>
+            {prayerInfo.additionalTips.map((tip) => (
+              <Text key={tip} style={styles.tipText}>
+                • {tip}
               </Text>
-            </View>
-          ) : (
-            <Pressable
-              style={styles.enableButton}
-              onPress={handleRequestLocation}>
-              <Text style={styles.enableButtonText}>Enable Location</Text>
-            </Pressable>
-          )}
+            ))}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -142,7 +192,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECEBFA',
   },
   container: {
-    flex: 1,
+    flexGrow: 1,
+    paddingBottom: 28,
   },
   header: {
     flexDirection: 'row',
@@ -161,10 +212,97 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#29293D',
   },
-  directionsContainer: {
+  cityCard: {
+    marginHorizontal: 24,
+    marginBottom: 18,
+    borderRadius: 24,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 18,
+    paddingVertical: 16,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  cardSubtitle: {
+    marginTop: 4,
+    fontSize: 13,
+    color: '#7E7D94',
+  },
+  cityList: {
+    marginTop: 14,
+    gap: 10,
+  },
+  cityChip: {
+    borderRadius: 18,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+  },
+  cityChipActive: {
+    backgroundColor: '#5548EF',
+  },
+  cityChipInactive: {
+    borderWidth: 1,
+    borderColor: '#E7E7F0',
+    backgroundColor: '#FFFFFF',
+  },
+  cityName: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#29293D',
+  },
+  cityNameActive: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  cityBearing: {
+    marginTop: 4,
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#7E7D94',
+  },
+  cityBearingActive: {
+    marginTop: 4,
+    fontSize: 13,
+    fontWeight: '600',
+    color: 'rgba(255,255,255,0.92)',
+  },
+  statusRow: {
+    flexDirection: 'row',
+    gap: 12,
+    paddingHorizontal: 24,
+    marginBottom: 18,
+  },
+  statusCard: {
     flex: 1,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+  },
+  statusLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+    color: '#8D8CA3',
+  },
+  statusValue: {
+    marginTop: 8,
+    fontSize: 26,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  statusCaption: {
+    marginTop: 4,
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#5548EF',
+  },
+  directionsContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
     paddingHorizontal: 24,
   },
   cardinalBox: {
@@ -236,30 +374,55 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#7E7D94',
   },
+  locationCard: {
+    width: '100%',
+    marginBottom: 16,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 18,
+    paddingVertical: 16,
+  },
   locationInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    borderRadius: 8,
-    backgroundColor: '#E7E7F0',
+    alignSelf: 'flex-start',
+    marginTop: 10,
+    borderRadius: 999,
+    backgroundColor: '#F5F4FF',
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
   locationText: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '600',
     color: '#5548EF',
   },
   enableButton: {
-    borderRadius: 8,
+    alignSelf: 'flex-start',
+    borderRadius: 999,
     backgroundColor: '#5548EF',
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 10,
   },
   enableButtonText: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: 13,
+    fontWeight: '700',
     color: '#FFFFFF',
+  },
+  tipsCard: {
+    width: '100%',
+    marginBottom: 24,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 18,
+    paddingVertical: 16,
+  },
+  tipText: {
+    marginTop: 10,
+    fontSize: 13,
+    lineHeight: 19,
+    color: '#7E7D94',
   },
 });
 
