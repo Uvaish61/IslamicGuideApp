@@ -114,6 +114,11 @@ const HomeScreen = ({
       return currentMinutes >= item.minutes && (!nextItem || currentMinutes < nextItem.minutes);
     }) ?? prayerTimes[0];
 
+  const prayerTimesWithActive = prayerTimes.map((item) => ({
+    ...item,
+    active: item.name === activePrayer.name,
+  }));
+
   const dashboardStats = [
     { id: 'now', label: 'Now', value: currentTime, hint: hijriDate },
     { id: 'next', label: 'Next', value: nextPrayer.name, hint: nextPrayer.time },
@@ -300,7 +305,7 @@ const HomeScreen = ({
           </View>
 
           <View style={styles.prayerTimesGrid}>
-            {prayerTimes.map((item) => (
+            {prayerTimesWithActive.map((item) => (
               <View key={item.name} style={styles.prayerTimeItem}>
                 <View style={[styles.prayerTimeDot, item.active ? styles.prayerTimeDotActive : styles.prayerTimeDotInactive]} />
                 <Text style={[styles.prayerTimeName, item.active ? styles.prayerTimeNameActive : styles.prayerTimeNameInactive]}>
