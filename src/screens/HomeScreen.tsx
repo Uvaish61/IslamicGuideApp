@@ -25,6 +25,7 @@ type HomeScreenProps = {
   onOpenDailyQuote: () => void;
   onOpenFavorites: () => void;
   onOpenTasbeeh: () => void;
+  onOpenZakat: () => void;
 };
 
 const HomeScreen = ({
@@ -33,6 +34,7 @@ const HomeScreen = ({
   onOpenDailyQuote,
   onOpenFavorites,
   onOpenTasbeeh,
+  onOpenZakat,
 }: HomeScreenProps) => {
   const [now, setNow] = useState(() => new Date());
 
@@ -264,7 +266,13 @@ const HomeScreen = ({
           <Text style={styles.featuredLabel}>Featured</Text>
           <View style={styles.featuredGrid}>
             {featuredCards.map(({ id, title, subtitle, label, Icon, tone, accent }) => (
-              <View key={id} style={[styles.featuredCard, { backgroundColor: tone }, cardShadow]}>
+              <Pressable
+                key={id}
+                onPress={() => {
+                  if (id === 'quran') onOpenDailyQuote();
+                  else if (id === 'zakat') onOpenZakat();
+                }}
+                style={[styles.featuredCard, { backgroundColor: tone }, cardShadow]}>
                 <View style={styles.featuredHeader}>
                   <View style={styles.featuredIcon}>
                     <Icon size={18} strokeWidth={1.9} color={accent} />
@@ -276,7 +284,7 @@ const HomeScreen = ({
                 <View style={styles.featuredButton}>
                   <Text style={styles.featuredButtonText}>{label}</Text>
                 </View>
-              </View>
+              </Pressable>
             ))}
           </View>
         </View>

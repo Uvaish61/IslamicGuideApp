@@ -10,10 +10,11 @@ import SignupScreen from './src/screens/SignupScreen';
 import FavoritesScreen from './src/screens/FavoritesScreen';
 import TasbeehScreen from './src/screens/TasbeehScreen';
 import QiblaScreen from './src/screens/QiblaScreen';
+import ZakatCalculatorScreen from './src/screens/ZakatCalculatorScreen';
 import BottomNav from './src/components/BottomNav';
 
 const App = () => {
-  const [screen, setScreen] = useState<'login' | 'signup' | 'home' | 'profile' | 'settings' | 'daily-quote' | 'favorites' | 'tasbeeh' | 'qibla'>('login');
+  const [screen, setScreen] = useState<'login' | 'signup' | 'home' | 'profile' | 'settings' | 'daily-quote' | 'favorites' | 'tasbeeh' | 'qibla' | 'zakat'>('login');
 
   const getActiveTab = () => {
     switch (screen) {
@@ -88,6 +89,7 @@ const App = () => {
             onOpenFavorites={() => setScreen('favorites')}
             onOpenSettings={() => setScreen('settings')}
             onOpenTasbeeh={() => setScreen('tasbeeh')}
+            onOpenZakat={() => setScreen('zakat')}
           />
         )}
         {screen === 'profile' && <ProfileScreen onBackToHome={() => setScreen('home')} />}
@@ -96,6 +98,7 @@ const App = () => {
         {screen === 'favorites' && <FavoritesScreen />}
         {screen === 'tasbeeh' && <TasbeehScreen onBackToHome={() => setScreen('home')} />}
         {screen === 'qibla' && <QiblaScreen onBackToHome={() => setScreen('home')} />}
+        {screen === 'zakat' && <ZakatCalculatorScreen onGoBack={() => setScreen('home')} />}
       </View>
 
       {screen !== 'tasbeeh' && <BottomNav active={getActiveTab()} onTabPress={handleTabPress} />}
