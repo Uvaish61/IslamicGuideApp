@@ -48,6 +48,13 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
   const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
   const [shareFeedback, setShareFeedback] = useState<string | null>(null);
 
+  const zakatGuidelines = [
+    'Include cash, savings, bank balances, gold, silver, and business assets.',
+    'Use the current market value for gold and silver when estimating Nisab.',
+    'Zakat is typically 2.5% of wealth that remains above the Nisab threshold for one lunar year.',
+    'If you are unsure about an asset, consult a local scholar for confirmation.',
+  ] as const;
+
   const previewResult = useMemo(() => calculateZakat(assets), [assets]);
   const hasValidationErrors = Object.values(validationErrors).some(Boolean);
   const calculateButtonScale = useSharedValue(1);
@@ -213,6 +220,39 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
           </Animated.View>
 
           <Animated.View
+            entering={FadeIn.delay(260).springify()}
+            style={styles.guidelinesSection}>
+            <View style={[styles.guidelinesCard, cardShadow]}>
+              <View style={styles.guidelinesHeader}>
+                <View style={styles.guidelinesIconWrap}>
+                  <Info size={18} color="#2F7E77" strokeWidth={2} />
+                </View>
+                <View style={styles.guidelinesHeaderText}>
+                  <Text style={styles.guidelinesLabel}>Guidelines</Text>
+                  <Text style={styles.guidelinesTitle}>Before you calculate</Text>
+                </View>
+              </View>
+
+              <View style={styles.guidelinesList}>
+                {zakatGuidelines.map((item, index) => (
+                  <View key={item} style={styles.guidelineRow}>
+                    <View style={styles.guidelineBullet}>
+                      <Text style={styles.guidelineBulletText}>{index + 1}</Text>
+                    </View>
+                    <Text style={styles.guidelineText}>{item}</Text>
+                  </View>
+                ))}
+              </View>
+
+              <View style={styles.guidelinesFooter}>
+                <Text style={styles.guidelinesFooterText}>
+                  Tip: keep your asset values updated so the result stays meaningful.
+                </Text>
+              </View>
+            </View>
+          </Animated.View>
+
+          <Animated.View
             entering={FadeIn.delay(300).springify()}
             style={styles.formulaSection}>
             <ZakatResultCard
@@ -349,6 +389,88 @@ const styles = StyleSheet.create({
   },
   formSection: {
     marginBottom: 24,
+  },
+  guidelinesSection: {
+    marginBottom: 24,
+  },
+  guidelinesCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    padding: 18,
+    borderWidth: 1,
+    borderColor: '#F0EFFF',
+  },
+  guidelinesHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    gap: 12,
+  },
+  guidelinesIconWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: '#EEF8F7',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  guidelinesHeaderText: {
+    flex: 1,
+  },
+  guidelinesLabel: {
+    fontSize: 11,
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    color: '#7E7D94',
+    fontWeight: '700',
+    marginBottom: 2,
+  },
+  guidelinesTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#29293D',
+  },
+  guidelinesList: {
+    gap: 12,
+  },
+  guidelineRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+  },
+  guidelineBullet: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#F4F1FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 1,
+  },
+  guidelineBulletText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#5548EF',
+  },
+  guidelineText: {
+    flex: 1,
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#7E7D94',
+    fontWeight: '500',
+  },
+  guidelinesFooter: {
+    marginTop: 16,
+    backgroundColor: '#F8F8FC',
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  guidelinesFooterText: {
+    fontSize: 11,
+    lineHeight: 16,
+    color: '#7E7D94',
+    fontWeight: '600',
   },
   sectionTitle: {
     fontSize: 16,
