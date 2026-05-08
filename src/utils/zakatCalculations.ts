@@ -163,6 +163,24 @@ export const formatZakatCalculation = (result: ZakatCalculation) => {
 };
 
 /**
+ * Build a shareable summary for the current result
+ */
+export const formatZakatShareText = (result: ZakatCalculation): string => {
+  const summary = formatZakatCalculation(result);
+
+  return [
+    'Zakat Calculation Summary',
+    `Status: ${summary.statusLabel}`,
+    `Zakat Payable: ${summary.formattedZakat}`,
+    `Total Assets: ${summary.formattedTotalAssets}`,
+    `Nisab Threshold: ${summary.formattedNisab}`,
+    `Calculated At: ${summary.calculatedAt}`,
+    '',
+    'Shared from IslamicGuideApp',
+  ].join('\n');
+};
+
+/**
  * Get asset types with values
  */
 export const getAssetTypesWithValues = (assets: AssetInput) => {

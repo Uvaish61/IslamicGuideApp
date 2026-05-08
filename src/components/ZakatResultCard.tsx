@@ -9,8 +9,8 @@ import Animated, {
   FadeInUp,
   ZoomIn,
 } from 'react-native-reanimated';
-import { Pressable } from 'react-native';
-import { ShieldCheck, CircleAlert, TrendingUp, Landmark, Bookmark } from 'lucide-react-native';
+import { Pressable, View } from 'react-native';
+import { ShieldCheck, CircleAlert, TrendingUp, Landmark, Bookmark, Share2 } from 'lucide-react-native';
 import { ZakatCalculation } from '../types/zakatTypes';
 import { formatZakatCalculation } from '../utils/zakatCalculations';
 import ZakatBreakdownSummary from './ZakatBreakdownSummary';
@@ -18,6 +18,7 @@ import ZakatBreakdownSummary from './ZakatBreakdownSummary';
 interface ZakatResultCardProps {
   result: ZakatCalculation | null;
   onSavePress?: () => void;
+  onSharePress?: () => void;
   isSaved?: boolean;
   isSaving?: boolean;
   containerStyle?: ViewStyle;
@@ -26,6 +27,7 @@ interface ZakatResultCardProps {
 const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
   result,
   onSavePress,
+  onSharePress,
   isSaved = false,
   isSaving = false,
   containerStyle,
@@ -120,20 +122,33 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
         containerStyle={styles.breakdownSummaryCard}
       />
 
-      {onSavePress ? (
-        <Pressable
-          onPress={onSavePress}
-          disabled={isSaving || isSaved}
-          style={[
-            styles.saveButton,
-            isSaved ? styles.saveButtonSaved : styles.saveButtonIdle,
-            isSaving && styles.saveButtonDisabled,
-          ]}>
-          <Bookmark size={16} color={isSaved ? '#2F7E77' : '#FFFFFF'} strokeWidth={2.2} />
-          <Text style={[styles.saveButtonText, isSaved && styles.saveButtonTextSaved]}>
-            {isSaving ? 'Saving...' : isSaved ? 'Saved to History' : 'Save Result'}
-          </Text>
-        </Pressable>
+      {(onSavePress || onSharePress) ? (
+        <View style={styles.actionRow}>
+          {onSavePress ? (
+            <Pressable
+              onPress={onSavePress}
+              disabled={isSaving || isSaved}
+              style={[
+                styles.actionButton,
+                isSaved ? styles.saveButtonSaved : styles.saveButtonIdle,
+                isSaving && styles.saveButtonDisabled,
+              ]}>
+              <Bookmark size={16} color={isSaved ? '#2F7E77' : '#FFFFFF'} strokeWidth={2.2} />
+              <Text style={[styles.saveButtonText, isSaved && styles.saveButtonTextSaved]}>
+                {isSaving ? 'Saving...' : isSaved ? 'Saved to History' : 'Save Result'}
+              </Text>
+            </Pressable>
+          ) : null}
+
+          {onSharePress ? (
+            <Pressable
+              onPress={onSharePress}
+              style={[styles.actionButton, styles.shareButton]}>
+              <Share2 size={16} color="#FFFFFF" strokeWidth={2.2} />
+              <Text style={styles.shareButtonText}>Share Result</Text>
+            </Pressable>
+          ) : null}
+        </View>
       ) : null}
 
       <View style={styles.footerNote}>
@@ -294,6 +309,21 @@ const styles = StyleSheet.create({
   breakdownSummaryCard: {
     marginBottom: 14,
   },
+  actionRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 14,
+  },
+  actionButton: {
+    minHeight: 50,
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 8,
+    flex: 1,
+  },
   saveButton: {
     minHeight: 50,
     borderRadius: 16,
@@ -321,6 +351,15 @@ const styles = StyleSheet.create({
   },
   saveButtonTextSaved: {
     color: '#2F7E77',
+  },
+  shareButton: {
+    backgroundColor: '#2F7E77',
+  },
+  shareButtonText: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: 0.2,
   },
   footerNote: {
     backgroundColor: '#F4F1FF',

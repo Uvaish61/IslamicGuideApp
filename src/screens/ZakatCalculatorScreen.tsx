@@ -7,6 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   Pressable,
+  Share,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
@@ -22,7 +23,7 @@ import { ArrowLeft, Calculator, Info } from 'lucide-react-native';
 import AssetInputFields from '../components/AssetInputFields';
 import ZakatResultCard from '../components/ZakatResultCard';
 import { AssetInput, ZakatResult } from '../types/zakatTypes';
-import { calculateZakat } from '../utils/zakatCalculations';
+import { calculateZakat, formatZakatShareText } from '../utils/zakatCalculations';
 
 const ZAKAT_RESULTS_STORAGE_KEY = 'zakat_results_history';
 
@@ -45,6 +46,7 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
+  const [shareFeedback, setShareFeedback] = useState<string | null>(null);
 
   const previewResult = useMemo(() => calculateZakat(assets), [assets]);
   const hasValidationErrors = Object.values(validationErrors).some(Boolean);
@@ -69,7 +71,22 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
 
     setIsSaved(false);
     setSaveFeedback(null);
+    setShareFeedback(null);
     setCalculationCount((previous) => previous + 1);
+  };
+
+  const handleSharePress = async () => {
+    if (hasValidationErrors) {
+      return;
+    }
+
+    try {
+      const message = formatZakatShareText(previewResult);
+      await Share.share({ message });
+      setShareFeedback('Share sheet opened successfully.');
+    } catch {
+      setShareFeedback('Unable to open share sheet right now.');
+    }
   };
 
   const handleSavePress = async () => {
@@ -202,6 +219,7 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
               key={`zakat-result-${calculationCount}`}
               result={previewResult}
               onSavePress={handleSavePress}
+              onSharePress={handleSharePress}
               isSaved={isSaved}
               isSaving={isSaving}
             />
@@ -209,6 +227,12 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
             {saveFeedback ? (
               <Animated.View entering={FadeIn.delay(50).springify()} style={styles.saveBanner}>
                 <Text style={styles.saveBannerText}>{saveFeedback}</Text>
+              </Animated.View>
+            ) : null}
+
+            {shareFeedback ? (
+              <Animated.View entering={FadeIn.delay(50).springify()} style={styles.shareBanner}>
+                <Text style={styles.shareBannerText}>{shareFeedback}</Text>
               </Animated.View>
             ) : null}
           </Animated.View>
@@ -363,6 +387,21 @@ const styles = StyleSheet.create({
     borderLeftColor: '#2F7E77',
   },
   saveBannerText: {
+    fontSize: 11,
+    lineHeight: 16,
+    color: '#2F7E77',
+    fontWeight: '600',
+  },
+  shareBanner: {
+    marginTop: 12,
+    backgroundColor: '#EEF8F7',
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: '#2F7E77',
+  },
+  shareBannerText: {
     fontSize: 11,
     lineHeight: 16,
     color: '#2F7E77',
