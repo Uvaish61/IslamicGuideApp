@@ -18,12 +18,26 @@ import Animated, {
   ZoomIn,
 } from 'react-native-reanimated';
 import { ArrowLeft, Info, Calculator } from 'lucide-react-native';
+import AssetInputFields from '../components/AssetInputFields';
+import ZakatResultCard from '../components/ZakatResultCard';
+import { AssetInput } from '../types/zakatTypes';
+import { calculateZakat } from '../utils/zakatCalculations';
 
 type ZakatCalculatorScreenProps = {
   onGoBack: () => void;
 };
 
 const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
+  const defaultAssets: AssetInput = {
+    cash: 0,
+    bankBalance: 0,
+    goldGrams: 0,
+    silverGrams: 0,
+    otherAssets: 0,
+  };
+
+  const previewResult = calculateZakat(defaultAssets);
+
   const cardShadow = {
     shadowColor: '#5548EF',
     shadowOpacity: 0.12,
@@ -83,23 +97,17 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
             </Text>
             
             <View style={[styles.formCard, cardShadow]}>
-              {/* Input fields will be added in next tasks */}
-              <View style={styles.inputPlaceholder}>
-                <Calculator size={32} color="#ECEBFA" strokeWidth={1.5} />
-              </View>
+              <AssetInputFields
+                assets={defaultAssets}
+                onAssetsChange={() => undefined}
+              />
             </View>
           </Animated.View>
 
           <Animated.View
             entering={FadeIn.delay(300).springify()}
             style={styles.formulaSection}>
-            <View style={[styles.formulaCard, cardShadow]}>
-              <Text style={styles.formulaLabel}>Nisab Threshold (2024)</Text>
-              <Text style={styles.formulaValue}>₹ 7,50,000</Text>
-              <Text style={styles.formulaDescription}>
-                Based on gold/silver market rates
-              </Text>
-            </View>
+            <ZakatResultCard result={previewResult} />
           </Animated.View>
 
         </ScrollView>
