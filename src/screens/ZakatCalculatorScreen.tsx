@@ -13,8 +13,11 @@ import {
 import Animated, {
   FadeIn,
   SlideInDown,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
 } from 'react-native-reanimated';
-import { ArrowLeft, Info } from 'lucide-react-native';
+import { ArrowLeft, Calculator, Info } from 'lucide-react-native';
 import AssetInputFields from '../components/AssetInputFields';
 import ZakatResultCard from '../components/ZakatResultCard';
 import { AssetInput } from '../types/zakatTypes';
@@ -35,9 +38,11 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
 
   const [assets, setAssets] = useState<AssetInput>(defaultAssets);
   const [validationErrors, setValidationErrors] = useState<Partial<Record<keyof AssetInput, string>>>({});
+  const [calculationCount, setCalculationCount] = useState(0);
 
   const previewResult = useMemo(() => calculateZakat(assets), [assets]);
   const hasValidationErrors = Object.values(validationErrors).some(Boolean);
+  const calculateButtonScale = useSharedValue(1);
 
   const cardShadow = {
     shadowColor: '#5548EF',
@@ -46,6 +51,18 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
     shadowOffset: { width: 0, height: 8 },
     elevation: 5,
   } as const;
+
+  const buttonAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: calculateButtonScale.value }],
+  }));
+
+  const handleCalculatePress = () => {
+    if (hasValidationErrors) {
+      return;
+    }
+
+    setCalculationCount((previous) => previous + 1);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -118,12 +135,33 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
                 }
               />
             </View>
+
+            <Animated.View style={[styles.calculateButtonWrap, buttonAnimatedStyle]}>
+              <Pressable
+                onPress={handleCalculatePress}
+                onPressIn={() => {
+                  calculateButtonScale.value = withSpring(0.97, {
+                    damping: 12,
+                    stiffness: 180,
+                  });
+                }}
+                onPressOut={() => {
+                  calculateButtonScale.value = withSpring(1, {
+                    damping: 12,
+                    stiffness: 180,
+                  });
+                }}
+                style={[styles.calculateButton, cardShadow, hasValidationErrors && styles.calculateButtonDisabled]}>
+                <Calculator size={18} color="#FFFFFF" strokeWidth={2} />
+                <Text style={styles.calculateButtonText}>Calculate Zakat</Text>
+              </Pressable>
+            </Animated.View>
           </Animated.View>
 
           <Animated.View
             entering={FadeIn.delay(300).springify()}
             style={styles.formulaSection}>
-            <ZakatResultCard result={previewResult} />
+            <ZakatResultCard key={`zakat-result-${calculationCount}`} result={previewResult} />
           </Animated.View>
 
         </ScrollView>
@@ -275,6 +313,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#F0EFFF',
+  },
+  calculateButtonWrap: {
+    marginTop: 14,
+  },
+  calculateButton: {
+    backgroundColor: '#5548EF',
+    borderRadius: 16,
+    minHeight: 52,
+    paddingHorizontal: 18,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+  },
+  calculateButtonDisabled: {
+    opacity: 0.72,
+  },
+  calculateButtonText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '800',
+    letterSpacing: 0.2,
   },
   formulaSection: {
     marginBottom: 24,
