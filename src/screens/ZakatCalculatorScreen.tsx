@@ -15,6 +15,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Animated, {
   FadeIn,
   SlideInDown,
+  interpolate,
+  useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -59,6 +61,7 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
   const previewResult = useMemo(() => calculateZakat(assets), [assets]);
   const hasValidationErrors = Object.values(validationErrors).some(Boolean);
   const calculateButtonScale = useSharedValue(1);
+  const scrollY = useSharedValue(0);
 
   const cardShadow = {
     shadowColor: colors.primary,
@@ -71,6 +74,30 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
   const buttonAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: calculateButtonScale.value }],
   }));
+
+  const scrollHintAnimatedStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(scrollY.value, [0, 80, 180], [1, 0.7, 0], 'clamp');
+    const translateY = interpolate(scrollY.value, [0, 180], [0, -12], 'clamp');
+
+    return {
+      opacity,
+      transform: [{ translateY }],
+    };
+  });
+
+  const progressAnimatedStyle = useAnimatedStyle(() => {
+    const progress = interpolate(scrollY.value, [0, 520], [0, 1], 'clamp');
+
+    return {
+      transform: [{ scaleX: progress }],
+    };
+  });
+
+  const handleScroll = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
   const handleCalculatePress = () => {
     if (hasValidationErrors) {
@@ -152,7 +179,17 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
         <ScrollView 
           style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}>
+
+          <Animated.View style={[styles.scrollProgressTrack, cardShadow]}>
+            <Animated.View style={[styles.scrollProgressFill, progressAnimatedStyle]} />
+          </Animated.View>
+
+          <Animated.View style={[styles.scrollHint, scrollHintAnimatedStyle]}>
+            <Text style={styles.scrollHintText}>Scroll for tips, summary, and actions</Text>
+          </Animated.View>
           
           <Animated.View
             entering={FadeIn.delay(100).springify()}
@@ -331,6 +368,33 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
+    scrollProgressTrack: {
+      height: 6,
+      borderRadius: 999,
+      backgroundColor: colors.border,
+      overflow: 'hidden',
+      marginBottom: 12,
+    },
+    scrollProgressFill: {
+      height: '100%',
+      borderRadius: 999,
+      backgroundColor: colors.primary,
+      transformOrigin: 'left',
+    },
+    scrollHint: {
+      alignSelf: 'flex-start',
+      backgroundColor: colors.primarySoft,
+      borderRadius: 999,
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      marginBottom: 14,
+    },
+    scrollHintText: {
+      fontSize: 11,
+      color: colors.primary,
+      fontWeight: '700',
+      letterSpacing: 0.2,
+    },
     fontWeight: '700',
     color: colors.textPrimary,
     letterSpacing: 0.3,

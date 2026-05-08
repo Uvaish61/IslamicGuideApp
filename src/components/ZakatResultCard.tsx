@@ -4,12 +4,12 @@ import {
   Text,
   StyleSheet,
   ViewStyle,
+  Pressable,
 } from 'react-native';
 import Animated, {
   FadeInUp,
   ZoomIn,
 } from 'react-native-reanimated';
-import { Pressable, View } from 'react-native';
 import { ShieldCheck, CircleAlert, TrendingUp, Landmark, Bookmark, Share2 } from 'lucide-react-native';
 import { ZakatCalculation } from '../types/zakatTypes';
 import { formatZakatCalculation } from '../utils/zakatCalculations';
