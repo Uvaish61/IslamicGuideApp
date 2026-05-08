@@ -12,6 +12,7 @@ import Animated, {
 import { ShieldCheck, CircleAlert, TrendingUp, Landmark } from 'lucide-react-native';
 import { ZakatCalculation } from '../types/zakatTypes';
 import { formatZakatCalculation } from '../utils/zakatCalculations';
+import ZakatBreakdownSummary from './ZakatBreakdownSummary';
 
 interface ZakatResultCardProps {
   result: ZakatCalculation | null;
@@ -106,6 +107,11 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
           <Text style={styles.breakdownValue}>{formattedNisab}</Text>
         </View>
       </View>
+
+      <ZakatBreakdownSummary
+        breakdown={result.breakdown}
+        containerStyle={styles.breakdownSummaryCard}
+      />
 
       <View style={styles.footerNote}>
         <Text style={styles.footerNoteText}>
@@ -261,6 +267,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '800',
     color: '#29293D',
+  },
+  breakdownSummaryCard: {
+    marginBottom: 14,
   },
   footerNote: {
     backgroundColor: '#F4F1FF',
