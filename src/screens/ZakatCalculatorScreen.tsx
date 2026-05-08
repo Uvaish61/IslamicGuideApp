@@ -24,6 +24,7 @@ import AssetInputFields from '../components/AssetInputFields';
 import ZakatResultCard from '../components/ZakatResultCard';
 import { AssetInput, ZakatResult } from '../types/zakatTypes';
 import { calculateZakat, formatZakatShareText } from '../utils/zakatCalculations';
+import colors from '../theme/colors';
 
 const ZAKAT_RESULTS_STORAGE_KEY = 'zakat_results_history';
 
@@ -60,7 +61,7 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
   const calculateButtonScale = useSharedValue(1);
 
   const cardShadow = {
-    shadowColor: '#5548EF',
+    shadowColor: colors.primary,
     shadowOpacity: 0.12,
     shadowRadius: 18,
     shadowOffset: { width: 0, height: 8 },
@@ -127,7 +128,7 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
+      <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
       
       <View style={styles.bgBubble1} />
       <View style={styles.bgBubble2} />
@@ -286,7 +287,7 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ECEBFA',
+    backgroundColor: colors.background,
   },
   bgBubble1: {
     position: 'absolute',
@@ -295,7 +296,7 @@ const styles = StyleSheet.create({
     height: 144,
     width: 144,
     borderRadius: 999,
-    backgroundColor: '#F4F1FF',
+    backgroundColor: colors.primarySoft,
     opacity: 0.5,
     zIndex: 1,
   },
@@ -306,7 +307,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 999,
-    backgroundColor: '#EEF8F7',
+    backgroundColor: colors.secondarySoft,
     opacity: 0.4,
     zIndex: 1,
   },
@@ -331,12 +332,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#29293D',
+    color: colors.textPrimary,
     letterSpacing: 0.3,
   },
   headerSubtitle: {
     fontSize: 12,
-    color: '#7E7D94',
+    color: colors.textSecondary,
     marginTop: 2,
     fontWeight: '500',
   },

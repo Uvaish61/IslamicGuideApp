@@ -11,6 +11,7 @@ import Animated, {
 import { Wallet, Banknote, Gem, Package } from 'lucide-react-native';
 import { ZakatBreakdown } from '../types/zakatTypes';
 import { formatCurrency } from '../utils/zakatCalculations';
+import colors from '../theme/colors';
 
 type BreakdownItem = {
   key: keyof ZakatBreakdown;
@@ -30,15 +31,15 @@ const breakdownItems: BreakdownItem[] = [
     key: 'cashZakat',
     label: 'Cash',
     Icon: Wallet,
-    tint: '#5548EF',
-    background: '#F4F1FF',
+    tint: colors.primary,
+    background: colors.primarySoft,
   },
   {
     key: 'bankZakat',
     label: 'Bank Balance',
     Icon: Banknote,
-    tint: '#2F7E77',
-    background: '#EEF8F7',
+    tint: colors.secondary,
+    background: colors.secondarySoft,
   },
   {
     key: 'goldZakat',
@@ -51,15 +52,15 @@ const breakdownItems: BreakdownItem[] = [
     key: 'silverZakat',
     label: 'Silver',
     Icon: Package,
-    tint: '#7E7D94',
-    background: '#F8F8FC',
+    tint: colors.textSecondary,
+    background: colors.surfaceSoft,
   },
   {
     key: 'otherZakat',
     label: 'Other Assets',
     Icon: Package,
-    tint: '#D64545',
-    background: '#FFF0F0',
+    tint: colors.danger,
+    background: colors.dangerSoft,
   },
 ];
 
@@ -126,11 +127,11 @@ const ZakatBreakdownSummary: React.FC<ZakatBreakdownSummaryProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 20,
     padding: 18,
     borderWidth: 1,
-    borderColor: '#F0EFFF',
+    borderColor: colors.border,
   },
   headerRow: {
     flexDirection: 'row',
@@ -143,18 +144,18 @@ const styles = StyleSheet.create({
     fontSize: 11,
     textTransform: 'uppercase',
     letterSpacing: 0.8,
-    color: '#7E7D94',
+    color: colors.textSecondary,
     fontWeight: '700',
     marginBottom: 4,
   },
   title: {
     fontSize: 16,
-    color: '#29293D',
+    color: colors.textPrimary,
     fontWeight: '800',
     lineHeight: 22,
   },
   totalBadge: {
-    backgroundColor: '#F4F1FF',
+    backgroundColor: colors.primarySoft,
     borderRadius: 999,
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -162,17 +163,17 @@ const styles = StyleSheet.create({
   totalBadgeText: {
     fontSize: 11,
     fontWeight: '800',
-    color: '#5548EF',
+    color: colors.primary,
   },
   list: {
     gap: 12,
   },
   row: {
-    backgroundColor: '#FCFBFF',
+    backgroundColor: colors.surfaceTertiary,
     borderRadius: 16,
     padding: 14,
     borderWidth: 1,
-    borderColor: '#F0EFFF',
+    borderColor: colors.border,
   },
   rowTop: {
     flexDirection: 'row',
@@ -193,11 +194,11 @@ const styles = StyleSheet.create({
   rowLabel: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#29293D',
+    color: colors.textPrimary,
   },
   rowAmount: {
     fontSize: 11,
-    color: '#7E7D94',
+    color: colors.textSecondary,
     fontWeight: '500',
     marginTop: 2,
   },
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
   progressTrack: {
     height: 8,
     borderRadius: 999,
-    backgroundColor: '#F0EFFF',
+    backgroundColor: colors.border,
     overflow: 'hidden',
   },
   progressFill: {
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
   },
   footerNote: {
     marginTop: 14,
-    backgroundColor: '#EEF8F7',
+    backgroundColor: colors.secondarySoft,
     borderRadius: 14,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
   footerNoteText: {
     fontSize: 11,
     lineHeight: 16,
-    color: '#2F7E77',
+    color: colors.secondary,
     fontWeight: '500',
   },
 });

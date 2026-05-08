@@ -14,6 +14,7 @@ import { ShieldCheck, CircleAlert, TrendingUp, Landmark, Bookmark, Share2 } from
 import { ZakatCalculation } from '../types/zakatTypes';
 import { formatZakatCalculation } from '../utils/zakatCalculations';
 import ZakatBreakdownSummary from './ZakatBreakdownSummary';
+import colors from '../theme/colors';
 
 interface ZakatResultCardProps {
   result: ZakatCalculation | null;
@@ -33,7 +34,7 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
   containerStyle,
 }) => {
   const cardShadow = {
-    shadowColor: '#5548EF',
+    shadowColor: colors.primary,
     shadowOpacity: 0.12,
     shadowRadius: 18,
     shadowOffset: { width: 0, height: 8 },
@@ -162,17 +163,17 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.surface,
     borderRadius: 20,
     padding: 18,
     borderWidth: 1,
-    borderColor: '#F0EFFF',
+    borderColor: colors.border,
   },
   emptyIconWrap: {
     width: 48,
     height: 48,
     borderRadius: 16,
-    backgroundColor: '#F4F1FF',
+    backgroundColor: colors.primarySoft,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 14,
@@ -180,13 +181,13 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#29293D',
+    color: colors.textPrimary,
     marginBottom: 6,
   },
   emptyText: {
     fontSize: 12,
     lineHeight: 18,
-    color: '#7E7D94',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   headerRow: {
@@ -199,13 +200,13 @@ const styles = StyleSheet.create({
     fontSize: 11,
     textTransform: 'uppercase',
     letterSpacing: 0.8,
-    color: '#7E7D94',
+    color: colors.textSecondary,
     fontWeight: '700',
     marginBottom: 4,
   },
   title: {
     fontSize: 18,
-    color: '#29293D',
+    color: colors.textPrimary,
     fontWeight: '800',
   },
   badgeWrap: {
@@ -220,23 +221,23 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   badgeSuccess: {
-    backgroundColor: '#EAF6F4',
+    backgroundColor: colors.successSoft,
   },
   badgeNeutral: {
-    backgroundColor: '#FFF4E8',
+    backgroundColor: colors.warningSoft,
   },
   badgeText: {
     fontSize: 11,
     fontWeight: '700',
   },
   badgeTextSuccess: {
-    color: '#2F7E77',
+    color: colors.secondary,
   },
   badgeTextNeutral: {
     color: '#9C6D00',
   },
   primaryStatCard: {
-    backgroundColor: '#F8F8FC',
+    backgroundColor: colors.surfaceSoft,
     borderRadius: 18,
     padding: 16,
     marginBottom: 16,
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
   primaryStatLabel: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#7E7D94',
+    color: colors.textSecondary,
     marginBottom: 8,
   },
   primaryStatValue: {
@@ -253,15 +254,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   primaryStatValueActive: {
-    color: '#2F7E77',
+    color: colors.secondary,
   },
   primaryStatValueMuted: {
-    color: '#5548EF',
+    color: colors.primary,
   },
   primaryStatHint: {
     fontSize: 12,
     lineHeight: 18,
-    color: '#7E7D94',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   breakdownGrid: {
@@ -271,17 +272,17 @@ const styles = StyleSheet.create({
   },
   breakdownItem: {
     flex: 1,
-    backgroundColor: '#FCFBFF',
+    backgroundColor: colors.surfaceTertiary,
     borderRadius: 16,
     padding: 14,
     borderWidth: 1,
-    borderColor: '#F0EFFF',
+    borderColor: colors.border,
   },
   breakdownIcon: {
     width: 34,
     height: 34,
     borderRadius: 12,
-    backgroundColor: '#F4F1FF',
+    backgroundColor: colors.primarySoft,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
@@ -290,7 +291,7 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 12,
-    backgroundColor: '#EEF8F7',
+    backgroundColor: colors.secondarySoft,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
@@ -298,13 +299,13 @@ const styles = StyleSheet.create({
   breakdownLabel: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#7E7D94',
+    color: colors.textSecondary,
     marginBottom: 4,
   },
   breakdownValue: {
     fontSize: 15,
     fontWeight: '800',
-    color: '#29293D',
+    color: colors.textPrimary,
   },
   breakdownSummaryCard: {
     marginBottom: 14,
@@ -335,10 +336,10 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   saveButtonIdle: {
-    backgroundColor: '#5548EF',
+    backgroundColor: colors.primary,
   },
   saveButtonSaved: {
-    backgroundColor: '#EAF6F4',
+    backgroundColor: colors.successSoft,
   },
   saveButtonDisabled: {
     opacity: 0.78,
@@ -346,14 +347,14 @@ const styles = StyleSheet.create({
   saveButtonText: {
     fontSize: 14,
     fontWeight: '800',
-    color: '#FFFFFF',
+    color: colors.surface,
     letterSpacing: 0.2,
   },
   saveButtonTextSaved: {
-    color: '#2F7E77',
+    color: colors.secondary,
   },
   shareButton: {
-    backgroundColor: '#2F7E77',
+    backgroundColor: colors.secondary,
   },
   shareButtonText: {
     fontSize: 14,
@@ -362,7 +363,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   footerNote: {
-    backgroundColor: '#F4F1FF',
+    backgroundColor: colors.primarySoft,
     borderRadius: 14,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -370,7 +371,7 @@ const styles = StyleSheet.create({
   footerNoteText: {
     fontSize: 11,
     lineHeight: 16,
-    color: '#7E7D94',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
 });
