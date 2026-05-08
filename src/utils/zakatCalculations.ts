@@ -11,6 +11,8 @@ const NISAB_SILVER_GRAMS = 612.36; // Approximately 612.36 grams of silver
 // Zakat percentage
 const ZAKAT_PERCENTAGE = 0.025; // 2.5%
 
+const roundToTwoDecimals = (value: number): number => Math.round(value * 100) / 100;
+
 /**
  * Calculate current Nisab threshold in INR
  */
@@ -68,11 +70,11 @@ export const calculateZakatBreakdown = (assets: AssetInput): ZakatBreakdown => {
   const otherZakat = assets.otherAssets * ZAKAT_PERCENTAGE;
 
   return {
-    cashZakat: Math.round(cashZakat * 100) / 100,
-    bankZakat: Math.round(bankZakat * 100) / 100,
-    goldZakat: Math.round(goldZakat * 100) / 100,
-    silverZakat: Math.round(silverZakat * 100) / 100,
-    otherZakat: Math.round(otherZakat * 100) / 100,
+    cashZakat: roundToTwoDecimals(cashZakat),
+    bankZakat: roundToTwoDecimals(bankZakat),
+    goldZakat: roundToTwoDecimals(goldZakat),
+    silverZakat: roundToTwoDecimals(silverZakat),
+    otherZakat: roundToTwoDecimals(otherZakat),
   };
 };
 
@@ -100,10 +102,10 @@ export const calculateZakat = (assets: AssetInput): ZakatCalculation => {
   const zakatAmount = nisabMet ? calculateTotalZakat(breakdown) : 0;
 
   return {
-    totalAssets: Math.round(totalAssets * 100) / 100,
-    nisabAmount: Math.round(nisabThreshold.minimumNisab * 100) / 100,
+    totalAssets: roundToTwoDecimals(totalAssets),
+    nisabAmount: roundToTwoDecimals(nisabThreshold.minimumNisab),
     isNisabMet: nisabMet,
-    zakatAmount: Math.round(zakatAmount * 100) / 100,
+    zakatAmount: roundToTwoDecimals(zakatAmount),
     breakdown,
     currency: 'INR',
     calculatedAt: new Date(),
@@ -118,9 +120,54 @@ export const formatCurrency = (amount: number): string => {
 };
 
 /**
+ * Format a calculated Zakat status message
+ */
+export const formatZakatStatus = (result: ZakatCalculation): string => {
+  if (result.isNisabMet) {
+    return 'Eligible for Zakat';
+  }
+
+  return 'Below Nisab threshold';
+};
+
+/**
+ * Format the calculation date for display
+ */
+export const formatCalculationDate = (date: Date): string => {
+  return date.toLocaleString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};
+
+/**
+ * Build display-ready summary values for the result card
+ */
+export const formatZakatCalculation = (result: ZakatCalculation) => {
+  const formattedTotalAssets = formatCurrency(result.totalAssets);
+  const formattedNisab = formatCurrency(result.nisabAmount);
+  const formattedZakat = formatCurrency(result.zakatAmount);
+
+  return {
+    formattedTotalAssets,
+    formattedNisab,
+    formattedZakat,
+    statusLabel: formatZakatStatus(result),
+    calculatedAt: formatCalculationDate(result.calculatedAt),
+    eligibilityNote: result.isNisabMet
+      ? 'You are required to pay 2.5% on your eligible wealth.'
+      : 'Your total wealth is currently below the Nisab threshold.',
+  };
+};
+
+/**
  * Get asset types with values
  */
 export const getAssetTypesWithValues = (assets: AssetInput) => {
+  const totalAssets = calculateTotalAssets(assets);
+
   return [
     { name: 'Cash', value: assets.cash, percentage: 0 },
     { name: 'Bank Balance', value: assets.bankBalance, percentage: 0 },

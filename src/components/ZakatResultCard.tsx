@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ShieldCheck, CircleAlert, TrendingUp, Landmark } from 'lucide-react-native';
 import { ZakatCalculation } from '../types/zakatTypes';
-import { formatCurrency } from '../utils/zakatCalculations';
+import { formatZakatCalculation } from '../utils/zakatCalculations';
 
 interface ZakatResultCardProps {
   result: ZakatCalculation | null;
@@ -46,9 +46,14 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
     );
   }
 
-  const totalAssetsFormatted = formatCurrency(result.totalAssets);
-  const nisabFormatted = formatCurrency(result.nisabAmount);
-  const zakatFormatted = formatCurrency(result.zakatAmount);
+  const {
+    formattedTotalAssets,
+    formattedNisab,
+    formattedZakat,
+    statusLabel,
+    calculatedAt,
+    eligibilityNote,
+  } = formatZakatCalculation(result);
   const isEligible = result.isNisabMet;
 
   return (
@@ -68,7 +73,7 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
               <CircleAlert size={14} color="#9C6D00" strokeWidth={2.2} />
             )}
             <Text style={[styles.badgeText, isEligible ? styles.badgeTextSuccess : styles.badgeTextNeutral]}>
-              {isEligible ? 'Nisab Met' : 'Below Nisab'}
+              {statusLabel}
             </Text>
           </View>
         </Animated.View>
@@ -77,12 +82,10 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
       <View style={styles.primaryStatCard}>
         <Text style={styles.primaryStatLabel}>Zakat Payable</Text>
         <Text style={[styles.primaryStatValue, isEligible ? styles.primaryStatValueActive : styles.primaryStatValueMuted]}>
-          {zakatFormatted}
+          {formattedZakat}
         </Text>
         <Text style={styles.primaryStatHint}>
-          {isEligible
-            ? 'You are required to pay 2.5% on your eligible wealth.'
-            : 'Your total wealth is currently below the Nisab threshold.'}
+          {eligibilityNote}
         </Text>
       </View>
 
@@ -92,7 +95,7 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
             <Landmark size={16} color="#5548EF" strokeWidth={2} />
           </View>
           <Text style={styles.breakdownLabel}>Total Assets</Text>
-          <Text style={styles.breakdownValue}>{totalAssetsFormatted}</Text>
+          <Text style={styles.breakdownValue}>{formattedTotalAssets}</Text>
         </View>
 
         <View style={styles.breakdownItem}>
@@ -100,13 +103,13 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
             <ShieldCheck size={16} color="#2F7E77" strokeWidth={2} />
           </View>
           <Text style={styles.breakdownLabel}>Nisab</Text>
-          <Text style={styles.breakdownValue}>{nisabFormatted}</Text>
+          <Text style={styles.breakdownValue}>{formattedNisab}</Text>
         </View>
       </View>
 
       <View style={styles.footerNote}>
         <Text style={styles.footerNoteText}>
-          Calculated in INR. You can refine the asset inputs next to get a precise result.
+          Calculated in INR. Updated {calculatedAt}.
         </Text>
       </View>
     </Animated.View>
