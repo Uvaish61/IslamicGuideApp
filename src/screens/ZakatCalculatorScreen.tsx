@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,17 +7,14 @@ import {
   StyleSheet,
   StatusBar,
   Pressable,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import Animated, {
   FadeIn,
-  FadeOut,
   SlideInDown,
-  ZoomIn,
 } from 'react-native-reanimated';
-import { ArrowLeft, Info, Calculator } from 'lucide-react-native';
+import { ArrowLeft, Info } from 'lucide-react-native';
 import AssetInputFields from '../components/AssetInputFields';
 import ZakatResultCard from '../components/ZakatResultCard';
 import { AssetInput } from '../types/zakatTypes';
@@ -28,15 +25,19 @@ type ZakatCalculatorScreenProps = {
 };
 
 const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
-  const defaultAssets: AssetInput = {
+  const defaultAssets = useMemo<AssetInput>(() => ({
     cash: 0,
     bankBalance: 0,
     goldGrams: 0,
     silverGrams: 0,
     otherAssets: 0,
-  };
+  }), []);
 
-  const previewResult = calculateZakat(defaultAssets);
+  const [assets, setAssets] = useState<AssetInput>(defaultAssets);
+  const [validationErrors, setValidationErrors] = useState<Partial<Record<keyof AssetInput, string>>>({});
+
+  const previewResult = useMemo(() => calculateZakat(assets), [assets]);
+  const hasValidationErrors = Object.values(validationErrors).some(Boolean);
 
   const cardShadow = {
     shadowColor: '#5548EF',
@@ -95,11 +96,26 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
             <Text style={styles.sectionDescription}>
               Enter the current value of your assets in INR
             </Text>
+
+            {hasValidationErrors ? (
+              <Animated.View entering={FadeIn.delay(50).springify()} style={styles.validationBanner}>
+                <Text style={styles.validationBannerText}>
+                  Please fix the highlighted fields before calculating your Zakat.
+                </Text>
+              </Animated.View>
+            ) : null}
             
             <View style={[styles.formCard, cardShadow]}>
               <AssetInputFields
-                assets={defaultAssets}
-                onAssetsChange={() => undefined}
+                assets={assets}
+                onAssetsChange={setAssets}
+                validationErrors={validationErrors}
+                onFieldValidation={(field, error) =>
+                  setValidationErrors((previous) => ({
+                    ...previous,
+                    [field]: error,
+                  }))
+                }
               />
             </View>
           </Animated.View>
@@ -235,6 +251,21 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     fontWeight: '500',
   },
+  validationBanner: {
+    backgroundColor: '#FFF4E8',
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    marginBottom: 12,
+    borderLeftWidth: 3,
+    borderLeftColor: '#D68C1B',
+  },
+  validationBannerText: {
+    fontSize: 11,
+    lineHeight: 16,
+    color: '#9C6D00',
+    fontWeight: '600',
+  },
   formCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
@@ -245,43 +276,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#F0EFFF',
   },
-  inputPlaceholder: {
-    width: 64,
-    height: 64,
-    borderRadius: 16,
-    backgroundColor: '#F4F1FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   formulaSection: {
     marginBottom: 24,
-  },
-  formulaCard: {
-    backgroundColor: '#EEF8F7',
-    borderRadius: 16,
-    padding: 16,
-    borderLeftWidth: 4,
-    borderLeftColor: '#2F7E77',
-  },
-  formulaLabel: {
-    fontSize: 12,
-    color: '#2F7E77',
-    fontWeight: '600',
-    marginBottom: 8,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  formulaValue: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: '#2F7E77',
-    marginBottom: 8,
-  },
-  formulaDescription: {
-    fontSize: 12,
-    color: '#2F7E77',
-    opacity: 0.7,
-    fontWeight: '500',
   },
 });
 

@@ -21,6 +21,8 @@ import { AssetInput } from '../types/zakatTypes';
 interface AssetInputFieldsProps {
   assets: AssetInput;
   onAssetsChange: (assets: AssetInput) => void;
+  validationErrors?: Partial<Record<keyof AssetInput, string>>;
+  onFieldValidation?: (field: keyof AssetInput, error?: string) => void;
   containerStyle?: ViewStyle;
 }
 
@@ -67,13 +69,29 @@ const ASSET_FIELDS = [
 const AssetInputFields: React.FC<AssetInputFieldsProps> = ({
   assets,
   onAssetsChange,
+  validationErrors,
+  onFieldValidation,
   containerStyle,
 }) => {
   const handleFieldChange = (field: keyof AssetInput, value: string) => {
-    const numValue = value === '' ? 0 : parseFloat(value) || 0;
+    const trimmedValue = value.trim();
+    const parsedValue = trimmedValue === '' ? 0 : Number(trimmedValue);
+    const safeValue = Number.isFinite(parsedValue) && parsedValue >= 0 ? parsedValue : 0;
+
+    let error: string | undefined;
+
+    if (trimmedValue !== '') {
+      if (!Number.isFinite(parsedValue) || Number.isNaN(parsedValue)) {
+        error = 'Enter a valid number';
+      } else if (parsedValue < 0) {
+        error = 'Value cannot be negative';
+      }
+    }
+
+    onFieldValidation?.(field, error);
     onAssetsChange({
       ...assets,
-      [field]: numValue,
+      [field]: safeValue,
     });
   };
 
@@ -109,6 +127,7 @@ const AssetInputFields: React.FC<AssetInputFieldsProps> = ({
                   icon={<Icon size={18} color="#5548EF" strokeWidth={2} />}
                   suffix={field.suffix}
                   keyboardType="decimal-pad"
+                  error={validationErrors?.[field.key as keyof AssetInput]}
                 />
                 <Text style={styles.fieldHint}>{field.hint}</Text>
               </View>

@@ -11,7 +11,6 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
   interpolateColor,
-  Extrapolate,
 } from 'react-native-reanimated';
 
 interface AnimatedInputFieldProps {
@@ -24,6 +23,7 @@ interface AnimatedInputFieldProps {
   containerStyle?: ViewStyle;
   keyboardType?: 'default' | 'numeric' | 'decimal-pad' | 'number-pad' | 'email-address' | 'phone-pad';
   editable?: boolean;
+  error?: string;
 }
 
 const AnimatedInputField: React.FC<AnimatedInputFieldProps> = ({
@@ -36,6 +36,7 @@ const AnimatedInputField: React.FC<AnimatedInputFieldProps> = ({
   containerStyle,
   keyboardType = 'numeric',
   editable = true,
+  error,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const focusAnim = useSharedValue(0);
@@ -59,6 +60,14 @@ const AnimatedInputField: React.FC<AnimatedInputFieldProps> = ({
   };
 
   const animatedBorderStyle = useAnimatedStyle(() => {
+    if (error) {
+      return {
+        borderColor: '#D64545',
+        borderWidth: 1.5,
+        shadowOpacity: 0,
+      };
+    }
+
     const borderColor = interpolateColor(
       focusAnim.value,
       [0, 1],
@@ -77,6 +86,12 @@ const AnimatedInputField: React.FC<AnimatedInputFieldProps> = ({
   });
 
   const animatedLabelStyle = useAnimatedStyle(() => {
+    if (error) {
+      return {
+        color: '#D64545',
+      };
+    }
+
     const scale = interpolateColor(
       focusAnim.value,
       [0, 1],
@@ -141,6 +156,8 @@ const AnimatedInputField: React.FC<AnimatedInputFieldProps> = ({
           <Text style={styles.suffix}>{suffix}</Text>
         )}
       </Animated.View>
+
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
   );
 };
@@ -187,6 +204,13 @@ const styles = StyleSheet.create({
     color: '#7E7D94',
     fontWeight: '600',
     marginLeft: 8,
+  },
+  errorText: {
+    fontSize: 11,
+    color: '#D64545',
+    marginTop: 6,
+    marginLeft: 2,
+    fontWeight: '500',
   },
 });
 
