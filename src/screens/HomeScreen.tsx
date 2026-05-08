@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native';
 import {
   Bell,
   BookOpen,
+  Coins,
   Heart,
   Landmark,
   MapPin,
@@ -66,7 +67,7 @@ const HomeScreen = ({
     { id: 'quran', label: 'Quran', Icon: BookOpen, tone: '#F4F1FF', onPress: onOpenDailyQuote },
     { id: 'duas', label: 'Duas', Icon: MoonStar, tone: '#FFF4E8', onPress: onOpenTasbeeh },
     { id: 'favorites', label: 'Saved', Icon: Heart, tone: '#FDECEF', onPress: onOpenFavorites },
-    { id: 'profile', label: 'Profile', Icon: UserRound, tone: '#E9E7FF', onPress: onOpenProfile },
+    { id: 'zakat', label: 'Zakat', Icon: Coins, tone: '#EEF8F7', onPress: onOpenZakat },
     { id: 'settings', label: 'Tools', Icon: Settings, tone: '#EAF6F4', onPress: onOpenSettings },
   ] as const;
 
