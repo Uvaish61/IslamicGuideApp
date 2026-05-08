@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Animated, {
   FadeIn,
   SlideInDown,
@@ -20,8 +21,10 @@ import Animated, {
 import { ArrowLeft, Calculator, Info } from 'lucide-react-native';
 import AssetInputFields from '../components/AssetInputFields';
 import ZakatResultCard from '../components/ZakatResultCard';
-import { AssetInput } from '../types/zakatTypes';
+import { AssetInput, ZakatResult } from '../types/zakatTypes';
 import { calculateZakat } from '../utils/zakatCalculations';
+
+const ZAKAT_RESULTS_STORAGE_KEY = 'zakat_results_history';
 
 type ZakatCalculatorScreenProps = {
   onGoBack: () => void;
@@ -39,6 +42,9 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
   const [assets, setAssets] = useState<AssetInput>(defaultAssets);
   const [validationErrors, setValidationErrors] = useState<Partial<Record<keyof AssetInput, string>>>({});
   const [calculationCount, setCalculationCount] = useState(0);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
 
   const previewResult = useMemo(() => calculateZakat(assets), [assets]);
   const hasValidationErrors = Object.values(validationErrors).some(Boolean);
@@ -61,7 +67,38 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
       return;
     }
 
+    setIsSaved(false);
+    setSaveFeedback(null);
     setCalculationCount((previous) => previous + 1);
+  };
+
+  const handleSavePress = async () => {
+    if (hasValidationErrors || isSaving) {
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      const savedResult: ZakatResult = {
+        id: `${Date.now()}`,
+        calculation: previewResult,
+        savedAt: new Date(),
+      };
+
+      const existingResultsRaw = await AsyncStorage.getItem(ZAKAT_RESULTS_STORAGE_KEY);
+      const existingResults: ZakatResult[] = existingResultsRaw ? JSON.parse(existingResultsRaw) : [];
+
+      const nextResults = [savedResult, ...existingResults];
+      await AsyncStorage.setItem(ZAKAT_RESULTS_STORAGE_KEY, JSON.stringify(nextResults));
+
+      setIsSaved(true);
+      setSaveFeedback('Result saved to history successfully.');
+    } catch {
+      setIsSaved(false);
+      setSaveFeedback('Unable to save result right now.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -161,7 +198,19 @@ const ZakatCalculatorScreen = ({ onGoBack }: ZakatCalculatorScreenProps) => {
           <Animated.View
             entering={FadeIn.delay(300).springify()}
             style={styles.formulaSection}>
-            <ZakatResultCard key={`zakat-result-${calculationCount}`} result={previewResult} />
+            <ZakatResultCard
+              key={`zakat-result-${calculationCount}`}
+              result={previewResult}
+              onSavePress={handleSavePress}
+              isSaved={isSaved}
+              isSaving={isSaving}
+            />
+
+            {saveFeedback ? (
+              <Animated.View entering={FadeIn.delay(50).springify()} style={styles.saveBanner}>
+                <Text style={styles.saveBannerText}>{saveFeedback}</Text>
+              </Animated.View>
+            ) : null}
           </Animated.View>
 
         </ScrollView>
@@ -302,6 +351,21 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 16,
     color: '#9C6D00',
+    fontWeight: '600',
+  },
+  saveBanner: {
+    marginTop: 12,
+    backgroundColor: '#EAF6F4',
+    borderRadius: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: '#2F7E77',
+  },
+  saveBannerText: {
+    fontSize: 11,
+    lineHeight: 16,
+    color: '#2F7E77',
     fontWeight: '600',
   },
   formCard: {

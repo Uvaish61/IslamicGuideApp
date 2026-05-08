@@ -9,18 +9,25 @@ import Animated, {
   FadeInUp,
   ZoomIn,
 } from 'react-native-reanimated';
-import { ShieldCheck, CircleAlert, TrendingUp, Landmark } from 'lucide-react-native';
+import { Pressable } from 'react-native';
+import { ShieldCheck, CircleAlert, TrendingUp, Landmark, Bookmark } from 'lucide-react-native';
 import { ZakatCalculation } from '../types/zakatTypes';
 import { formatZakatCalculation } from '../utils/zakatCalculations';
 import ZakatBreakdownSummary from './ZakatBreakdownSummary';
 
 interface ZakatResultCardProps {
   result: ZakatCalculation | null;
+  onSavePress?: () => void;
+  isSaved?: boolean;
+  isSaving?: boolean;
   containerStyle?: ViewStyle;
 }
 
 const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
   result,
+  onSavePress,
+  isSaved = false,
+  isSaving = false,
   containerStyle,
 }) => {
   const cardShadow = {
@@ -112,6 +119,22 @@ const ZakatResultCard: React.FC<ZakatResultCardProps> = ({
         breakdown={result.breakdown}
         containerStyle={styles.breakdownSummaryCard}
       />
+
+      {onSavePress ? (
+        <Pressable
+          onPress={onSavePress}
+          disabled={isSaving || isSaved}
+          style={[
+            styles.saveButton,
+            isSaved ? styles.saveButtonSaved : styles.saveButtonIdle,
+            isSaving && styles.saveButtonDisabled,
+          ]}>
+          <Bookmark size={16} color={isSaved ? '#2F7E77' : '#FFFFFF'} strokeWidth={2.2} />
+          <Text style={[styles.saveButtonText, isSaved && styles.saveButtonTextSaved]}>
+            {isSaving ? 'Saving...' : isSaved ? 'Saved to History' : 'Save Result'}
+          </Text>
+        </Pressable>
+      ) : null}
 
       <View style={styles.footerNote}>
         <Text style={styles.footerNoteText}>
@@ -270,6 +293,34 @@ const styles = StyleSheet.create({
   },
   breakdownSummaryCard: {
     marginBottom: 14,
+  },
+  saveButton: {
+    minHeight: 50,
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 14,
+  },
+  saveButtonIdle: {
+    backgroundColor: '#5548EF',
+  },
+  saveButtonSaved: {
+    backgroundColor: '#EAF6F4',
+  },
+  saveButtonDisabled: {
+    opacity: 0.78,
+  },
+  saveButtonText: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: 0.2,
+  },
+  saveButtonTextSaved: {
+    color: '#2F7E77',
   },
   footerNote: {
     backgroundColor: '#F4F1FF',
