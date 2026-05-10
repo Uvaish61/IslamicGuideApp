@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StatusBar, Share, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { ChevronLeft, ChevronRight, Heart } from 'lucide-react-native';
 import { dailyQuotes } from '../data/quoteData';
+import QuoteCard from '../components/QuoteCard';
+import QuoteActions from '../components/QuoteActions';
 
 type DailyQuoteScreenProps = {
   onBackToHome: () => void;
@@ -20,16 +22,21 @@ const DailyQuoteScreen = ({ onBackToHome }: DailyQuoteScreenProps) => {
     );
   };
 
+  const onShare = async () => {
+    try {
+      await Share.share({ message: `${quote.text} — ${quote.source}` });
+    } catch (e) {
+      // ignore share errors for now
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor="#ECEBFA" />
       <View style={styles.container}>
         <Text style={styles.title}>Daily Quote</Text>
 
-        <View style={styles.quoteCard}>
-          <Text style={styles.quoteText}>"{quote.text}"</Text>
-          <Text style={styles.quoteSource}>— {quote.source}</Text>
-        </View>
+        <QuoteCard quote={quote} />
 
         <View style={styles.navRow}>
           <Pressable
@@ -53,10 +60,7 @@ const DailyQuoteScreen = ({ onBackToHome }: DailyQuoteScreenProps) => {
           </Pressable>
         </View>
 
-        <Pressable style={styles.saveButton} onPress={toggleSaveQuote}>
-          <Heart size={18} color={isSaved ? '#FF6B6B' : '#FFFFFF'} fill={isSaved ? '#FF6B6B' : 'none'} />
-          <Text style={styles.saveButtonText}>{isSaved ? 'Saved' : 'Save Quote'}</Text>
-        </Pressable>
+        <QuoteActions isSaved={isSaved} onToggleSave={toggleSaveQuote} onShare={onShare} />
 
         <Pressable style={styles.backButton} onPress={onBackToHome}>
           <Text style={styles.backButtonText}>Back to Home</Text>
