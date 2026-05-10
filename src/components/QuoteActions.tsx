@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, Share, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
+import styles from './quoteStyles';
 import { Heart, Share2 } from 'lucide-react-native';
 
 type Props = {
@@ -23,37 +24,5 @@ const QuoteActions = ({ isSaved, onToggleSave, onShare }: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  actionsRow: {
-    marginTop: 32,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 12,
-  },
-  actionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    borderRadius: 16,
-    backgroundColor: '#5548EF',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-  actionText: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
-  saved: {
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#FF6B6B',
-  },
-  savedText: {
-    color: '#FF6B6B',
-  },
-});
 
 export default QuoteActions;

@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import styles from './quoteStyles';
 
 type Quote = {
   id: number;
@@ -19,32 +20,5 @@ const QuoteCard = ({ quote }: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  quoteCard: {
-    marginTop: 40,
-    width: '100%',
-    borderRadius: 24,
-    borderWidth: 2,
-    borderColor: '#3D3AE0',
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 24,
-    paddingVertical: 32,
-  },
-  quoteText: {
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: '700',
-    fontStyle: 'italic',
-    color: '#3D3AE0',
-  },
-  quoteSource: {
-    marginTop: 24,
-    textAlign: 'center',
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#7E7D94',
-  },
-});
 
 export default QuoteCard;
