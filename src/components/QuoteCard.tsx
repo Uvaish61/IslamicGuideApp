@@ -2,17 +2,17 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import styles from './quoteStyles';
 
-type Quote = {
+export type Quote = {
   id: number;
   text: string;
   source: string;
 };
 
-type Props = {
+export type QuoteCardProps = {
   quote: Quote;
 };
 
-const QuoteCard = ({ quote }: Props) => {
+const QuoteCard = ({ quote }: QuoteCardProps) => {
   return (
     <View style={styles.quoteCard}>
       <Text style={styles.quoteText}>"{quote.text}"</Text>

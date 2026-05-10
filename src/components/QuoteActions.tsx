@@ -3,13 +3,13 @@ import { Pressable, Text, View } from 'react-native';
 import styles from './quoteStyles';
 import { Heart, Share2 } from 'lucide-react-native';
 
-type Props = {
+export type QuoteActionsProps = {
   isSaved: boolean;
   onToggleSave: () => void;
   onShare: () => void;
 };
 
-const QuoteActions = ({ isSaved, onToggleSave, onShare }: Props) => {
+const QuoteActions = ({ isSaved, onToggleSave, onShare }: QuoteActionsProps) => {
   return (
     <View style={styles.actionsRow}>
       <Pressable style={[styles.actionButton, isSaved && styles.saved]} onPress={onToggleSave}>
